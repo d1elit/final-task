@@ -1,0 +1,32 @@
+.controls {
+  width: 145px;
+  position: absolute;
+  display: flex;  
+  justify-content: space-between;
+  align-items: center;
+  bottom: 0;
+ 
+  &__control {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 35px;
+    width: 60px;
+    padding: 5px;
+    color: rgb(58, 75, 116);
+    background: rgba(255, 255, 255, 0.26);
+  }
+  &__img {
+    width: 50px;
+    height: 50px;
+    // background-image: url(../../images/right-arrow.png);
+  }
+  &__direction {   
+    width: 20px;  
+    border: 1px solid rgb(58, 75, 116);
+    border-radius: 3px;
+    &_reverse {
+      transform:scale(-1,1);
+    }
+  }
+}

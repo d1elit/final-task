@@ -1,0 +1,20 @@
+.game-stats {
+  position: absolute;
+  justify-content: space-between;
+  right: 10px;
+  top: 0px;
+  display: flex;
+  &__item {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    color: rgb(58, 75, 116);
+    height: 30px;
+    width: 130px;
+    background: rgba(255, 255, 255, 0.26);
+    margin-right: 3px;
+  }
+  &__value {
+    font-weight: bold;
+  }
+}

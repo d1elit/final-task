@@ -1,0 +1,33 @@
+.start-game {
+  
+  &__title {
+    margin: 0;
+    font-size: 4rem;
+    font-weight: normal;
+    color: #fff;
+  }
+  &__description {
+    color: #fff;
+    padding: 30px;
+  }
+  &__controls {
+    max-width: 320px;
+    display: flex;
+    margin: 0 auto;      
+    justify-content: space-between;
+  }
+  &__btn {
+    width: 150px;
+    height: 50px;
+    cursor: pointer;
+    border: none;
+    border-radius: 30px;
+    background-color: rgb(164, 102, 172);
+    color: #fff;
+    font-weight: bold;   
+    &_rules {
+      background-color: unset;
+      border: 2px solid #fff;
+    }
+  }
+}
