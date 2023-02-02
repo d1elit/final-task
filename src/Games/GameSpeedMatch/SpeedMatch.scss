@@ -1,0 +1,21 @@
+.speed-match {
+  width: 620px;
+  height: 480px;
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+  justify-content:center;
+  align-items: center;
+  margin: 0 auto;
+  background-color:rgb(82, 98, 139) ;
+  border: 1px solid gray;
+  border-radius: 3px;
+  text-align: center;
+  &__title {
+    margin-top: 50px;
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: normal;   
+    font-family:'Courier New', Courier, monospace
+  }
+}
