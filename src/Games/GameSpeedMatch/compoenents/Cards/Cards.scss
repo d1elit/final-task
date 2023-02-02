@@ -1,0 +1,18 @@
+.cards {
+  display:  flex;
+  width: 70%;
+  justify-content: space-between;
+  margin-top: -90px;
+  &__card-field {
+    width: 200px;
+    height: 200px;  
+    background-color: rgba(236, 234, 240, 0.062);
+    border-radius: 5px;
+    
+  }
+  &__field-previous {
+    &_used {
+      background-color: rgba(53, 48, 122, 0.719);
+    }
+  }
+}
