@@ -19,3 +19,4 @@ export default function StartGame({title,   description, onPlayHandler} : StartG
     </div>
   )
 }
+
