@@ -2,7 +2,7 @@ import { is } from 'immer/dist/internal'
 import React, { useState ,useEffect, useRef} from 'react'
 import Controls from '../../components/Controls/Controls'
 import StartGame from '../../components/StartGame/StartGame'
-import Cards from './compoenents/Cards/Cards'
+import Cards from './components/Cards/Cards'
 import GameStats from '../../components/GameStats/GameStats'
 import './SpeedMatch.scss'
 
