@@ -1,0 +1,19 @@
+import React from 'react'
+import './GameStats.scss'
+
+type Props = {}
+
+export default function GameStats({}: Props) {
+  return (
+    <div className='game-stats'>
+      <div className="game-stats__item game-stats__timer">
+        <span className="game-stats__name">TIME</span>
+        <span className="game-stats__value">00:30</span>
+      </div>
+      <div className="game-stats__item game-stats__score">
+        <span className="game-stats__name">SCORE</span>
+        <span className="game-stats__value">0</span>
+      </div>
+    </div>
+  )
+}
