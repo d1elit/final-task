@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 
 function App() {
+  console.log('APP RENDERING')
   return (
     <BrowserRouter>
       <Routes>
