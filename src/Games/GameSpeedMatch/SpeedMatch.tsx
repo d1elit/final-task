@@ -27,6 +27,7 @@ export default function SpeedMatch() {
   const [score, setScore] = useState(0)
   const [timer, setTimer] = useState(45)
   const multiplierTemp = useRef(1)
+  const gameEndTemp = useRef(false)
   const prevCard = useRef('')
   const [isGameEnd, setIsGameEnd] = useState(false)
   const [answersCount, setAnswersCount]= useState(0)
@@ -90,7 +91,8 @@ export default function SpeedMatch() {
   }
 
   const onControlsHandler = (event: KeyboardEvent) => {
-    if (event.key === 'ArrowRight' || (event.key === 'ArrowLeft' && !isGameEnd)) {      
+    if (gameEndTemp.current) return
+    if (event.key === 'ArrowRight' || (event.key === 'ArrowLeft' )) {      
       document.querySelector('.cards__field-previous')?.classList.add('cards__field-previous_used')  
       setCurrentCard( (currentCard) => {      
         setIsAnswerGetted(true) 
@@ -107,13 +109,18 @@ export default function SpeedMatch() {
     startTimer()
   }
 
+  const setEndOfGame = (isGameEnd: boolean) => {
+    setIsGameEnd(isGameEnd)  
+    gameEndTemp.current = isGameEnd
+
+  }
 
   const startTimer = () => {
     const interval = setInterval(() => {
       setTimer(prevTimer => {       
         if (prevTimer === 0) {
           clearInterval(interval);  
-          setIsGameEnd(true)        
+          setEndOfGame(true)        
           setIsStarted(false)
           return 0
         } else {
@@ -126,7 +133,7 @@ export default function SpeedMatch() {
   }
 
   const onRetryHandler = () => {
-    setIsGameEnd(false)        
+    setEndOfGame(false)        
     setIsStarted(true)
     setScore(0)
     setMultiplier(1)
