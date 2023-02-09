@@ -1,7 +1,8 @@
 import LoginForm from "../components/LoginForm/LoginForm";
 
-import authApi from "../shared/api/auth";
+import withoutAuth from "../shared/hoc/withoutAuth";
 import { useActionCreators } from "../shared/hooks/store";
+import authApi from "../shared/api/auth";
 
 import type { UserData } from "../shared/types/User";
 
@@ -27,4 +28,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default withoutAuth(Login);

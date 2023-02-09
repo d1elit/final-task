@@ -19,6 +19,7 @@ const initialState: UserState = {
 
 const setUser = (state: UserState, action: { payload: User | string }) => {
   state.status = "success";
+  state.isAuth = true;
   state.data = action.payload as User;
 };
 
