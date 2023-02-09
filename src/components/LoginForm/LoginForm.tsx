@@ -1,4 +1,5 @@
 import { MouseEventHandler, useState } from "react";
+import { useForm } from "react-hook-form";
 
 import { UserData } from "../../shared/types/User";
 
@@ -8,47 +9,78 @@ interface Props {
   onLogin(userData: UserData): void;
   onGoogleLogin(): void;
   onRegister(userData: UserData): void;
+  isError?: boolean;
+  error?: string | null;
+}
+
+interface IFormInputs {
+  username: string;
+  password: string;
 }
 
 export default function LoginForm({
   onLogin,
   onGoogleLogin,
   onRegister,
+  isError,
+  error,
 }: Props) {
-  const [username, setUsername] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<IFormInputs>();
 
-  const handleLogin: MouseEventHandler<HTMLButtonElement> = (e) => {
-    e.preventDefault();
-    onLogin({ username, password });
-  };
-  const handleGoogleLogin: MouseEventHandler<HTMLButtonElement> = (e) => {
-    e.preventDefault();
-    onGoogleLogin();
-  };
-  const handleRegister: MouseEventHandler<HTMLButtonElement> = (e) => {
-    e.preventDefault();
-    onRegister({ username, password });
-  };
+  const handleLogin = (data: IFormInputs) => onLogin(data);
+  const handleGoogleLogin = () => onGoogleLogin();
+  const handleRegister = (data: IFormInputs) => onRegister(data);
 
   return (
     <form className="loginForm">
+      {isError && <p>{error}</p>}
       <input
         type="text"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
+        {...register("username", {
+          required: "Fill the field",
+          minLength: {
+            value: 3,
+            message: "Min length 3 characters",
+          },
+        })}
         placeholder="Username"
       />
+      {errors?.username && <p>{errors.username.message}</p>}
       <input
         type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        {...register("password", {
+          required: "Fill the field",
+          pattern: {
+            value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^\w\s]).{6,}/,
+            message:
+              "Invalid password. At least 6 digit characters, spec. characters, Latin, the presence of lowercase and uppercase characters",
+          },
+        })}
         placeholder="Password"
       />
+      {errors?.password && <p>{errors.password.message}</p>}
       <div className="loginControls">
-        <button onClick={handleLogin}>Sign in</button>
-        <button onClick={handleRegister}>Sign up</button>
-        <button onClick={handleGoogleLogin}>G</button>
+        <button
+          disabled={isSubmitting}
+          type="submit"
+          onClick={handleSubmit(handleLogin)}
+        >
+          Sign in
+        </button>
+        <button
+          disabled={isSubmitting}
+          type="submit"
+          onClick={handleSubmit(handleRegister)}
+        >
+          Sign up
+        </button>
+        <button disabled={isSubmitting} onClick={handleGoogleLogin}>
+          G
+        </button>
       </div>
     </form>
   );

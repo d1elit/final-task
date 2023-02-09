@@ -1,13 +1,16 @@
 import LoginForm from "../components/LoginForm/LoginForm";
 
 import withoutAuth from "../shared/hoc/withoutAuth";
-import { useActionCreators } from "../shared/hooks/store";
+import { useActionCreators, useAppSelector } from "../shared/hooks/store";
 import authApi from "../shared/api/auth";
 
 import type { UserData } from "../shared/types/User";
 
 function Login() {
   const actions = useActionCreators(authApi);
+
+  const status = useAppSelector((state) => state.user.status);
+  const error = useAppSelector((state) => state.user.error);
 
   const handleLogin = (userData: UserData) => actions.login(userData);
   const handleRegister = (userData: UserData) => actions.register(userData);
@@ -18,6 +21,8 @@ function Login() {
       <div className="container">
         <div>
           <LoginForm
+            isError={status === "error" && error !== "Unauthorized"}
+            error={error}
             onLogin={handleLogin}
             onRegister={handleRegister}
             onGoogleLogin={handleGoogleLogin}
