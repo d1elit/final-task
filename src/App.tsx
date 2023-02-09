@@ -10,7 +10,6 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path='/speedmatch' element={<SpeedMatch />} />
-        {/* <Route path='/' element={<SpeedMatch/>}/> */}
       </Routes>
     </BrowserRouter>
   )

@@ -1,6 +1,5 @@
 import React from 'react'
 import './Card.scss'
-import img from '../../assets/images/shapes/circle.png'
 interface Props {
   shapeImg: string
 }

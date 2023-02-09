@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-var-requires */
 const succesSound = require('../../assets/sounds/success.mp3')
-const failureSoundSecond = require('../../assets/sounds/failure.mp3')
 const failureSound = require('../../assets/sounds/failure.wav')
 const timerSound = require('../../assets/sounds/timerSound.mp3')
 import React, { useState, useEffect, useRef } from 'react'
@@ -16,7 +15,6 @@ import circle from '../../assets/images/shapes/circle.png'
 import rectangle from '../../assets/images/shapes/rectangle.png'
 import triangle from '../../assets/images/shapes/triangle.png'
 import rhombus from '../../assets/images/shapes/rhombus.png'
-import polygon from '../../assets/images/shapes/polygon.png'
 import quatrefoil from '../../assets/images/shapes/quatrefoil.png'
 import StartGameTimer from '../../components/StartGameTimer/StartGameTimer'
 
@@ -33,7 +31,6 @@ const shapes = [
   { shapeName: 'circle', shapeImg: circle },
   { shapeName: 'triangle', shapeImg: triangle },
   { shapeName: 'rhombus', shapeImg: rhombus },
-  // { shapeName: 'polygon', shapeImg: polygon },
   { shapeName: 'quatrefoil', shapeImg: quatrefoil },
 ]
 
