@@ -1,40 +1,73 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 
-import type { User } from "../types/User";
+import type { User, UserData } from "../types/User";
 
 export const authHost = axios.create({
   withCredentials: true,
   baseURL: `${process.env.REACT_APP_API_URL}/auth`,
 });
 
-type UserData = {
-  username: string;
-  password: string;
-};
+const login = createAsyncThunk(
+  "user/login",
+  async (userData: UserData, { rejectWithValue }) => {
+    try {
+      const res = await authHost.post<User>("/login", {
+        username: userData.username,
+        password: userData.password,
+      });
+      return res;
+    } catch (e) {
+      const err = e as Error | AxiosError;
+      if (axios.isAxiosError(err)) {
+        return rejectWithValue(err.response?.data.message);
+      } else {
+        return rejectWithValue(err.message);
+      }
+    }
+  }
+);
 
-async function login(userData: UserData) {
-  const res = await authHost.post<User>("/login", {
-    username: userData.username,
-    password: userData.password,
-  });
-  return res;
-}
-
-async function googleLogin() {
+const googleLogin = createAsyncThunk("user/googleLogin", async () => {
   window.open(`${authHost.defaults.baseURL}/google`, "_self");
-}
+});
 
-async function register(userData: UserData) {
-  const res = await authHost.post<User>("/register", {
-    username: userData.username,
-    password: userData.password,
-  });
-  return res;
-}
+const register = createAsyncThunk(
+  "user/register",
+  async (userData: UserData, { rejectWithValue }) => {
+    try {
+      const res = await authHost.post<User>("/register", {
+        username: userData.username,
+        password: userData.password,
+      });
+      return res;
+    } catch (e) {
+      const err = e as Error | AxiosError;
+      if (axios.isAxiosError(err)) {
+        return rejectWithValue(err.response?.data.message);
+      } else {
+        return rejectWithValue(err.message);
+      }
+    }
+  }
+);
 
-async function getMe(userId: string) {
-  const user = await authHost.get<User>("/me");
-}
+const getMe = createAsyncThunk(
+  "user/getMe",
+  async (_: never, { rejectWithValue }) => {
+    try {
+      const res = await authHost.get<User>("/me");
+      return res;
+    } catch (e) {
+      const err = e as Error | AxiosError;
+      if (axios.isAxiosError(err)) {
+        return rejectWithValue(err.response?.data.message);
+      } else {
+        return rejectWithValue(err.message);
+      }
+    }
+  }
+);
 
 export default {
   login,

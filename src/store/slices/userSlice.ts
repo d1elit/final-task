@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import type { User } from "../shared/types/User";
+import type { User, UserData } from "../../shared/types/User";
 
 type UserState = {
   isAuth: boolean;
@@ -27,6 +27,7 @@ const userSlice = createSlice({
       state.data = null;
     },
   },
+  // extraReducers: (builder) => builder.addCase()
 });
 
 export const { reducer: userReducer, actions: userActions } = userSlice;
