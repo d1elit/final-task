@@ -8,11 +8,13 @@ type User = {
 type UserState = {
   isAuth: boolean;
   data: User | null;
+  status: "init" | "loading" | "error" | "success";
 };
 
 const initialState: UserState = {
   isAuth: false,
   data: null,
+  status: "init",
 };
 
 const userSlice = createSlice({
