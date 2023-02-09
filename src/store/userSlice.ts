@@ -1,9 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-type User = {
-  _id: string;
-  username: string;
-};
+import type { User } from "../shared/types/User";
 
 type UserState = {
   isAuth: boolean;
