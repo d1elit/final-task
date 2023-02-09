@@ -9,8 +9,6 @@ interface Props {
 }
 
 export default function GameStats({ timer, score, multiplier, streak }: Props) {
-  console.log(streak)
-
   const drawSuccessStreak = () => {
     return (
       <div className='game-stats__item multiplier'>
