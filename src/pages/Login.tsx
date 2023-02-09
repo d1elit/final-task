@@ -1,11 +1,12 @@
 import { FormEvent, useState } from "react";
 
 import authApi from "../shared/api/auth";
+import withAuth from "../shared/hoc/withAuth";
 import { useActionCreators } from "../shared/hooks/store";
 
 import "./Login.scss";
 
-export default function Login() {
+function Login() {
   const actions = useActionCreators(authApi);
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -40,3 +41,5 @@ export default function Login() {
     </div>
   );
 }
+
+export default Login;
