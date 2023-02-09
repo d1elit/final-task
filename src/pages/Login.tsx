@@ -1,7 +1,7 @@
 import { FormEvent, useState } from "react";
+
 import authApi from "../shared/api/auth";
 import { useActionCreators } from "../shared/hooks/store";
-import { userActions } from "../store/slices/userSlice";
 
 import "./Login.scss";
 
@@ -10,15 +10,14 @@ export default function Login() {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  const handelSubmit = async (e: FormEvent): Promise<void> => {
-    e.preventDefault();
-    actions.login({ username, password });
-  };
+  const handelLogin = () => actions.login({ username, password });
+  const handleRegister = () => actions.register({ username, password });
+  const handleGoogleAuth = () => actions.googleLogin();
 
   return (
     <div className="pageWrapper">
       <div className="container">
-        <form className="loginForm" onSubmit={handelSubmit}>
+        <form className="loginForm">
           <input
             type="text"
             value={username}
@@ -32,8 +31,9 @@ export default function Login() {
             placeholder="Password"
           />
           <div className="loginControls">
-            <button type="submit">Login</button>
-            <button>G</button>
+            <button onClick={handelLogin}>Sign in</button>
+            <button onClick={handleRegister}>Sign up</button>
+            <button onClick={handleGoogleAuth}>G</button>
           </div>
         </form>
       </div>
