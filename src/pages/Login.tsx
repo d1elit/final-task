@@ -1,42 +1,27 @@
-import { FormEvent, useState } from "react";
+import LoginForm from "../components/LoginForm/LoginForm";
 
 import authApi from "../shared/api/auth";
-import withAuth from "../shared/hoc/withAuth";
 import { useActionCreators } from "../shared/hooks/store";
 
-import "./Login.scss";
+import type { UserData } from "../shared/types/User";
 
 function Login() {
   const actions = useActionCreators(authApi);
-  const [username, setUsername] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
 
-  const handelLogin = () => actions.login({ username, password });
-  const handleRegister = () => actions.register({ username, password });
-  const handleGoogleAuth = () => actions.googleLogin();
+  const handleLogin = (userData: UserData) => actions.login(userData);
+  const handleRegister = (userData: UserData) => actions.register(userData);
+  const handleGoogleLogin = () => actions.googleLogin();
 
   return (
     <div className="pageWrapper">
       <div className="container">
-        <form className="loginForm">
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            placeholder="Username"
+        <div>
+          <LoginForm
+            onLogin={handleLogin}
+            onRegister={handleRegister}
+            onGoogleLogin={handleGoogleLogin}
           />
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
-          />
-          <div className="loginControls">
-            <button onClick={handelLogin}>Sign in</button>
-            <button onClick={handleRegister}>Sign up</button>
-            <button onClick={handleGoogleAuth}>G</button>
-          </div>
-        </form>
+        </div>
       </div>
     </div>
   );
