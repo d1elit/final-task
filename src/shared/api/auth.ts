@@ -55,7 +55,7 @@ const register = createAsyncThunk(
 
 const getMe = createAsyncThunk(
   "user/getMe",
-  async (_: {}, { rejectWithValue }) => {
+  async (_: null, { rejectWithValue }) => {
     try {
       const res = await authHost.get<User>("/me");
       return res.data;
