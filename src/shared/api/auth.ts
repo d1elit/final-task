@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import type { User } from "../shared/types/User";
+import type { User } from "../types/User";
 
 export const authHost = axios.create({
   withCredentials: true,

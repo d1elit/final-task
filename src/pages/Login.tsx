@@ -1,5 +1,5 @@
 import { FormEvent, useState } from "react";
-import authApi from "../api/auth";
+import authApi from "../shared/api/auth";
 
 import "./Login.scss";
 
