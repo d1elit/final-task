@@ -1,14 +1,23 @@
 import { ReactNode, useEffect } from "react";
 
-import { useActionCreators } from "../../shared/hooks/store";
+import { useActionCreators, useAppSelector } from "../../shared/hooks/store";
 import authApi from "../../shared/api/auth";
 
 const Session: React.FC<{ children: ReactNode }> = ({ children }) => {
   const actions = useActionCreators(authApi);
 
+  const status = useAppSelector((state) => state.user.status);
+
   useEffect(() => {
     actions.getMe(null);
   }, []);
+
+  if (status === "init")
+    return (
+      <div style={{ fontSize: 50, color: "#fff", textAlign: "center" }}>
+        Loading...
+      </div>
+    );
 
   return <>{children}</>;
 };
