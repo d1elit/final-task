@@ -1,7 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-var-requires */
 const succesSound = require('../../assets/sounds/success.mp3')
-const failureSound = require('../../assets/sounds/failure.mp3')
+const failureSoundSecond = require('../../assets/sounds/failure.mp3')
+const failureSound = require('../../assets/sounds/failure.wav')
+const timerSound = require('../../assets/sounds/timerSound.mp3')
 import React, { useState, useEffect, useRef } from 'react'
 import Controls from '../../components/Controls/Controls'
 import StartGame from '../../components/StartGame/StartGame'
@@ -10,30 +12,55 @@ import GameStats from '../../components/GameStats/GameStats'
 import './SpeedMatch.scss'
 import AnswerIndicator from '../../components/AnswerIndicator/AnswerIndicator'
 import Results from '../../components/Results/Results'
+import circle from '../../assets/images/shapes/circle.png'
+import rectangle from '../../assets/images/shapes/rectangle.png'
+import triangle from '../../assets/images/shapes/triangle.png'
+import rhombus from '../../assets/images/shapes/rhombus.png'
+import polygon from '../../assets/images/shapes/polygon.png'
+import quatrefoil from '../../assets/images/shapes/quatrefoil.png'
+import StartGameTimer from '../../components/StartGameTimer/StartGameTimer'
 
 const gameDescription =
   'In Speed Match you only need to determine if the symbols are the same.'
-const figures = ['rectangle', 'triangle', 'circle']
+
+interface IShapes {
+  shapeName: string
+  shapeImg: string
+}
+
+const shapes = [
+  { shapeName: 'rectangle', shapeImg: rectangle },
+  { shapeName: 'circle', shapeImg: circle },
+  { shapeName: 'triangle', shapeImg: triangle },
+  { shapeName: 'rhombus', shapeImg: rhombus },
+  // { shapeName: 'polygon', shapeImg: polygon },
+  { shapeName: 'quatrefoil', shapeImg: quatrefoil },
+]
 
 const getNextCard = () => {
-  return figures[Math.floor(Math.random() * figures.length)]
+  return shapes[Math.floor(Math.random() * shapes.length)]
 }
 
 export default function SpeedMatch() {
   const [isStarted, setIsStarted] = useState(false)
   const [isSuccess, setIsSuccess] = useState(true)
   const [isAnswerGetted, setIsAnswerGetted] = useState(false)
-  const [currentCard, setCurrentCard] = useState('rectangle')
+  const [currentCard, setCurrentCard] = useState<IShapes>({
+    shapeName: 'rectangle',
+    shapeImg: rectangle,
+  })
   const [streak, setStreak] = useState(0)
   const [multiplier, setMultiplier] = useState(1)
   const [score, setScore] = useState(0)
-  const [timer, setTimer] = useState(45)
-  const multiplierTemp = useRef(1)
-  const gameEndTemp = useRef(false)
-  const prevCard = useRef('')
+  const [gameTimer, setGameTimer] = useState(45)
   const [isGameEnd, setIsGameEnd] = useState(false)
   const [answersCount, setAnswersCount] = useState(0)
   const [rightAnswersCount, setRightAnswersCount] = useState(0)
+  const multiplierTemp = useRef(1)
+  const gameEndTemp = useRef(false)
+  const prevCard = useRef('')
+  const [startGameTimer, setStartGameTimer] = useState(3)
+  const isStartTimerEnd = useRef(false)
 
   const changeMultiplayer = (isRightAnswer: boolean, streak: number) => {
     if (isRightAnswer && streak == 4) {
@@ -74,22 +101,18 @@ export default function SpeedMatch() {
       : new Audio(failureSound).play()
   }
 
-  const chekIsRightAnswer = (
-    event: KeyboardEvent,
-    current: string,
-    prev: string
-  ) => {
+  const chekIsRightAnswer = (key: string, current: string, prev: string) => {
     setAnswersCount(prev => prev + 1)
-    if (current === prev && event.key === 'ArrowRight') {
+    if (current === prev && key === 'ArrowRight') {
       handleAnswer(true)
     }
-    if (current !== prev && event.key === 'ArrowLeft') {
+    if (current !== prev && key === 'ArrowLeft') {
       handleAnswer(true)
     }
-    if (current === prev && event.key === 'ArrowLeft') {
+    if (current === prev && key === 'ArrowLeft') {
       handleAnswer(false)
     }
-    if (current !== prev && event.key === 'ArrowRight') {
+    if (current !== prev && key === 'ArrowRight') {
       handleAnswer(false)
     }
   }
@@ -99,25 +122,30 @@ export default function SpeedMatch() {
     gameEndTemp.current = isGameEnd
   }
 
-  const onControlsHandler = (event: KeyboardEvent) => {
-    if (gameEndTemp.current) return
-    if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
-      document
-        .querySelector('.cards__field-previous')
-        ?.classList.add('cards__field-previous_used')
-      setCurrentCard(currentCard => {
-        setIsAnswerGetted(true)
-        chekIsRightAnswer(event, currentCard, prevCard.current)
-        prevCard.current = currentCard
-        const newCurrent = getNextCard()
-        return newCurrent
-      })
+  const handleUserMove = (key: string) => {
+    document
+      .querySelector('.cards__field-previous')
+      ?.classList.add('cards__field-previous_used')
+    setCurrentCard(currentCard => {
+      setIsAnswerGetted(true)
+      chekIsRightAnswer(key, currentCard.shapeName, prevCard.current)
+      prevCard.current = currentCard.shapeName
+      const newCurrent = getNextCard()
+      return newCurrent
+    })
+  }
+
+  const onKeyControlsHandler = (event: KeyboardEvent) => {
+    const key = event.key
+    if (gameEndTemp.current || !isStartTimerEnd.current) return
+    if (key === 'ArrowRight' || key === 'ArrowLeft') {
+      handleUserMove(key)
     }
   }
 
   const startTimer = () => {
     const interval = setInterval(() => {
-      setTimer(prevTimer => {
+      setGameTimer(prevTimer => {
         if (prevTimer === 0) {
           clearInterval(interval)
           setEndOfGame(true)
@@ -132,9 +160,24 @@ export default function SpeedMatch() {
     return () => clearInterval(interval)
   }
 
+  const startGameTimerHandle = () => {
+    new Audio(timerSound).play()
+    const timer = setInterval(() => {
+      setStartGameTimer(prev => {
+        if (prev !== 1) new Audio(timerSound).play()
+        return prev - 1
+      })
+    }, 1000)
+    setTimeout(() => {
+      clearInterval(timer)
+      isStartTimerEnd.current = true
+      startTimer()
+    }, 3000)
+  }
+
   const onPlayHandler = () => {
     setIsStarted(true)
-    startTimer()
+    startGameTimerHandle()
   }
 
   const onRetryHandler = () => {
@@ -145,18 +188,27 @@ export default function SpeedMatch() {
     setStreak(0)
     setAnswersCount(0)
     setRightAnswersCount(0)
-    setTimer(45)
+    setGameTimer(45)
+    setStartGameTimer(3)
     multiplierTemp.current = 1
     setIsAnswerGetted(false)
-    startTimer()
-    setCurrentCard('rectangle')
+    startGameTimerHandle()
+    setCurrentCard({ shapeName: 'rectangle', shapeImg: rectangle })
     document
       .querySelector('.cards__field-previous')
       ?.classList.toggle('cards__field-previous_used')
   }
 
+  const onBtnCountrolsHandler = (e: Event) => {
+    const elem = (e.target as HTMLElement).closest('.controls__control')
+    if (elem) {
+      handleUserMove(elem.id)
+    }
+  }
+
   useEffect(() => {
-    document.addEventListener('keydown', onControlsHandler)
+    document.addEventListener('keydown', onKeyControlsHandler)
+    document.addEventListener('click', onBtnCountrolsHandler)
   }, [])
 
   return (
@@ -170,17 +222,22 @@ export default function SpeedMatch() {
       )}
       {isStarted && (
         <>
+          {startGameTimer !== 0 ? (
+            <StartGameTimer timerValue={startGameTimer} />
+          ) : (
+            false
+          )}
           <GameStats
             score={score}
             streak={streak}
             multiplier={multiplier}
-            timer={timer}
+            timer={gameTimer}
           />
           <h2 className='speed-match__title'>
             Does the CURRENT card match the card that came IMMEDIATELY BEFORE
             it?
           </h2>
-          <Cards currentCard={currentCard} />
+          <Cards currentCard={currentCard.shapeImg} />
           {isAnswerGetted && <AnswerIndicator isSuccess={isSuccess} />}
           <Controls />
         </>
