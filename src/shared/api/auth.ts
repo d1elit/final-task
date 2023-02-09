@@ -6,6 +6,7 @@ import type { User, UserData } from "../types/User";
 export const authHost = axios.create({
   withCredentials: true,
   baseURL: `${process.env.REACT_APP_API_URL}/auth`,
+  validateStatus: (status) => status < 300,
 });
 
 const login = createAsyncThunk(
@@ -16,10 +17,10 @@ const login = createAsyncThunk(
         username: userData.username,
         password: userData.password,
       });
-      return res;
+      return res.data;
     } catch (e) {
       const err = e as Error | AxiosError;
-      if (axios.isAxiosError(err)) {
+      if (axios.isAxiosError(err) && err.response) {
         return rejectWithValue(err.response?.data.message);
       } else {
         return rejectWithValue(err.message);
@@ -40,10 +41,10 @@ const register = createAsyncThunk(
         username: userData.username,
         password: userData.password,
       });
-      return res;
+      return res.data;
     } catch (e) {
       const err = e as Error | AxiosError;
-      if (axios.isAxiosError(err)) {
+      if (axios.isAxiosError(err) && err.response) {
         return rejectWithValue(err.response?.data.message);
       } else {
         return rejectWithValue(err.message);
@@ -54,13 +55,13 @@ const register = createAsyncThunk(
 
 const getMe = createAsyncThunk(
   "user/getMe",
-  async (_: never, { rejectWithValue }) => {
+  async (_: {}, { rejectWithValue }) => {
     try {
       const res = await authHost.get<User>("/me");
-      return res;
+      return res.data;
     } catch (e) {
       const err = e as Error | AxiosError;
-      if (axios.isAxiosError(err)) {
+      if (axios.isAxiosError(err) && err.response) {
         return rejectWithValue(err.response?.data.message);
       } else {
         return rejectWithValue(err.message);

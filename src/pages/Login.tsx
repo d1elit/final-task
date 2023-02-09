@@ -1,16 +1,18 @@
 import { FormEvent, useState } from "react";
 import authApi from "../shared/api/auth";
+import { useActionCreators } from "../shared/hooks/store";
+import { userActions } from "../store/slices/userSlice";
 
 import "./Login.scss";
 
 export default function Login() {
+  const actions = useActionCreators(authApi);
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
   const handelSubmit = async (e: FormEvent): Promise<void> => {
     e.preventDefault();
-    const res = await authApi.login({ username, password });
-    console.log(res);
+    actions.login({ username, password });
   };
 
   return (
