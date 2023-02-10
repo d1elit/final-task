@@ -1,0 +1,86 @@
+{
+  "extends": [
+    "airbnb/hooks",
+    "airbnb-typescript",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:react-hooks/recommended",
+    "plugin:jest/recommended",
+    "plugin:import/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": ["react", "@typescript-eslint", "jest", "prettier"],
+  "env": {
+    "browser": true,
+    "es6": true,
+    "jest": true
+  },
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "project": "./tsconfig.json"
+  },
+  "rules": {
+    "@typescript-eslint/no-explicit-any": "error",
+    "linebreak-style": "off",
+    "lines-between-class-members": "off",
+    "no-plusplus": "warn",
+    "no-console": "warn",
+    "max-len": ["warn", { "code": 120 }],
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": "off",
+    "no-unused-expressions": "off",
+    "@typescript-eslint/no-unused-expressions": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-uses-react": "off",
+    "react/jsx-props-no-spreading": "warn",
+    "react/no-unescaped-entities": "off",
+    "react-hooks/exhaustive-deps": "warn",
+    "import/prefer-default-export": "off",
+    "import/no-extraneous-dependencies": [
+      "warn",
+      {
+        "devDependencies": false,
+        "optionalDependencies": false,
+        "peerDependencies": false
+      }
+    ],
+    "indent": [
+      "warn",
+      2,
+      {
+        "SwitchCase": 1
+      }
+    ],
+    "@typescript-eslint/indent": [
+      "warn",
+      2,
+      {
+        "SwitchCase": 1
+      }
+    ],
+    "no-param-reassign": [
+      "error",
+      {
+        "props": false
+      }
+    ],
+
+    "prettier/prettier": [
+      "error",
+      {
+        "jsxSingleQuote": false
+      }
+    ]
+  }
+}
