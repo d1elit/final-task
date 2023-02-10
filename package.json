@@ -2,7 +2,6 @@
   "name": "final-task",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://d1elit.github.io/final-task",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.1",
     "react": "^18.2.0",
