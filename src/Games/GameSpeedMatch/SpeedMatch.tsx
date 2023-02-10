@@ -187,6 +187,7 @@ export default function SpeedMatch() {
     setRightAnswersCount(0)
     setGameTimer(45)
     setStartGameTimer(3)
+    isStartTimerEnd.current = false
     multiplierTemp.current = 1
     setIsAnswerGetted(false)
     startGameTimerHandle()
