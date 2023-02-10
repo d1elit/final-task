@@ -1,10 +1,8 @@
-/* eslint-disable @typescript-eslint/no-floating-promises */
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @typescript-eslint/no-var-requires */
-import succesSound from '../../assets/sounds/success.mp3';
-import failureSound from '../../assets/sounds/failure.wav';
-import timerSound from '../../assets/sounds/timerSound.mp3';
-import React, { useState, useEffect, useRef } from 'react';
+import succesSoundPath from '../../assets/sounds/success.mp3';
+import failureSoundPath from '../../assets/sounds/failureNormalized.mp3';
+import timerSoundPath from '../../assets/sounds/timerSound.mp3';
+
+import { useState, useEffect, useRef } from 'react';
 import Controls from '../../components/Controls/Controls';
 import StartGame from '../../components/StartGame/StartGame';
 import Cards from './components/Cards/Cards';
@@ -18,6 +16,10 @@ import triangle from '../../assets/images/shapes/triangle.png';
 import rhombus from '../../assets/images/shapes/rhombus.png';
 import quatrefoil from '../../assets/images/shapes/quatrefoil.png';
 import StartGameTimer from '../../components/StartGameTimer/StartGameTimer';
+
+const succesSound = new Audio(succesSoundPath);
+const failureSound = new Audio(failureSoundPath);
+const timerSound = new Audio(timerSoundPath);
 
 const gameDescription =
   'In Speed Match you only need to determine if the symbols are the same.';
@@ -94,24 +96,30 @@ export default function SpeedMatch() {
   const handleAnswer = (isRightAnswer: boolean) => {
     changeScore(isRightAnswer);
     setIsSuccess(isRightAnswer);
-    isRightAnswer
-      ? new Audio(succesSound).play()
-      : new Audio(failureSound).play();
+    if (isRightAnswer) {
+      succesSound.pause();
+      succesSound.currentTime = 0;
+      void succesSound.play();
+    } else {
+      failureSound.pause();
+      failureSound.currentTime = 0;
+      void failureSound.play();
+    }
   };
 
   const chekIsRightAnswer = (key: string, current: string, prev: string) => {
     setAnswersCount(prev => prev + 1);
     if (current === prev && key === 'ArrowRight') {
-      handleAnswer(true);
+      void handleAnswer(true);
     }
     if (current !== prev && key === 'ArrowLeft') {
-      handleAnswer(true);
+      void handleAnswer(true);
     }
     if (current === prev && key === 'ArrowLeft') {
-      handleAnswer(false);
+      void handleAnswer(false);
     }
     if (current !== prev && key === 'ArrowRight') {
-      handleAnswer(false);
+      void handleAnswer(false);
     }
   };
 
@@ -159,10 +167,12 @@ export default function SpeedMatch() {
   };
 
   const startGameTimerHandle = () => {
-    new Audio(timerSound).play();
+    void timerSound.play();
     const timer = setInterval(() => {
       setStartGameTimer(prev => {
-        if (prev !== 1) new Audio(timerSound).play();
+        if (prev !== 1) {
+          void timerSound.play();
+        }
         return prev - 1;
       });
     }, 1000);
