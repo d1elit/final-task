@@ -171,6 +171,8 @@ export default function SpeedMatch() {
     const timer = setInterval(() => {
       setStartGameTimer(prev => {
         if (prev !== 1) {
+          timerSound.pause();
+          timerSound.currentTime = 0;
           void timerSound.play();
         }
         return prev - 1;
