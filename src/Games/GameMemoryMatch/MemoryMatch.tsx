@@ -9,7 +9,7 @@ import Controls from '../../components/Controls/Controls';
 import StartGame from '../../components/StartGame/StartGame';
 import Cards from './components/Cards/Cards';
 import GameStats from '../../components/GameStats/GameStats';
-import './SpeedMatch.scss';
+import './MemoryMatch.scss';
 import AnswerIndicator from '../../components/AnswerIndicator/AnswerIndicator';
 import Results from '../../components/Results/Results';
 import circle from '../../assets/images/shapes/circle.png';
@@ -21,7 +21,7 @@ import StartGameTimer from '../../components/StartGameTimer/StartGameTimer';
 import { IShapes } from '../../types/MatchGamesTypes';
 
 const gameDescription =
-  'In Speed Match you only need to determine if the symbols are the same.';
+  'Train your working memory by determining whether the symbols match';
 
 export const shapes = [
   { shapeName: 'rectangle', shapeImg: rectangle },
@@ -35,6 +35,14 @@ const getNextCard = () => {
   return shapes[Math.floor(Math.random() * shapes.length)];
 };
 
+const getShapeByName = (shapeName: string) => {
+  let result: IShapes = { shapeName: '', shapeImg: '' };
+  shapes.forEach(shape => {
+    if (shape.shapeName === shapeName) result = shape;
+  });
+  return result;
+};
+
 export default function SpeedMatch() {
   const [isStarted, setIsStarted] = useState(false);
   const [isSuccess, setIsSuccess] = useState(true);
@@ -43,18 +51,32 @@ export default function SpeedMatch() {
     shapeName: 'rectangle',
     shapeImg: rectangle,
   });
+  const [secondCard, setSecondCard] = useState<IShapes>({
+    shapeName: 'circle',
+    shapeImg: circle,
+  });
+  const [thirdCard, setThirdCard] = useState<IShapes>({
+    shapeName: '',
+    shapeImg: '',
+  });
   const [streak, setStreak] = useState(0);
   const [multiplier, setMultiplier] = useState(1);
   const [score, setScore] = useState(0);
-  const [gameTimer, setGameTimer] = useState(45);
+  const [gameTimer, setGameTimer] = useState(450);
   const [isGameEnd, setIsGameEnd] = useState(false);
   const [answersCount, setAnswersCount] = useState(0);
   const [rightAnswersCount, setRightAnswersCount] = useState(0);
   const multiplierTemp = useRef(1);
   const gameEndTemp = useRef(false);
-  const prevCard = useRef('');
+  const prevCard = useRef('circle');
+  const prevPrevCard = useRef('');
   const [startGameTimer, setStartGameTimer] = useState(3);
   const isStartTimerEnd = useRef(false);
+
+  const setShapesToEmpty = () => {
+    setSecondCard({ shapeName: '', shapeImg: '' });
+    setThirdCard({ shapeName: '', shapeImg: '' });
+  };
 
   const changeMultiplayer = (isRightAnswer: boolean, streak: number) => {
     if (isRightAnswer && streak == 4) {
@@ -90,23 +112,32 @@ export default function SpeedMatch() {
   const handleAnswer = (isRightAnswer: boolean) => {
     changeScore(isRightAnswer);
     setIsSuccess(isRightAnswer);
+    if (!isRightAnswer) {
+      setSecondCard(getShapeByName(prevCard.current));
+      setThirdCard(getShapeByName(prevPrevCard.current));
+    }
     isRightAnswer
       ? new Audio(succesSound).play()
       : new Audio(failureSound).play();
   };
 
-  const chekIsRightAnswer = (key: string, current: string, prev: string) => {
+  const chekIsRightAnswer = (
+    key: string,
+    current: string,
+    prev: string,
+    prevPrev: string
+  ) => {
     setAnswersCount(prev => prev + 1);
-    if (current === prev && key === 'ArrowRight') {
+    if ((current === prev || current === prevPrev) && key === 'ArrowRight') {
       handleAnswer(true);
     }
-    if (current !== prev && key === 'ArrowLeft') {
+    if (current !== prev && current !== prevPrev && key === 'ArrowLeft') {
       handleAnswer(true);
     }
-    if (current === prev && key === 'ArrowLeft') {
+    if ((current === prev || current === prevPrev) && key === 'ArrowLeft') {
       handleAnswer(false);
     }
-    if (current !== prev && key === 'ArrowRight') {
+    if (current !== prev && current !== prevPrev && key === 'ArrowRight') {
       handleAnswer(false);
     }
   };
@@ -121,8 +152,15 @@ export default function SpeedMatch() {
       .querySelector('.cards__field-previous')
       ?.classList.add('cards__field-previous_used');
     setCurrentCard(currentCard => {
+      setShapesToEmpty();
       setIsAnswerGetted(true);
-      chekIsRightAnswer(key, currentCard.shapeName, prevCard.current);
+      chekIsRightAnswer(
+        key,
+        currentCard.shapeName,
+        prevCard.current,
+        prevPrevCard.current
+      );
+      prevPrevCard.current = prevCard.current;
       prevCard.current = currentCard.shapeName;
       const newCurrent = getNextCard();
       return newCurrent;
@@ -210,7 +248,7 @@ export default function SpeedMatch() {
     <div className="speed-match">
       {!isStarted && !isGameEnd && (
         <StartGame
-          title="SpeedMatch"
+          title="Memory Match"
           description={gameDescription}
           onPlayHandler={onPlayHandler}
         />
@@ -228,11 +266,20 @@ export default function SpeedMatch() {
             multiplier={multiplier}
             timer={gameTimer}
           />
+          {/* <p>{` Current: ${currentCard.shapeName}  `} </p>
+          <p> {` Prev: ${prevCard.current}  `} </p>
+          <p> {` PrevPrev: ${prevPrevCard.current}  `} </p> */}
+
           <h2 className="speed-match__title">
-            Does the CURRENT card match the card that came IMMEDIATELY BEFORE
+            Does the card on the RIGHT match the card that came TWO CARDS BEFORE
             it?
           </h2>
-          <Cards currentCard={currentCard.shapeImg} />
+
+          <Cards
+            currentCard={currentCard.shapeImg}
+            secondCard={secondCard.shapeImg}
+            thirdCard={thirdCard.shapeImg}
+          />
           {isAnswerGetted && <AnswerIndicator isSuccess={isSuccess} />}
           <Controls />
         </>
