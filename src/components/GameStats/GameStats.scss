@@ -18,3 +18,19 @@
     font-weight: bold;
   }
 }
+
+.multiplier {
+  display: flex;
+  justify-content: space-around;
+  &__item {
+    display: inline-block;
+    height: 15px;
+    width: 15px;
+    border:  none;
+    background-color: rgba(58, 75, 116, 0.39);
+    border-radius: 15px;
+    &_filled {
+      background-color: rgb(58, 75, 116);;
+    }
+  }
+}

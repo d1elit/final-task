@@ -1,0 +1,14 @@
+.answer-indecator {
+   position: absolute;
+  
+   top: 55%;
+  
+   &__failure {
+    font-size: 3.5rem;   
+   }
+   &__success {
+    color: green;  
+    font-size: 4.5rem;
+    margin-top: -10px;
+   }
+}
