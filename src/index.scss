@@ -1,10 +1,21 @@
 body {
   height: 100vh;
-  background: rgb(2,0,36);
-  background: linear-gradient(153deg, rgba(2,0,36,1) 0%, rgba(164,68,157,1) 35%, rgba(0,212,255,1) 100%);
+  background: rgb(2, 0, 36);
+  background: linear-gradient(
+    153deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(164, 68, 157, 1) 35%,
+    rgba(0, 212, 255, 1) 100%
+  );
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.container {
+  max-width: 1230px;
+  padding: 0 15px;
+  margin: 0 auto;
 }
