@@ -1,5 +1,5 @@
 import succesSoundPath from '../../assets/sounds/success.mp3';
-import failureSoundPath from '../../assets/sounds/failureNormalized.mp3';
+import failureSoundPath from '../../assets/sounds/failure.mp3';
 import timerSoundPath from '../../assets/sounds/timerSound.mp3';
 
 import { useState, useEffect, useRef } from 'react';
