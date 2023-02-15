@@ -3,6 +3,7 @@ import './Results.scss';
 
 interface Props {
   score: number;
+  gameName: string;
   correct?: number;
   count?: number;
   onRetryHandler: () => void;
@@ -13,10 +14,11 @@ export default function Results({
   correct,
   count,
   onRetryHandler,
+  gameName,
 }: Props) {
   return (
     <div className="results">
-      <h2 className="results__title">Speed Match</h2>
+      <h2 className="results__title">{gameName}</h2>
       <div className="results__item results__score">
         Score: <span className="results__data"> {score}</span>
       </div>

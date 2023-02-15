@@ -291,6 +291,7 @@ export default function SpeedMatch() {
           correct={rightAnswersCount}
           count={answersCount}
           onRetryHandler={onRetryHandler}
+          gameName="Memory Match"
         />
       )}
     </div>
