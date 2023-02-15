@@ -19,7 +19,7 @@ import rhombus from '../../assets/images/shapes/rhombus.png';
 import quatrefoil from '../../assets/images/shapes/quatrefoil.png';
 import StartGameTimer from '../../components/StartGameTimer/StartGameTimer';
 import { IShapes } from '../../types/MatchGamesTypes';
-
+import cardBackground from '../../assets/images/shapes/card-background.jpg';
 const gameDescription =
   'In Speed Match you only need to determine if the symbols are the same.';
 
@@ -42,6 +42,10 @@ export default function SpeedMatch() {
   const [currentCard, setCurrentCard] = useState<IShapes>({
     shapeName: 'rectangle',
     shapeImg: rectangle,
+  });
+  const [secondCard, setSecondCard] = useState<IShapes>({
+    shapeName: '',
+    shapeImg: '',
   });
   const [streak, setStreak] = useState(0);
   const [multiplier, setMultiplier] = useState(1);
@@ -129,6 +133,7 @@ export default function SpeedMatch() {
       ?.classList.add('cards__field-previous_used');
     setCurrentCard(currentCard => {
       document.querySelector('.cards__field-current')?.classList.add('animate');
+      setSecondCard({ shapeName: '', shapeImg: cardBackground });
       setIsAnswerGetted(true);
       chekIsRightAnswer(key, currentCard.shapeName, prevCard.current);
       prevCard.current = currentCard.shapeName;
@@ -240,7 +245,10 @@ export default function SpeedMatch() {
             Does the CURRENT card match the card that came IMMEDIATELY BEFORE
             it?
           </h2>
-          <Cards currentCard={currentCard.shapeImg} />
+          <Cards
+            currentCard={currentCard.shapeImg}
+            secondCard={secondCard.shapeImg}
+          />
           {isAnswerGetted && <AnswerIndicator isSuccess={isSuccess} />}
           <Controls />
         </>
