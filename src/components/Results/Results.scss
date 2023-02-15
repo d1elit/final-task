@@ -2,18 +2,18 @@
   &__title {
     font-size: 4rem;
     color: #fff;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
   }
   &__item {
     margin: 0 auto;
     margin-bottom: 5px;
     width: 250px;
     display: flex;
-    flex-direction:row;
+    flex-direction: row;
     justify-content: space-between;
     color: #fff;
     font-size: 1.5rem;
-    font-family:'Courier New', Courier, monospace;
+    font-family: "Courier New", Courier, monospace;
     font-weight: bold;
   }
   &__score {
