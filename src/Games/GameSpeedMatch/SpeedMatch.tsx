@@ -116,11 +116,19 @@ export default function SpeedMatch() {
     gameEndTemp.current = isGameEnd;
   };
 
+  const animate = () => {
+    document.querySelector('.cards__field-current')?.classList.add('animate');
+  };
+
   const handleUserMove = (key: string) => {
+    document
+      .querySelector('.cards__field-current')
+      ?.classList.remove('animate');
     document
       .querySelector('.cards__field-previous')
       ?.classList.add('cards__field-previous_used');
     setCurrentCard(currentCard => {
+      document.querySelector('.cards__field-current')?.classList.add('animate');
       setIsAnswerGetted(true);
       chekIsRightAnswer(key, currentCard.shapeName, prevCard.current);
       prevCard.current = currentCard.shapeName;

@@ -9,8 +9,7 @@ export default function Cards({ currentCard }: Props) {
   return (
     <div className="cards">
       <div className="cards__card-field cards__field-previous"></div>
-      <div className="cards__card-field cards__field-previous"></div>
-      <div className="cards__card-field">
+      <div className="cards__card-field cards__field-current">
         <Card shapeImg={currentCard} />
       </div>
       {/* <Card figure={'hello'}/>

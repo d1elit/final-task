@@ -18,6 +18,7 @@ import triangle from '../../assets/images/shapes/triangle.png';
 import rhombus from '../../assets/images/shapes/rhombus.png';
 import quatrefoil from '../../assets/images/shapes/quatrefoil.png';
 import StartGameTimer from '../../components/StartGameTimer/StartGameTimer';
+import cardBackground from '../../assets/images/shapes/card-background.jpg';
 import { IShapes } from '../../types/MatchGamesTypes';
 
 const gameDescription =
@@ -62,7 +63,7 @@ export default function SpeedMatch() {
   const [streak, setStreak] = useState(0);
   const [multiplier, setMultiplier] = useState(1);
   const [score, setScore] = useState(0);
-  const [gameTimer, setGameTimer] = useState(450);
+  const [gameTimer, setGameTimer] = useState(45);
   const [isGameEnd, setIsGameEnd] = useState(false);
   const [answersCount, setAnswersCount] = useState(0);
   const [rightAnswersCount, setRightAnswersCount] = useState(0);
@@ -74,8 +75,8 @@ export default function SpeedMatch() {
   const isStartTimerEnd = useRef(false);
 
   const setShapesToEmpty = () => {
-    setSecondCard({ shapeName: '', shapeImg: '' });
-    setThirdCard({ shapeName: '', shapeImg: '' });
+    setSecondCard({ shapeName: '', shapeImg: cardBackground });
+    setThirdCard({ shapeName: '', shapeImg: cardBackground });
   };
 
   const changeMultiplayer = (isRightAnswer: boolean, streak: number) => {
