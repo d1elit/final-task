@@ -19,6 +19,7 @@ function Login() {
   const handleRegister = (userData: UserData) => {
     void actions.register(userData);
   };
+
   const handleGoogleLogin = () => {
     void actions.googleLogin();
   };
