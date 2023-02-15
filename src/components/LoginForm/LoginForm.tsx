@@ -59,12 +59,12 @@ export default function LoginForm({
         type="password"
         {...register('password', {
           required: 'Fill the field',
-          // pattern: {
-          //   value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^\w\s]).{6,}/,
-          //   message:
-          //     'Invalid password. At least 6 digit characters, spec. characters, \
-          //     Latin, the presence of lowercase and uppercase characters',
-          // },
+          pattern: {
+            value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^\w\s]).{6,}/,
+            message:
+              'Invalid password. At least 6 digit characters, spec. characters, \
+              Latin, the presence of lowercase and uppercase characters',
+          },
         })}
         placeholder="Password"
       />
