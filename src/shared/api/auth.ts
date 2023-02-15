@@ -8,12 +8,10 @@ import {
 } from '@reduxjs/toolkit/dist/matchers';
 import { APIError } from '../types/api';
 
-const baseURL = `${process.env.REACT_APP_API_URL as string}` || '';
-
 export const authHost = axios.create({
   withCredentials: true,
-  baseURL: `${baseURL}/auth`,
-  validateStatus: (status: number) => status < 300,
+  baseURL: `/auth`,
+  validateStatus: (status: number) => status < 400,
 });
 
 const login = createAsyncThunk(
@@ -40,7 +38,7 @@ const login = createAsyncThunk(
 );
 
 const googleLogin = createAsyncThunk('user/googleLogin', () => {
-  window.open(`${baseURL}/google`, '_self');
+  window.open(`http://localhost:5000/auth/google`, '_self');
 });
 
 const register = createAsyncThunk(
@@ -69,12 +67,17 @@ const register = createAsyncThunk(
 const getMe = createAsyncThunk(
   'user/getMe',
   async (
-    _: null,
+    sessionId: null | string,
     { rejectWithValue }
   ): Promise<User | RejectedActionFromAsyncThunk<AnyAsyncThunk>> => {
     try {
-      const res = await authHost.get<User>('/me');
-      return res.data;
+      if (sessionId) {
+        const res = await authHost.get<User>('/session/' + sessionId);
+        return res.data;
+      } else {
+        const res = await authHost.get<User>('/me');
+        return res.data;
+      }
     } catch (e) {
       const err = e as AxiosError<APIError>;
       if (isAxiosError(err) && err.response) {

@@ -13,14 +13,14 @@ function Login() {
   const error = useAppSelector(state => state.user.error);
 
   const handleLogin = (userData: UserData) => {
-    actions.login(userData);
+    void actions.login(userData);
   };
 
   const handleRegister = (userData: UserData) => {
-    actions.register(userData);
+    void actions.register(userData);
   };
   const handleGoogleLogin = () => {
-    actions.googleLogin();
+    void actions.googleLogin();
   };
 
   return (

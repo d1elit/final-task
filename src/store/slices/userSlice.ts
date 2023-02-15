@@ -1,43 +1,43 @@
-import { createSlice } from "@reduxjs/toolkit";
-import auth from "../../shared/api/auth";
+import { createSlice } from '@reduxjs/toolkit';
+import auth from '../../shared/api/auth';
 
-import type { User } from "../../shared/types/User";
+import type { User } from '../../shared/types/User';
 
 type UserState = {
   isAuth: boolean;
   data: User | null;
-  status: "init" | "loading" | "error" | "success";
+  status: 'init' | 'loading' | 'error' | 'success';
   error: string | null;
 };
 
 const initialState: UserState = {
   isAuth: false,
   data: null,
-  status: "init",
+  status: 'init',
   error: null,
 };
 
 const setUser = (state: UserState, action: { payload: User | string }) => {
-  state.status = "success";
+  state.status = 'success';
   state.isAuth = true;
   state.data = action.payload as User;
 };
 
 const setError = (state: UserState, action: { payload: unknown }) => {
-  state.status = "error";
+  state.status = 'error';
   state.data = null;
   state.error = action.payload as string;
 };
 
 const setStatusToLoading = (state: UserState) => {
-  state.status = "loading";
+  state.status = 'loading';
 };
 
 const userSlice = createSlice({
-  name: "user",
+  name: 'user',
   initialState,
   reducers: {},
-  extraReducers: (builder) =>
+  extraReducers: builder =>
     builder
       .addCase(auth.login.pending, setStatusToLoading)
       .addCase(auth.login.fulfilled, setUser)
