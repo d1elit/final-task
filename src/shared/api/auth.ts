@@ -38,6 +38,7 @@ const login = createAsyncThunk(
 );
 
 const googleLogin = createAsyncThunk('user/googleLogin', () => {
+  // TODO add api url
   window.open(`http://localhost:5000/auth/google`, '_self');
 });
 
