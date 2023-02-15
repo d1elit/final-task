@@ -8,8 +8,8 @@ import { Link } from 'react-router-dom';
 
 function App() {
   return (
-    <Session>
-      <BrowserRouter>
+    <BrowserRouter>
+      <Session>
         <div>
           <Link to="/" style={{ color: 'white' }}>
             Link - /
