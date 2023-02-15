@@ -1,4 +1,3 @@
-import React, { EventHandler } from 'react';
 import './StartGame.scss';
 
 interface StartGameProps {
