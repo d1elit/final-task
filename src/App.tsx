@@ -1,4 +1,3 @@
-import React from 'react';
 import './App.scss';
 import SpeedMatch from './Games/GameSpeedMatch/SpeedMatch';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -39,8 +38,8 @@ function App() {
           <Route path="/memorymatrix" element={<MemoryMatrix />} />
           <Route path="*" element={<div>Home</div>} />
         </Routes>
-      </BrowserRouter>
-    </Session>
+      </Session>
+    </BrowserRouter>
   );
 }
 

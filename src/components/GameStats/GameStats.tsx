@@ -1,14 +1,26 @@
 import React from 'react';
 import './GameStats.scss';
+import cn from 'classnames';
 
 interface Props {
+  tiles?: number;
+  trial?: number;
   timer?: string | number;
   score?: number;
   multiplier?: number;
   streak?: number;
+  colorStyle?: string;
 }
 
-export default function GameStats({ timer, score, multiplier, streak }: Props) {
+export default function GameStats({
+  tiles,
+  trial,
+  timer,
+  score,
+  multiplier,
+  streak,
+  colorStyle,
+}: Props) {
   const drawSuccessStreak = () => {
     return (
       <div className="game-stats__item multiplier">
@@ -30,18 +42,34 @@ export default function GameStats({ timer, score, multiplier, streak }: Props) {
   };
 
   return (
-    <div className="game-stats">
-      <div className="game-stats__item game-stats__timer">
-        <span className="game-stats__name">TIME</span>
-        <span className="game-stats__value">
-          {timer ? `00:${timer >= 10 ? timer : `0${timer}`}` : '00:00'}
-        </span>
-      </div>
-      <div className="game-stats__item game-stats__score">
-        <span className="game-stats__name">SCORE</span>
-        <span className="game-stats__value">{score ? score : '0'}</span>
-      </div>
-      {streak !== undefined ? drawSuccessStreak() : ''}
+    <div className={cn('game-stats', colorStyle && `game-stats_${colorStyle}`)}>
+      {tiles !== undefined && (
+        <div className="game-stats__item game-stats__tiles">
+          <span className="game-stats__name">TILES</span>
+          <span className="game-stats__value">{tiles}</span>
+        </div>
+      )}
+      {trial !== undefined && (
+        <div className="game-stats__item game-stats__timer">
+          <span className="game-stats__name">TRIAL</span>
+          <span className="game-stats__value">{`${trial} of 12`}</span>
+        </div>
+      )}
+      {timer !== undefined && (
+        <div className="game-stats__item game-stats__timer">
+          <span className="game-stats__name">TIME</span>
+          <span className="game-stats__value">
+            {timer ? `00:${timer >= 10 ? timer : `0${timer}`}` : '00:00'}
+          </span>
+        </div>
+      )}
+      {score !== undefined && (
+        <div className="game-stats__item game-stats__score">
+          <span className="game-stats__name">SCORE</span>
+          <span className="game-stats__value">{score ? score : '0'}</span>
+        </div>
+      )}
+      {streak !== undefined && drawSuccessStreak()}
     </div>
   );
 }
