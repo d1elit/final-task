@@ -1,13 +1,17 @@
+import cn from 'classnames';
+import React from 'react';
 import './StartGame.scss';
 
 interface StartGameProps {
   title: string;
+  colorStyle?: string;
   description: string;
   onPlayHandler: () => void;
 }
 
 export default function StartGame({
   title,
+  colorStyle,
   description,
   onPlayHandler,
 }: StartGameProps) {
@@ -19,8 +23,13 @@ export default function StartGame({
         <button className="start-game__btn start-game__btn_rules">
           How To Play
         </button>
-        <button className="start-game__btn" onClick={onPlayHandler}>
-          {' '}
+        <button
+          className={cn(
+            'start-game__btn',
+            colorStyle && `start-game_${colorStyle}`
+          )}
+          onClick={onPlayHandler}
+        >
           Play
         </button>
       </div>

@@ -1,0 +1,16 @@
+.board {
+  width: 130px;
+  height: 130px;
+  padding: 10px;
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  gap: 4px;
+
+  background-color: rgb(56 36 21 / 70%);
+  border-radius: 5px;
+  transition: 0.3s;
+}
