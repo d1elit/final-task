@@ -10,8 +10,7 @@ function App() {
       <Session>
         <Routes>
           <Route path="/speedmatch" element={<SpeedMatch />} />
-          <Route path="/login/:sessionId" element={<Login />} />
-          <Route path="/:id" element={<Login />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </Session>
     </BrowserRouter>

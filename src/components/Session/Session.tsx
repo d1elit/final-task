@@ -8,7 +8,6 @@ const Session: React.FC<{ children: ReactNode }> = ({ children }) => {
   const status = useAppSelector(state => state.user.status);
 
   useEffect(() => {
-    const queryString = new URLSearchParams(window.location.search);
     void actions.getMe(null);
   }, [actions]);
 
