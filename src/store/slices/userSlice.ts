@@ -47,7 +47,14 @@ const userSlice = createSlice({
       .addCase(auth.register.rejected, setError)
       .addCase(auth.getMe.pending, setStatusToLoading)
       .addCase(auth.getMe.fulfilled, setUser)
-      .addCase(auth.getMe.rejected, setError),
+      .addCase(auth.getMe.rejected, setError)
+      .addCase(auth.logout.pending, setStatusToLoading)
+      .addCase(auth.logout.fulfilled, (state: UserState) => {
+        state.status = 'success';
+        state.isAuth = false;
+        state.data = null;
+      })
+      .addCase(auth.logout.rejected, setError),
 });
 
 export const { reducer: userReducer, actions: userActions } = userSlice;
