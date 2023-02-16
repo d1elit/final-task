@@ -1,36 +1,16 @@
-import './App.scss';
-import SpeedMatch from './Games/GameSpeedMatch/SpeedMatch';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Header from './components/Header/Header';
 import Login from './pages/Login';
-import Session from './components/Session/Session';
 import MemoryMatrix from './Games/MemoryMatrix/MemoryMatrix';
-import { Link } from 'react-router-dom';
+import Session from './components/Session/Session';
+import SpeedMatch from './Games/GameSpeedMatch/SpeedMatch';
+import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
+import './App.scss';
 
 function App() {
   return (
     <BrowserRouter>
       <Session>
-        <div>
-          <Link to="/" style={{ color: 'white' }}>
-            Link - /
-          </Link>
-        </div>
-        <div>
-          <Link to="/speedmatch" style={{ color: 'white' }}>
-            Link - /speedmatch
-          </Link>
-        </div>
-        <div>
-          <Link to="/memorymatrix" style={{ color: 'white' }}>
-            Link - /memorymatrix
-          </Link>
-        </div>
-        <div>
-          <Link to="/login" style={{ color: 'white' }}>
-            Link - /login
-          </Link>
-        </div>
-
+        <Header />
         <Routes>
           <Route path="/" element={<div>Home</div>} />
           <Route path="/speedmatch" element={<SpeedMatch />} />
