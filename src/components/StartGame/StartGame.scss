@@ -1,5 +1,4 @@
 .start-game {
-  
   &__title {
     margin: 0;
     font-size: 5rem;
@@ -9,12 +8,13 @@
   &__description {
     color: #fff;
     font-size: 1.5rem;
-    padding: 30px;
+    width: 430px;
+    margin: 40px auto;
   }
   &__controls {
     max-width: 390px;
     display: flex;
-    margin: 0 auto;      
+    margin: 0 auto;
     justify-content: space-between;
   }
   &__btn {
@@ -23,15 +23,42 @@
     cursor: pointer;
     border: none;
     border-radius: 30px;
-    background-color: rgb(164, 102, 172);
+
     color: #fff;
+    font-weight: 600;
+    font-size: 18px;
+    transition: 0.2s;
+
+    background-color: gray;
+    &:hover {
+      background-color: rgb(111, 111, 111);
+    }
     font-weight: bold;   
     transition: 3s;
     transform: rotate(0);
     &_rules {
       background-color: unset;
       border: 2px solid #fff;
+      &:hover {
+        background-color: #00000040;
+      }
     }
    
+  }
+}
+
+.start-game_speed-match {
+  color: #fff;
+  background-color: rgb(164, 102, 172);
+  &:hover {
+    color: #fff;
+    background-color: rgb(131 81 137);
+  }
+}
+
+.start-game_memory-matrix {
+  background-color: rgb(229 117 8);
+  &:hover {
+    background-color: rgb(191, 98, 4);
   }
 }

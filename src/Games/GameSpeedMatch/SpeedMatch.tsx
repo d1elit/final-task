@@ -1,10 +1,8 @@
-/* eslint-disable @typescript-eslint/no-floating-promises */
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @typescript-eslint/no-var-requires */
-import succesSound from '../../assets/sounds/success.mp3';
-import failureSound from '../../assets/sounds/failure.wav';
-import timerSound from '../../assets/sounds/timerSound.mp3';
-import React, { useState, useEffect, useRef } from 'react';
+import succesSoundPath from '../../assets/sounds/success.mp3';
+import failureSoundPath from '../../assets/sounds/failure.mp3';
+import timerSoundPath from '../../assets/sounds/timerSound.mp3';
+
+import { useState, useEffect, useRef } from 'react';
 import Controls from '../../components/Controls/Controls';
 import StartGame from '../../components/StartGame/StartGame';
 import Cards from './components/Cards/Cards';
@@ -21,7 +19,7 @@ import StartGameTimer from '../../components/StartGameTimer/StartGameTimer';
 import { IShapes } from '../../types/MatchGamesTypes';
 import cardBackground from '../../assets/images/shapes/card-background.jpg';
 const gameDescription =
-  'In Speed Match you only need to determine if the symbols are the same.';
+  'In Speed Match you only need to determine if the symbols are the same';
 
 export const shapes = [
   { shapeName: 'rectangle', shapeImg: rectangle },
@@ -95,23 +93,23 @@ export default function SpeedMatch() {
     changeScore(isRightAnswer);
     setIsSuccess(isRightAnswer);
     isRightAnswer
-      ? new Audio(succesSound).play()
-      : new Audio(failureSound).play();
+      ? void new Audio(succesSoundPath).play()
+      : void new Audio(failureSoundPath).play();
   };
 
   const chekIsRightAnswer = (key: string, current: string, prev: string) => {
     setAnswersCount(prev => prev + 1);
     if (current === prev && key === 'ArrowRight') {
-      handleAnswer(true);
+      void handleAnswer(true);
     }
     if (current !== prev && key === 'ArrowLeft') {
-      handleAnswer(true);
+      void handleAnswer(true);
     }
     if (current === prev && key === 'ArrowLeft') {
-      handleAnswer(false);
+      void handleAnswer(false);
     }
     if (current !== prev && key === 'ArrowRight') {
-      handleAnswer(false);
+      void handleAnswer(false);
     }
   };
 
@@ -160,10 +158,12 @@ export default function SpeedMatch() {
   };
 
   const startGameTimerHandle = () => {
-    new Audio(timerSound).play();
+    void new Audio(timerSoundPath).play();
     const timer = setInterval(() => {
       setStartGameTimer(prev => {
-        if (prev !== 1) new Audio(timerSound).play();
+        if (prev !== 1) {
+          void new Audio(timerSoundPath).play();
+        }
         return prev - 1;
       });
     }, 1000);
@@ -223,7 +223,8 @@ export default function SpeedMatch() {
     <div className="speed-match">
       {!isStarted && !isGameEnd && (
         <StartGame
-          title="SpeedMatch"
+          title="Speed Match"
+          colorStyle={'speed-match'}
           description={gameDescription}
           onPlayHandler={onPlayHandler}
         />
@@ -240,6 +241,7 @@ export default function SpeedMatch() {
             streak={streak}
             multiplier={multiplier}
             timer={gameTimer}
+            colorStyle={'speed-match'}
           />
           <h2 className="speed-match__title">
             Does the CURRENT card match the card that came IMMEDIATELY BEFORE
@@ -258,6 +260,7 @@ export default function SpeedMatch() {
           score={score}
           correct={rightAnswersCount}
           count={answersCount}
+          colorStyle={'speed-match'}
           onRetryHandler={onRetryHandler}
           gameName="Speed Match"
         />
