@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-var-requires */
 import succesSound from '../../assets/sounds/success.mp3';
-import failureSound from '../../assets/sounds/failure.wav';
+import failureSound from '../../assets/sounds/failure.mp3';
 import timerSound from '../../assets/sounds/timerSound.mp3';
 import React, { useState, useEffect, useRef } from 'react';
 import Controls from '../../components/Controls/Controls';
@@ -252,6 +252,7 @@ export default function SpeedMatch() {
           title="Memory Match"
           description={gameDescription}
           onPlayHandler={onPlayHandler}
+          colorStyle={'speed-match'}
         />
       )}
       {isStarted && (
@@ -266,6 +267,7 @@ export default function SpeedMatch() {
             streak={streak}
             multiplier={multiplier}
             timer={gameTimer}
+            colorStyle={'speed-match'}
           />
           {/* <p>{` Current: ${currentCard.shapeName}  `} </p>
           <p> {` Prev: ${prevCard.current}  `} </p>
@@ -290,6 +292,7 @@ export default function SpeedMatch() {
           score={score}
           correct={rightAnswersCount}
           count={answersCount}
+          colorStyle={'speed-match'}
           onRetryHandler={onRetryHandler}
           gameName="Memory Match"
         />
