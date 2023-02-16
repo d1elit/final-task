@@ -1,0 +1,175 @@
+.header {
+  position: relative;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 20px;
+
+  color: #f1fcfc;
+  background-color: #0e91a1;
+  user-select: none;
+
+  position: relative;
+
+  width: 100%;
+  margin-bottom: 20px;
+  color: #f1fcfc;
+  background-color: #0e91a1;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.header__container {
+  max-width: 1000px;
+  height: 100%;
+
+  margin: 0 auto;
+  padding: 0 10px 0 20px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0px 20px;
+  flex-wrap: wrap;
+}
+
+.header__logo {
+  height: 40px;
+}
+
+.header__logo-img {
+  position: relative;
+  width: 130px;
+  top: 4px;
+}
+
+.header__menu {
+
+}
+
+.header__menu-list {
+  display: flex;
+  gap: 4px;
+}
+
+.header__menu-item {
+  padding: 5px 10px;
+  border-radius: 5px;
+
+  font-size: 18px;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  &:last-child {
+    background-color: #0f8393;
+  }
+  &:hover {
+    background-color: #146c78;
+  }
+  &:active {
+    background-color: #115e66;
+  }
+
+}
+
+.header__menu-link {
+  text-decoration: none;
+  color: #f1fcfc;
+}
+
+.header__account {
+  position: relative;
+  width: 160px;
+  height: 46px;
+
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 50px;
+
+  font-size: 17px;
+  font-weight: 300;
+
+  &:hover {
+    background-color: #146c78;
+  }
+  &:hover .header__account-menu {
+    display: block;
+  }
+}
+
+.header__account-name {
+  position: relative;
+
+  &::before {
+    position: absolute;
+    content: "";
+
+    width: 32px;
+    height: 32px;
+    left: -35px;
+    top: -7px;
+
+    background: url("../../assets/images/avatar.svg");
+    background-size: cover;
+    background-position: center;
+  }
+  &::after {
+    position: absolute;
+    content: "";
+
+    width: 20px;
+    height: 20px;
+    right: -58px;
+    top: 0px;
+
+    background: url("../../assets/images/caretDown.svg");
+    background-size: cover;
+    background-position: center;
+  }
+}
+
+.header__account-menu {
+  display: none;
+
+  position: absolute;
+  width: 100%;
+  top: 100%;
+  left: 0;
+  z-index: 1;
+
+  background-color: white;
+}
+
+.header__account-list {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 0px;
+  padding: 4px 0px;
+}
+
+.header__account-item {
+  width: 100%;
+  height: 28px;
+  padding-left: 10px;
+
+  display: flex;
+  align-items: center;
+
+  color: #146c78;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgb(229, 229, 229);
+  }
+}
+
+.header__account-link {
+  color: #146c78;
+  font-size: 18px;
+  font-weight: 400;
+}
