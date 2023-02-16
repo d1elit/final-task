@@ -258,7 +258,7 @@ export default function SpeedMatch() {
     <div className="speed-match">
       {!isStarted && !isGameEnd && (
         <StartGame
-          title={gameTitle[getLang()]}
+          title="Memory Match"
           description={gameDescription[getLang()]}
           onPlayHandler={onPlayHandler}
           colorStyle={'speed-match'}
@@ -282,10 +282,7 @@ export default function SpeedMatch() {
           <p> {` Prev: ${prevCard.current}  `} </p>
           <p> {` PrevPrev: ${prevPrevCard.current}  `} </p> */}
 
-          <h2 className="speed-match__title">
-            Does the card on the RIGHT match the card that came TWO CARDS BEFORE
-            it?
-          </h2>
+          <h2 className="speed-match__title">{gameTitle[getLang()]}</h2>
 
           <Cards
             currentCard={currentCard.shapeImg}
