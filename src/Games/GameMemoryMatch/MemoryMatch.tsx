@@ -24,13 +24,13 @@ import { LocalText } from '../../types/localisationTypes';
 import { getLang } from '../../utils/localisationUtils';
 
 const gameDescription: LocalText = {
-  eng: 'In Speed Match you only need to determine if the symbols are the same',
-  rus: 'В Speed Match вам нужно определить, совпадают ли символы.',
+  eng: 'Train your working memory by determining whether the symbols match',
+  rus: 'Тренируйте свою рабочую память, определяя, совпадают ли символы.',
 };
 
 const gameTitle: LocalText = {
-  eng: 'Does the CURRENT card match the card that came IMMEDIATELY BEFORE it?',
-  rus: 'Совпадает ли ТЕКУЩАЯ карта с картой, которая была РАНЕЕ?',
+  eng: 'Does the card on the RIGHT match the card that came TWO CARDS BEFORE it?',
+  rus: 'Совпадает ли карта СПРАВА с картой, которая пришла ДВУМЯ КАРТАМИ РАНЕЕ?',
 };
 
 export const shapes = [
