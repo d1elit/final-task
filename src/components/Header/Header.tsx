@@ -34,6 +34,27 @@ export default function Header() {
                 Stats
               </Link>
             </li>
+            <li className="header__menu-item">
+              <button
+                className="header__lang"
+                onClick={() => {
+                  localStorage.setItem('lang', 'rus');
+                }}
+              >
+                rus
+              </button>
+            </li>
+
+            <li className="header__menu-item">
+              <button
+                className="header__lang"
+                onClick={() => {
+                  localStorage.setItem('lang', 'eng');
+                }}
+              >
+                eng
+              </button>
+            </li>
             {/* <li className="header__menu-item">
               <Link className="header__menu-link" to={'./aboutus'}>
                 About us
