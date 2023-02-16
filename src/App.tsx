@@ -36,6 +36,14 @@ function App() {
             Link - /login
           </Link>
         </div>
+        <div>
+          <button onClick={() => localStorage.setItem('lang', 'eng')}>
+            Eng
+          </button>
+          <button onClick={() => localStorage.setItem('lang', 'rus')}>
+            Rus
+          </button>
+        </div>
 
         <Routes>
           <Route path="/" element={<div>Home</div>} />

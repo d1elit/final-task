@@ -1,7 +1,13 @@
 import cn from 'classnames';
 import React from 'react';
+import { LocalText } from '../../types/localisationTypes';
+import { getLang } from '../../utils/localisationUtils';
 import './Results.scss';
 
+const correctText: LocalText = { eng: 'CORRECT', rus: 'ВЕРНО' };
+const scoreText: LocalText = { eng: 'SCORE', rus: 'ОЧКИ' };
+const accuracyText: LocalText = { eng: 'ACCURACY', rus: 'ТОЧНОСТЬ' };
+const tryAgainText: LocalText = { eng: 'Try again', rus: 'Попробовать снова' };
 interface Props {
   score: number;
   gameName: string;
@@ -23,17 +29,17 @@ export default function Results({
     <div className="results">
       <h2 className="results__title">{gameName}</h2>
       <div className="results__item results__score">
-        Score: <span className="results__data"> {score}</span>
+        {scoreText[getLang()]}: <span className="results__data"> {score}</span>
       </div>
       <div className="results__item">
-        Correct:{' '}
+        {correctText[getLang()]}:{' '}
         <span className="results__data">
           {correct}/{count}
         </span>
       </div>
       {correct !== undefined && count !== undefined && (
         <div className="results__item">
-          Accuracy:
+          {accuracyText[getLang()]}:
           <span className="results__data">
             {correct !== 0 ? Math.round((correct / count) * 100) : 0}%
           </span>
@@ -46,7 +52,7 @@ export default function Results({
         )}
         onClick={onRetryHandler}
       >
-        Try again
+        {tryAgainText[getLang()]}
       </button>
     </div>
   );

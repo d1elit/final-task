@@ -1,5 +1,7 @@
 import cn from 'classnames';
 import React from 'react';
+import { LocalText } from '../../types/localisationTypes';
+import { getLang } from '../../utils/localisationUtils';
 import './StartGame.scss';
 
 interface StartGameProps {
@@ -8,6 +10,16 @@ interface StartGameProps {
   description: string;
   onPlayHandler: () => void;
 }
+
+const howToPlayText: LocalText = {
+  eng: 'How To Play?',
+  rus: 'Как играть?',
+};
+
+const playText: LocalText = {
+  eng: 'Play',
+  rus: 'Играть',
+};
 
 export default function StartGame({
   title,
@@ -21,7 +33,7 @@ export default function StartGame({
       <p className="start-game__description">{description}</p>
       <div className="start-game__controls">
         <button className="start-game__btn start-game__btn_rules">
-          How To Play
+          {howToPlayText[getLang()]}
         </button>
         <button
           className={cn(
@@ -30,7 +42,7 @@ export default function StartGame({
           )}
           onClick={onPlayHandler}
         >
-          Play
+          {playText[getLang()]}
         </button>
       </div>
     </div>
