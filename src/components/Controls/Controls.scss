@@ -7,14 +7,16 @@
   bottom: 0;
  
   &__control {
+    border: none;
     display: flex;
     align-items: center;
     justify-content: space-around;
     height: 35px;
-    width: 60px;
+    width: 70px;
     padding: 5px;
     color: rgb(58, 75, 116);
     background: rgba(255, 255, 255, 0.26);
+    cursor: pointer;
   }
   &__img {
     width: 50px;

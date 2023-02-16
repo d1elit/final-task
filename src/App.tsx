@@ -1,16 +1,24 @@
-import React from 'react';
-import './App.scss';
-import SpeedMatch from './Games/GameSpeedMatch/SpeedMatch';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Header from './components/Header/Header';
+import Login from './pages/Login';
+import MemoryMatrix from './Games/MemoryMatrix/MemoryMatrix';
+import Session from './components/Session/Session';
+import SpeedMatch from './Games/GameSpeedMatch/SpeedMatch';
+import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
+import './App.scss';
 
 function App() {
   return (
     <BrowserRouter>
-      <Header />
-      <Routes>
-        <Route path="/speedmatch" element={<SpeedMatch />} />
-      </Routes>
+      <Session>
+        <Header />
+        <Routes>
+          <Route path="/" element={<div>Home</div>} />
+          <Route path="/speedmatch" element={<SpeedMatch />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/memorymatrix" element={<MemoryMatrix />} />
+          <Route path="*" element={<div>Home</div>} />
+        </Routes>
+      </Session>
     </BrowserRouter>
   );
 }

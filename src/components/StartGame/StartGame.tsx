@@ -1,22 +1,38 @@
-import React, { EventHandler } from 'react'
-import './StartGame.scss'
+import cn from 'classnames';
+import React from 'react';
+import './StartGame.scss';
 
 interface StartGameProps {
   title: string;
-  description: string; 
-  onPlayHandler:() => void
+  colorStyle?: string;
+  description: string;
+  onPlayHandler: () => void;
 }
 
-export default function StartGame({title,   description, onPlayHandler} : StartGameProps) {
+export default function StartGame({
+  title,
+  colorStyle,
+  description,
+  onPlayHandler,
+}: StartGameProps) {
   return (
-    <div className='start-game'>
-      <h2 className='start-game__title'>{title}</h2>
-      <p className='start-game__description'>{description}</p>
+    <div className="start-game">
+      <h2 className="start-game__title">{title}</h2>
+      <p className="start-game__description">{description}</p>
       <div className="start-game__controls">
-        <button className="start-game__btn start-game__btn_rules">How To Play</button>
-        <button className="start-game__btn" onClick={onPlayHandler}>Play</button>
+        <button className="start-game__btn start-game__btn_rules">
+          How To Play
+        </button>
+        <button
+          className={cn(
+            'start-game__btn',
+            colorStyle && `start-game_${colorStyle}`
+          )}
+          onClick={onPlayHandler}
+        >
+          Play
+        </button>
       </div>
     </div>
-  )
+  );
 }
-

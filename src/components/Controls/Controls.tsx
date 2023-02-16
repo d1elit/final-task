@@ -1,18 +1,19 @@
-import React from 'react'
-import './Controls.scss'
-type Props = {}
+import React from 'react';
+import './Controls.scss';
 
-export default function Controls({}: Props) {
+export default function Controls() {
   return (
-    <div className='controls'>
-      <div className="controls__control">      
-        <span className="controls__name">No</span>   
-        <span  className='controls__direction controls__direction_reverse'>➦</span>    
-      </div>
-      <div className="controls__control">
-          <span  className='controls__direction'>➦</span>
-          <span className="controls__name">Yes</span>          
-      </div>
+    <div className="controls">
+      <button className="controls__control" id="ArrowLeft">
+        <span className="controls__name">No</span>
+        <span className="controls__direction controls__direction_reverse">
+          ➦
+        </span>
+      </button>
+      <button className="controls__control" id="ArrowRight">
+        <span className="controls__direction">➦</span>
+        <span className="controls__name">Yes</span>
+      </button>
     </div>
-  )
+  );
 }
