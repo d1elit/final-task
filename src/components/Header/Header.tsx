@@ -46,7 +46,7 @@ export default function Header() {
           <div className="header__account-menu">
             <ul className="header__account-list">
               <li className="header__account-item">
-                <Link className="header__account-link" to={'./login'}>
+                <Link className="header__account-link" to={'./signup'}>
                   Sign Up
                 </Link>
               </li>
