@@ -2,8 +2,17 @@ import React from 'react';
 import './Header.scss';
 import logo from '../../assets/images/lumosityLogo.png';
 import { Link } from 'react-router-dom';
+import { useActionCreators, useAppSelector } from '../../shared/hooks/store';
+import authApi from '../../shared/api/auth';
 
 export default function Header() {
+  const username = useAppSelector(state => state.user.data?.username);
+  const actions = useActionCreators(authApi);
+
+  const handleLogOut = () => {
+    void actions.logout(null);
+  };
+
   return (
     <header className="header">
       <div className="header__container">
@@ -63,23 +72,24 @@ export default function Header() {
           </ul>
         </nav>
         <div className="header__account">
-          <div className="header__account-name">Name</div>
+          <div className="header__account-name">
+            {username || 'Get started'}
+          </div>
           <div className="header__account-menu">
             <ul className="header__account-list">
               <li className="header__account-item">
-                <Link className="header__account-link" to={'./signup'}>
-                  Sign Up
-                </Link>
-              </li>
-              <li className="header__account-item">
-                <Link className="header__account-link" to={'./login'}>
-                  Log In
-                </Link>
-              </li>
-              <li className="header__account-item">
-                <Link className="header__account-link" to={'./logout'}>
-                  Log Out
-                </Link>
+                {username ? (
+                  <button
+                    className="header__account-link"
+                    onClick={handleLogOut}
+                  >
+                    Log Out
+                  </button>
+                ) : (
+                  <Link className="header__account-link" to={'./login'}>
+                    Log In
+                  </Link>
+                )}
               </li>
             </ul>
           </div>
