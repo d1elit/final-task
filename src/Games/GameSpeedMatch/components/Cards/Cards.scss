@@ -8,11 +8,20 @@
     height: 200px;  
     background-color: rgba(236, 234, 240, 0.062);
     border-radius: 5px;
-    
+    transition: .05s;
   }
   &__field-previous {
     &_used {
       background-color: rgba(53, 48, 122, 0.719);
     }
   }
+}
+
+.animate {
+  // animation: myAnimation .2s linear;
+}
+
+@keyframes myAnimation {
+  from { transform: translateX(0); }
+  to { transform: translateX(-250px) rotateY(-180deg); }
 }

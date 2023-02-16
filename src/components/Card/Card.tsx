@@ -1,5 +1,6 @@
 import React from 'react';
 import './Card.scss';
+
 interface Props {
   shapeImg: string;
 }
@@ -7,9 +8,15 @@ interface Props {
 export default function Card({ shapeImg }: Props) {
   return (
     <div className="card">
-      <div className="card__figure">
-        <img src={shapeImg} alt="" />
-      </div>
+      {shapeImg !== '' ? (
+        <div className="card__figure">
+          <img src={shapeImg} alt="" />
+        </div>
+      ) : (
+        <div className="card__figure card__figure_background">
+          <img src={shapeImg} alt="" />
+        </div>
+      )}
     </div>
   );
 }
