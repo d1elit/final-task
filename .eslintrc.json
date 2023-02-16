@@ -31,11 +31,15 @@
     "project": "./tsconfig.json"
   },
   "rules": {
-    "@typescript-eslint/no-misused-promises": [2, {
-      "checksVoidReturn": {
-        "attributes": false
+    "@typescript-eslint/no-misused-promises": [
+      2,
+      {
+        "checksVoidReturn": {
+          "attributes": false
+        }
       }
-    }],
+    ],
+    "@typescript-eslint/no-unsafe-member-access": "off",
     "@typescript-eslint/no-explicit-any": "error",
     "linebreak-style": "off",
     "lines-between-class-members": "off",

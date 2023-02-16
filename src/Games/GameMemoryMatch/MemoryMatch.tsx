@@ -20,9 +20,18 @@ import quatrefoil from '../../assets/images/shapes/quatrefoil.png';
 import StartGameTimer from '../../components/StartGameTimer/StartGameTimer';
 import cardBackground from '../../assets/images/shapes/card-background.jpg';
 import { IShapes } from '../../types/MatchGamesTypes';
+import { LocalText } from '../../types/localisationTypes';
+import { getLang } from '../../utils/localisationUtils';
 
-const gameDescription =
-  'Train your working memory by determining whether the symbols match';
+const gameDescription: LocalText = {
+  eng: 'Train your working memory by determining whether the symbols match',
+  rus: 'Тренируйте свою рабочую память, определяя, совпадают ли символы.',
+};
+
+const gameTitle: LocalText = {
+  eng: 'Does the card on the RIGHT match the card that came TWO CARDS BEFORE it?',
+  rus: 'Совпадает ли карта СПРАВА с картой, которая пришла ДВУМЯ КАРТАМИ РАНЕЕ?',
+};
 
 export const shapes = [
   { shapeName: 'rectangle', shapeImg: rectangle },
@@ -250,7 +259,7 @@ export default function SpeedMatch() {
       {!isStarted && !isGameEnd && (
         <StartGame
           title="Memory Match"
-          description={gameDescription}
+          description={gameDescription[getLang()]}
           onPlayHandler={onPlayHandler}
           colorStyle={'speed-match'}
         />
@@ -273,10 +282,7 @@ export default function SpeedMatch() {
           <p> {` Prev: ${prevCard.current}  `} </p>
           <p> {` PrevPrev: ${prevPrevCard.current}  `} </p> */}
 
-          <h2 className="speed-match__title">
-            Does the card on the RIGHT match the card that came TWO CARDS BEFORE
-            it?
-          </h2>
+          <h2 className="speed-match__title">{gameTitle[getLang()]}</h2>
 
           <Cards
             currentCard={currentCard.shapeImg}

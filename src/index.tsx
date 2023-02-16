@@ -9,6 +9,7 @@ import store from './store';
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+localStorage.setItem('lang', 'eng');
 root.render(
   <Provider store={store}>
     <App />

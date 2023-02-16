@@ -6,6 +6,7 @@ import Session from './components/Session/Session';
 import SpeedMatch from './Games/GameSpeedMatch/SpeedMatch';
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 import './App.scss';
+import MemoryMatch from './Games/GameMemoryMatch/MemoryMatch';
 
 function App() {
   return (
