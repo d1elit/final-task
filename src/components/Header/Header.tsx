@@ -1,7 +1,11 @@
-import React from 'react';
+/* eslint-disable @typescript-eslint/no-floating-promises */
+import React, { useEffect } from 'react';
 import './Header.scss';
 import logo from '../../assets/images/lumosityLogo.png';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { setLocalisationStyle, setStyles } from '../../utils/localisationUtils';
+
 import { useActionCreators, useAppSelector } from '../../shared/hooks/store';
 import authApi from '../../shared/api/auth';
 
@@ -12,6 +16,11 @@ export default function Header() {
   const handleLogOut = () => {
     void actions.logout(null);
   };
+
+  const { t, i18n } = useTranslation();
+  useEffect(() => {
+    setLocalisationStyle();
+  }, []);
 
   return (
     <header className="header">
@@ -45,23 +54,25 @@ export default function Header() {
             </li>
             <li className="header__menu-item">
               <button
-                className="header__lang"
-                onClick={() => {
-                  localStorage.setItem('lang', 'rus');
+                className="header__lang header__lang_ru"
+                onClick={e => {
+                  i18n.changeLanguage('ru');
+                  setStyles(e);
                 }}
               >
-                rus
+                ru
               </button>
             </li>
 
             <li className="header__menu-item">
               <button
-                className="header__lang"
-                onClick={() => {
-                  localStorage.setItem('lang', 'eng');
+                className="header__lang header__lang_en"
+                onClick={e => {
+                  i18n.changeLanguage('en');
+                  setStyles(e);
                 }}
               >
-                eng
+                en
               </button>
             </li>
             {/* <li className="header__menu-item">
@@ -83,11 +94,11 @@ export default function Header() {
                     className="header__account-link"
                     onClick={handleLogOut}
                   >
-                    Log Out
+                    {t('login.logOut')}
                   </button>
                 ) : (
                   <Link className="header__account-link" to={'./login'}>
-                    Log In
+                    {t('login.login')}
                   </Link>
                 )}
               </li>

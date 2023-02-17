@@ -63,7 +63,7 @@
   white-space: nowrap;
   cursor: pointer;
   &:last-child {
-    background-color: #0f8393;
+    // background-color: #0f8393;
   }
   &:hover {
     background-color: #146c78;
@@ -182,4 +182,7 @@
   background: none;
   border: none;
   cursor: pointer;
+  &_active {
+    color: rgb(228, 138, 240);
+  }
 }

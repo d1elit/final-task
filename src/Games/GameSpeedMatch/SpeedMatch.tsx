@@ -10,40 +10,15 @@ import GameStats from '../../components/GameStats/GameStats';
 import './SpeedMatch.scss';
 import AnswerIndicator from '../../components/AnswerIndicator/AnswerIndicator';
 import Results from '../../components/Results/Results';
-import circle from '../../assets/images/shapes/circle.png';
-import rectangle from '../../assets/images/shapes/rectangle.png';
-import triangle from '../../assets/images/shapes/triangle.png';
-import rhombus from '../../assets/images/shapes/rhombus.png';
-import quatrefoil from '../../assets/images/shapes/quatrefoil.png';
 import StartGameTimer from '../../components/StartGameTimer/StartGameTimer';
 import { IShapes } from '../../types/MatchGamesTypes';
 import cardBackground from '../../assets/images/shapes/card-background.jpg';
-import { getLang } from '../../utils/localisationUtils';
-import { LocalText } from '../../types/localisationTypes';
-
-const gameDescription: LocalText = {
-  eng: 'In Speed Match you only need to determine if the symbols are the same',
-  rus: 'В Speed Match вам нужно определить, совпадают ли символы.',
-};
-
-const gameTitle: LocalText = {
-  eng: 'Does the CURRENT card match the card that came IMMEDIATELY BEFORE it?',
-  rus: 'Совпадает ли ТЕКУЩАЯ карта с картой, которая была РАНЕЕ?',
-};
-
-export const shapes = [
-  { shapeName: 'rectangle', shapeImg: rectangle },
-  { shapeName: 'circle', shapeImg: circle },
-  { shapeName: 'triangle', shapeImg: triangle },
-  { shapeName: 'rhombus', shapeImg: rhombus },
-  { shapeName: 'quatrefoil', shapeImg: quatrefoil },
-];
-
-const getNextCard = () => {
-  return shapes[Math.floor(Math.random() * shapes.length)];
-};
+import { useTranslation } from 'react-i18next';
+import { getNextCard } from '../../utils/matchGamesUtils';
+import rectangle from '../../assets/images/shapes/rectangle.png';
 
 export default function SpeedMatch() {
+  const { t } = useTranslation();
   const [isStarted, setIsStarted] = useState(false);
   const [isSuccess, setIsSuccess] = useState(true);
   const [isAnswerGetted, setIsAnswerGetted] = useState(false);
@@ -97,6 +72,13 @@ export default function SpeedMatch() {
       changeMultiplayer(false, prev);
       return 0;
     });
+  };
+
+  const setShapesToStart = () => {
+    setSecondCard({ shapeName: '', shapeImg: cardBackground });
+    prevCard.current = 'rectangle';
+    setCurrentCard(getNextCard());
+    void new Audio(succesSoundPath).play();
   };
 
   const handleAnswer = (isRightAnswer: boolean) => {
@@ -181,6 +163,7 @@ export default function SpeedMatch() {
       clearInterval(timer);
       isStartTimerEnd.current = true;
       startTimer();
+      setShapesToStart();
     }, 3000);
   };
 
@@ -203,6 +186,7 @@ export default function SpeedMatch() {
     multiplierTemp.current = 1;
     setIsAnswerGetted(false);
     startGameTimerHandle();
+    setSecondCard({ shapeName: '', shapeImg: '' });
     setCurrentCard({ shapeName: 'rectangle', shapeImg: rectangle });
     document
       .querySelector('.cards__field-previous')
@@ -235,7 +219,7 @@ export default function SpeedMatch() {
         <StartGame
           title="Speed Match"
           colorStyle={'speed-match'}
-          description={gameDescription[getLang()]}
+          description={t('speedMatch.description')}
           onPlayHandler={onPlayHandler}
         />
       )}
@@ -253,7 +237,7 @@ export default function SpeedMatch() {
             timer={gameTimer}
             colorStyle={'speed-match'}
           />
-          <h2 className="speed-match__title">{gameTitle[getLang()]}</h2>
+          <h2 className="speed-match__title">{t('speedMatch.title')}</h2>
           <Cards
             currentCard={currentCard.shapeImg}
             secondCard={secondCard.shapeImg}

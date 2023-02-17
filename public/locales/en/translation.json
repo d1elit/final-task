@@ -1,0 +1,35 @@
+{
+  "speedMatch" : {
+    "title": "Does the CURRENT card match the card that came IMMEDIATELY BEFORE it?",
+    "description":"In Speed Match you only need to determine if the symbols are the same."    
+  },
+  "memoryMatch" :{
+    "title": "Does the card on the RIGHT match the card that came TWO CARDS BEFORE it?",
+    "description":"Train your working memory by determining whether the symbols match."    
+  },
+  "startGame": {
+    "play": "Play",
+    "howToPlay": "How to play?"
+  },
+  "stats": {
+    "time": "TIME",
+    "score": "SCORE",
+    "trial": "TRIAL",
+    "tiles": "TILES"
+  },
+  "controls": {
+    "yes": "Yes",
+    "no" : "No"
+  },
+  "results": {
+    "score": "SCORE",
+    "correct": "CORRECT",
+    "accuracy": "ACCURACY",
+    "tryAgain": "Try again"
+  },
+  "login": {
+    "login": "Log In",
+    "logOut": "Log Out",
+    "signUp": "Sign Up"
+  }
+}
