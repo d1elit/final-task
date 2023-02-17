@@ -103,27 +103,27 @@
 
   &::before {
     position: absolute;
-    content: '';
+    content: "";
 
     width: 32px;
     height: 32px;
     left: -35px;
     top: -7px;
 
-    background: url('../../assets/images/avatar.svg');
+    background: url("../../assets/images/avatar.svg");
     background-size: cover;
     background-position: center;
   }
   &::after {
     position: absolute;
-    content: '';
+    content: "";
 
     width: 20px;
     height: 20px;
     right: -28px;
     top: 0px;
 
-    background: url('../../assets/images/caretDown.svg');
+    background: url("../../assets/images/caretDown.svg");
     background-size: cover;
     background-position: center;
   }
