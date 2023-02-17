@@ -33,8 +33,7 @@
     &:hover {
       background-color: rgb(111, 111, 111);
     }
-    font-weight: bold;   
-    transition: 3s;
+    font-weight: bold;
     transform: rotate(0);
     &_rules {
       background-color: unset;
@@ -43,7 +42,6 @@
         background-color: #00000040;
       }
     }
-   
   }
 }
 
