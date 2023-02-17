@@ -2,7 +2,7 @@ import succesSoundPath from '../../assets/sounds/success.mp3';
 import failureSoundPath from '../../assets/sounds/failure.mp3';
 import timerSoundPath from '../../assets/sounds/timerSound.mp3';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import Controls from '../../components/Controls/Controls';
 import StartGame from '../../components/StartGame/StartGame';
 import Cards from './components/Cards/Cards';
@@ -16,6 +16,10 @@ import cardBackground from '../../assets/images/shapes/card-background.jpg';
 import { useTranslation } from 'react-i18next';
 import { getNextCard } from '../../utils/matchGamesUtils';
 import rectangle from '../../assets/images/shapes/rectangle.png';
+
+import scoreApi from '../../shared/api/score';
+
+import type { SpeedMatchScore } from '../../shared/types/score';
 
 export default function SpeedMatch() {
   const { t } = useTranslation();
@@ -42,6 +46,24 @@ export default function SpeedMatch() {
   const prevCard = useRef('');
   const [startGameTimer, setStartGameTimer] = useState(3);
   const isStartTimerEnd = useRef(false);
+
+  const saveResults = useCallback(() => {
+    const results = {
+      score,
+      correct: `${rightAnswersCount}/${answersCount}`,
+      accuracy: `${
+        rightAnswersCount !== 0
+          ? Math.round((rightAnswersCount / answersCount) * 100)
+          : 0
+      }%`,
+    };
+
+    try {
+      void scoreApi.saveResults<SpeedMatchScore>('speed-match', results);
+    } catch (e) {
+      console.warn(e);
+    }
+  }, [answersCount, rightAnswersCount, score]);
 
   const changeMultiplayer = (isRightAnswer: boolean, streak: number) => {
     if (isRightAnswer && streak == 4) {
@@ -212,6 +234,10 @@ export default function SpeedMatch() {
     document.addEventListener('keydown', onKeyControlsHandler);
     document.addEventListener('click', onBtnCountrolsHandler);
   }, []);
+
+  useEffect(() => {
+    if (isGameEnd) saveResults();
+  }, [isGameEnd, saveResults]);
 
   return (
     <div className="speed-match">
