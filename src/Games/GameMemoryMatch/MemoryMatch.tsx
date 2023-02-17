@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-floating-promises */
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @typescript-eslint/no-var-requires */
 import succesSound from '../../assets/sounds/success.mp3';
 import failureSound from '../../assets/sounds/failure.mp3';
 import timerSound from '../../assets/sounds/timerSound.mp3';
@@ -14,25 +11,11 @@ import AnswerIndicator from '../../components/AnswerIndicator/AnswerIndicator';
 import Results from '../../components/Results/Results';
 import circle from '../../assets/images/shapes/circle.png';
 import rectangle from '../../assets/images/shapes/rectangle.png';
-import triangle from '../../assets/images/shapes/triangle.png';
-import rhombus from '../../assets/images/shapes/rhombus.png';
-import quatrefoil from '../../assets/images/shapes/quatrefoil.png';
 import StartGameTimer from '../../components/StartGameTimer/StartGameTimer';
 import cardBackground from '../../assets/images/shapes/card-background.jpg';
 import { IShapes } from '../../types/MatchGamesTypes';
 import { useTranslation } from 'react-i18next';
-
-export const shapes = [
-  { shapeName: 'rectangle', shapeImg: rectangle },
-  { shapeName: 'circle', shapeImg: circle },
-  { shapeName: 'triangle', shapeImg: triangle },
-  { shapeName: 'rhombus', shapeImg: rhombus },
-  { shapeName: 'quatrefoil', shapeImg: quatrefoil },
-];
-
-const getNextCard = () => {
-  return shapes[Math.floor(Math.random() * shapes.length)];
-};
+import { getNextCard, shapes } from '../../utils/matchGamesUtils';
 
 const getShapeByName = (shapeName: string) => {
   let result: IShapes = { shapeName: '', shapeImg: '' };
@@ -78,6 +61,21 @@ export default function SpeedMatch() {
     setThirdCard({ shapeName: '', shapeImg: cardBackground });
   };
 
+  const resetShapesToRestart = () => {
+    setCurrentCard({ shapeName: 'rectangle', shapeImg: rectangle });
+    setSecondCard({ shapeName: 'circle', shapeImg: circle });
+    setThirdCard({ shapeName: '', shapeImg: '' });
+  };
+
+  const setShapesToStart = () => {
+    setSecondCard({ shapeName: '', shapeImg: cardBackground });
+    setThirdCard({ shapeName: '', shapeImg: cardBackground });
+    prevPrevCard.current = 'circle';
+    prevCard.current = 'rectangle';
+    setCurrentCard(getNextCard());
+    void new Audio(succesSound).play();
+  };
+
   const changeMultiplayer = (isRightAnswer: boolean, streak: number) => {
     if (isRightAnswer && streak == 4) {
       setMultiplier(prev => {
@@ -117,8 +115,8 @@ export default function SpeedMatch() {
       setThirdCard(getShapeByName(prevPrevCard.current));
     }
     isRightAnswer
-      ? new Audio(succesSound).play()
-      : new Audio(failureSound).play();
+      ? void new Audio(succesSound).play()
+      : void new Audio(failureSound).play();
   };
 
   const chekIsRightAnswer = (
@@ -185,10 +183,10 @@ export default function SpeedMatch() {
   };
 
   const startGameTimerHandle = () => {
-    new Audio(timerSound).play();
+    void new Audio(timerSound).play();
     const timer = setInterval(() => {
       setStartGameTimer(prev => {
-        if (prev !== 1) new Audio(timerSound).play();
+        if (prev !== 1) void new Audio(timerSound).play();
         return prev - 1;
       });
     }, 1000);
@@ -196,6 +194,7 @@ export default function SpeedMatch() {
       clearInterval(timer);
       isStartTimerEnd.current = true;
       startTimer();
+      setShapesToStart();
     }, 3000);
   };
 
@@ -212,13 +211,13 @@ export default function SpeedMatch() {
     setStreak(0);
     setAnswersCount(0);
     setRightAnswersCount(0);
+    resetShapesToRestart();
     setGameTimer(45);
     setStartGameTimer(3);
     isStartTimerEnd.current = false;
     multiplierTemp.current = 1;
     setIsAnswerGetted(false);
     startGameTimerHandle();
-    setCurrentCard({ shapeName: 'rectangle', shapeImg: rectangle });
     document
       .querySelector('.cards__field-previous')
       ?.classList.toggle('cards__field-previous_used');

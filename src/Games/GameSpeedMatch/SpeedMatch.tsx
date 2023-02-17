@@ -10,27 +10,12 @@ import GameStats from '../../components/GameStats/GameStats';
 import './SpeedMatch.scss';
 import AnswerIndicator from '../../components/AnswerIndicator/AnswerIndicator';
 import Results from '../../components/Results/Results';
-import circle from '../../assets/images/shapes/circle.png';
-import rectangle from '../../assets/images/shapes/rectangle.png';
-import triangle from '../../assets/images/shapes/triangle.png';
-import rhombus from '../../assets/images/shapes/rhombus.png';
-import quatrefoil from '../../assets/images/shapes/quatrefoil.png';
 import StartGameTimer from '../../components/StartGameTimer/StartGameTimer';
 import { IShapes } from '../../types/MatchGamesTypes';
 import cardBackground from '../../assets/images/shapes/card-background.jpg';
 import { useTranslation } from 'react-i18next';
-
-export const shapes = [
-  { shapeName: 'rectangle', shapeImg: rectangle },
-  { shapeName: 'circle', shapeImg: circle },
-  { shapeName: 'triangle', shapeImg: triangle },
-  { shapeName: 'rhombus', shapeImg: rhombus },
-  { shapeName: 'quatrefoil', shapeImg: quatrefoil },
-];
-
-const getNextCard = () => {
-  return shapes[Math.floor(Math.random() * shapes.length)];
-};
+import { getNextCard } from '../../utils/matchGamesUtils';
+import rectangle from '../../assets/images/shapes/rectangle.png';
 
 export default function SpeedMatch() {
   const { t } = useTranslation();
@@ -87,6 +72,13 @@ export default function SpeedMatch() {
       changeMultiplayer(false, prev);
       return 0;
     });
+  };
+
+  const setShapesToStart = () => {
+    setSecondCard({ shapeName: '', shapeImg: cardBackground });
+    prevCard.current = 'rectangle';
+    setCurrentCard(getNextCard());
+    void new Audio(succesSoundPath).play();
   };
 
   const handleAnswer = (isRightAnswer: boolean) => {
@@ -171,6 +163,7 @@ export default function SpeedMatch() {
       clearInterval(timer);
       isStartTimerEnd.current = true;
       startTimer();
+      setShapesToStart();
     }, 3000);
   };
 
@@ -193,6 +186,7 @@ export default function SpeedMatch() {
     multiplierTemp.current = 1;
     setIsAnswerGetted(false);
     startGameTimerHandle();
+    setSecondCard({ shapeName: '', shapeImg: '' });
     setCurrentCard({ shapeName: 'rectangle', shapeImg: rectangle });
     document
       .querySelector('.cards__field-previous')
