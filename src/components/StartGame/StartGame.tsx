@@ -1,8 +1,6 @@
 import cn from 'classnames';
-import React from 'react';
-import { LocalText } from '../../types/localisationTypes';
-import { getLang } from '../../utils/localisationUtils';
 import './StartGame.scss';
+import { useTranslation } from 'react-i18next';
 
 interface StartGameProps {
   title: string;
@@ -11,29 +9,20 @@ interface StartGameProps {
   onPlayHandler: () => void;
 }
 
-const howToPlayText: LocalText = {
-  eng: 'How To Play?',
-  rus: 'Как играть?',
-};
-
-const playText: LocalText = {
-  eng: 'Play',
-  rus: 'Играть',
-};
-
 export default function StartGame({
   title,
   colorStyle,
   description,
   onPlayHandler,
 }: StartGameProps) {
+  const { t } = useTranslation();
   return (
     <div className="start-game">
       <h2 className="start-game__title">{title}</h2>
       <p className="start-game__description">{description}</p>
       <div className="start-game__controls">
         <button className="start-game__btn start-game__btn_rules">
-          {howToPlayText[getLang()]}
+          {t('startGame.howToPlay')}
         </button>
         <button
           className={cn(
@@ -42,7 +31,7 @@ export default function StartGame({
           )}
           onClick={onPlayHandler}
         >
-          {playText[getLang()]}
+          {t('startGame.play')}
         </button>
       </div>
     </div>

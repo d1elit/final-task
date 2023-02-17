@@ -1,9 +1,13 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
 import React from 'react';
 import './Header.scss';
 import logo from '../../assets/images/lumosityLogo.png';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { setStyles } from '../../utils/localisationUtils';
 
 export default function Header() {
+  const { i18n } = useTranslation();
   return (
     <header className="header">
       <div className="header__container">
@@ -37,22 +41,24 @@ export default function Header() {
             <li className="header__menu-item">
               <button
                 className="header__lang"
-                onClick={() => {
-                  localStorage.setItem('lang', 'rus');
+                onClick={e => {
+                  i18n.changeLanguage('ru');
+                  setStyles(e);
                 }}
               >
-                rus
+                ru
               </button>
             </li>
 
             <li className="header__menu-item">
               <button
-                className="header__lang"
-                onClick={() => {
-                  localStorage.setItem('lang', 'eng');
+                className="header__lang header__lang_active"
+                onClick={e => {
+                  i18n.changeLanguage('en');
+                  setStyles(e);
                 }}
               >
-                eng
+                en
               </button>
             </li>
             {/* <li className="header__menu-item">

@@ -18,18 +18,7 @@ import quatrefoil from '../../assets/images/shapes/quatrefoil.png';
 import StartGameTimer from '../../components/StartGameTimer/StartGameTimer';
 import { IShapes } from '../../types/MatchGamesTypes';
 import cardBackground from '../../assets/images/shapes/card-background.jpg';
-import { getLang } from '../../utils/localisationUtils';
-import { LocalText } from '../../types/localisationTypes';
-
-const gameDescription: LocalText = {
-  eng: 'In Speed Match you only need to determine if the symbols are the same',
-  rus: 'В Speed Match вам нужно определить, совпадают ли символы.',
-};
-
-const gameTitle: LocalText = {
-  eng: 'Does the CURRENT card match the card that came IMMEDIATELY BEFORE it?',
-  rus: 'Совпадает ли ТЕКУЩАЯ карта с картой, которая была РАНЕЕ?',
-};
+import { useTranslation } from 'react-i18next';
 
 export const shapes = [
   { shapeName: 'rectangle', shapeImg: rectangle },
@@ -44,6 +33,7 @@ const getNextCard = () => {
 };
 
 export default function SpeedMatch() {
+  const { t } = useTranslation();
   const [isStarted, setIsStarted] = useState(false);
   const [isSuccess, setIsSuccess] = useState(true);
   const [isAnswerGetted, setIsAnswerGetted] = useState(false);
@@ -235,7 +225,7 @@ export default function SpeedMatch() {
         <StartGame
           title="Speed Match"
           colorStyle={'speed-match'}
-          description={gameDescription[getLang()]}
+          description={t('speedMatch.description')}
           onPlayHandler={onPlayHandler}
         />
       )}
@@ -253,7 +243,7 @@ export default function SpeedMatch() {
             timer={gameTimer}
             colorStyle={'speed-match'}
           />
-          <h2 className="speed-match__title">{gameTitle[getLang()]}</h2>
+          <h2 className="speed-match__title">{t('speedMatch.title')}</h2>
           <Cards
             currentCard={currentCard.shapeImg}
             secondCard={secondCard.shapeImg}
