@@ -1,9 +1,16 @@
-import React from 'react';
+/* eslint-disable @typescript-eslint/no-floating-promises */
+import React, { useEffect } from 'react';
 import './Header.scss';
 import logo from '../../assets/images/lumosityLogo.png';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { setLocalisationStyle, setStyles } from '../../utils/localisationUtils';
 
 export default function Header() {
+  const { t, i18n } = useTranslation();
+  useEffect(() => {
+    setLocalisationStyle();
+  }, []);
   return (
     <header className="header">
       <div className="header__container">
@@ -36,23 +43,25 @@ export default function Header() {
             </li>
             <li className="header__menu-item">
               <button
-                className="header__lang"
-                onClick={() => {
-                  localStorage.setItem('lang', 'rus');
+                className="header__lang header__lang_ru"
+                onClick={e => {
+                  i18n.changeLanguage('ru');
+                  setStyles(e);
                 }}
               >
-                rus
+                ru
               </button>
             </li>
 
             <li className="header__menu-item">
               <button
-                className="header__lang"
-                onClick={() => {
-                  localStorage.setItem('lang', 'eng');
+                className="header__lang header__lang_en"
+                onClick={e => {
+                  i18n.changeLanguage('en');
+                  setStyles(e);
                 }}
               >
-                eng
+                en
               </button>
             </li>
             {/* <li className="header__menu-item">
@@ -68,17 +77,17 @@ export default function Header() {
             <ul className="header__account-list">
               <li className="header__account-item">
                 <Link className="header__account-link" to={'./signup'}>
-                  Sign Up
+                  {t('login.signUp')}
                 </Link>
               </li>
               <li className="header__account-item">
                 <Link className="header__account-link" to={'./login'}>
-                  Log In
+                  {t('login.login')}
                 </Link>
               </li>
               <li className="header__account-item">
                 <Link className="header__account-link" to={'./logout'}>
-                  Log Out
+                  {t('login.logOut')}
                 </Link>
               </li>
             </ul>
