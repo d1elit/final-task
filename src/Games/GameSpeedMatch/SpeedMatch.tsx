@@ -89,6 +89,13 @@ export default function SpeedMatch() {
     });
   };
 
+  const setShapesToStart = () => {
+    setSecondCard({ shapeName: '', shapeImg: cardBackground });
+    prevCard.current = 'rectangle';
+    setCurrentCard(getNextCard());
+    void new Audio(succesSoundPath).play();
+  };
+
   const handleAnswer = (isRightAnswer: boolean) => {
     changeScore(isRightAnswer);
     setIsSuccess(isRightAnswer);
@@ -171,6 +178,7 @@ export default function SpeedMatch() {
       clearInterval(timer);
       isStartTimerEnd.current = true;
       startTimer();
+      setShapesToStart();
     }, 3000);
   };
 
@@ -193,6 +201,7 @@ export default function SpeedMatch() {
     multiplierTemp.current = 1;
     setIsAnswerGetted(false);
     startGameTimerHandle();
+    setSecondCard({ shapeName: '', shapeImg: '' });
     setCurrentCard({ shapeName: 'rectangle', shapeImg: rectangle });
     document
       .querySelector('.cards__field-previous')
