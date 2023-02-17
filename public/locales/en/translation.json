@@ -26,5 +26,10 @@
     "correct": "CORRECT",
     "accuracy": "ACCURACY",
     "tryAgain": "Try again"
-  }  
+  },
+  "login": {
+    "login": "Log In",
+    "logOut": "Log Out",
+    "signUp": "Sign Up"
+  }
 }
