@@ -1,13 +1,16 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
-import React from 'react';
+import React, { useEffect } from 'react';
 import './Header.scss';
 import logo from '../../assets/images/lumosityLogo.png';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { setStyles } from '../../utils/localisationUtils';
+import { setLocalisationStyle, setStyles } from '../../utils/localisationUtils';
 
 export default function Header() {
   const { t, i18n } = useTranslation();
+  useEffect(() => {
+    setLocalisationStyle();
+  }, []);
   return (
     <header className="header">
       <div className="header__container">
@@ -40,7 +43,7 @@ export default function Header() {
             </li>
             <li className="header__menu-item">
               <button
-                className="header__lang"
+                className="header__lang header__lang_ru"
                 onClick={e => {
                   i18n.changeLanguage('ru');
                   setStyles(e);
@@ -52,7 +55,7 @@ export default function Header() {
 
             <li className="header__menu-item">
               <button
-                className="header__lang header__lang_active"
+                className="header__lang header__lang_en"
                 onClick={e => {
                   i18n.changeLanguage('en');
                   setStyles(e);
