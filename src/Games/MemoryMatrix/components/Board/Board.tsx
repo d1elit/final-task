@@ -8,6 +8,9 @@ interface BoardProps {
   setTiles: React.Dispatch<React.SetStateAction<number>>;
   trial: number;
   setTrial: React.Dispatch<React.SetStateAction<number>>;
+  addScore: () => void;
+  addBonusScore: () => void;
+  gameMessage: (tapsDone: number, tapsSuccess: number) => void;
   children?: JSX.Element;
 }
 
@@ -81,6 +84,9 @@ export default function Board({
   setTiles,
   trial = 1,
   setTrial,
+  addScore,
+  addBonusScore,
+  gameMessage,
 }: BoardProps) {
   const [board, setBoard] = useState<string[]>([]);
 
@@ -166,7 +172,9 @@ export default function Board({
 
   useEffect(() => {
     console.log(tapsCount, tapsSuccess, tapsDone);
+    gameMessage(tapsDone, tapsSuccess);
     if (tapsCount === tapsSuccess) {
+      addBonusScore();
       setBoard(prev =>
         prev.map((el, i) => {
           if (i === lastTileIndex && el.includes('tile_guess')) {
@@ -193,6 +201,7 @@ export default function Board({
             if (el.includes('tile_default')) {
               return 'tile tile_wrong';
             } else if (el.includes('tile_guess')) {
+              addScore();
               setTapsSuccess(prev => prev + 1);
               if (tapsSuccess === tapsCount) {
                 return 'tile tile_allright';
