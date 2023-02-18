@@ -16,11 +16,13 @@ import cardBackground from '../../assets/images/shapes/card-background.jpg';
 import { useTranslation } from 'react-i18next';
 import { getNextCard } from '../../utils/matchGamesUtils';
 import rectangle from '../../assets/images/shapes/rectangle.png';
+import HowToPlay from '../../components/HowToPlay/HowToPlay';
 
 export default function SpeedMatch() {
   const { t } = useTranslation();
   const [isStarted, setIsStarted] = useState(false);
   const [isSuccess, setIsSuccess] = useState(true);
+  const [isHowToPlayOpen, setIsHowToPlayOpen] = useState(false);
   const [isAnswerGetted, setIsAnswerGetted] = useState(false);
   const [currentCard, setCurrentCard] = useState<IShapes>({
     shapeName: 'rectangle',
@@ -172,6 +174,11 @@ export default function SpeedMatch() {
     startGameTimerHandle();
   };
 
+  const onPlayInHowToPlayHandler = () => {
+    setIsHowToPlayOpen(false);
+    onPlayHandler();
+  };
+
   const onRetryHandler = () => {
     setEndOfGame(false);
     setIsStarted(true);
@@ -208,6 +215,10 @@ export default function SpeedMatch() {
     }
   };
 
+  const onHowToPlayHandler = () => {
+    setIsHowToPlayOpen(true);
+  };
+
   useEffect(() => {
     document.addEventListener('keydown', onKeyControlsHandler);
     document.addEventListener('click', onBtnCountrolsHandler);
@@ -215,14 +226,25 @@ export default function SpeedMatch() {
 
   return (
     <div className="speed-match">
-      {!isStarted && !isGameEnd && (
+      {!isStarted && !isGameEnd && !isHowToPlayOpen && (
         <StartGame
           title="Speed Match"
           colorStyle={'speed-match'}
           description={t('speedMatch.description')}
           onPlayHandler={onPlayHandler}
+          onHowToPlayHandler={onHowToPlayHandler}
         />
       )}
+
+      {isHowToPlayOpen ? (
+        <HowToPlay
+          gameRules={t('speedMatch.howToPlay')}
+          onPlayHandler={onPlayInHowToPlayHandler}
+        />
+      ) : (
+        ''
+      )}
+
       {isStarted && (
         <>
           {startGameTimer !== 0 ? (

@@ -1,0 +1,12 @@
+.how-to-play {
+  padding: 10px;
+  color: #fff;
+  font-size: 1.2rem;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  &__title {
+    position: absolute;
+    top: 2%;
+    left: calc(50% - 65px);
+    font-size: 2rem;
+  }
+}
