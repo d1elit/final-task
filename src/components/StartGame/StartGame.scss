@@ -23,17 +23,16 @@
     cursor: pointer;
     border: none;
     border-radius: 30px;
-
+    background-color: rgb(164, 102, 172);
     color: #fff;
     font-weight: 600;
     font-size: 18px;
     transition: 0.2s;
 
-    background-color: gray;
     &:hover {
       background-color: rgb(111, 111, 111);
     }
-    font-weight: bold;   
+    font-weight: bold;
     transition: 3s;
     transform: rotate(0);
     &_rules {
@@ -43,7 +42,6 @@
         background-color: #00000040;
       }
     }
-   
   }
 }
 

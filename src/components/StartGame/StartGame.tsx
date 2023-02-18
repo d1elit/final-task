@@ -7,6 +7,7 @@ interface StartGameProps {
   colorStyle?: string;
   description: string;
   onPlayHandler: () => void;
+  onHowToPlayHandler: () => void;
 }
 
 export default function StartGame({
@@ -14,6 +15,7 @@ export default function StartGame({
   colorStyle,
   description,
   onPlayHandler,
+  onHowToPlayHandler,
 }: StartGameProps) {
   const { t } = useTranslation();
   return (
@@ -21,7 +23,10 @@ export default function StartGame({
       <h2 className="start-game__title">{title}</h2>
       <p className="start-game__description">{description}</p>
       <div className="start-game__controls">
-        <button className="start-game__btn start-game__btn_rules">
+        <button
+          className="start-game__btn start-game__btn_rules"
+          onClick={onHowToPlayHandler}
+        >
           {t('startGame.howToPlay')}
         </button>
         <button

@@ -61,6 +61,9 @@ export default function MemoryMatrix() {
     [29, { w: 10, h: 6 }],
     [30, { w: 10, h: 6 }],
   ]);
+  const onHowToPlayHandler = () => {
+    console.log('how to play');
+  };
 
   return (
     <div className="memory-matrix">
@@ -70,6 +73,7 @@ export default function MemoryMatrix() {
           colorStyle={'memory-matrix'}
           description={gameDescription}
           onPlayHandler={init}
+          onHowToPlayHandler={onHowToPlayHandler}
         />
       )}
 
