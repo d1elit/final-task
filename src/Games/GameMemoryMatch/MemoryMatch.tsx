@@ -16,6 +16,7 @@ import cardBackground from '../../assets/images/shapes/card-background.jpg';
 import { IShapes } from '../../types/MatchGamesTypes';
 import { useTranslation } from 'react-i18next';
 import { getNextCard, shapes } from '../../utils/matchGamesUtils';
+import HowToPlay from '../../components/HowToPlay/HowToPlay';
 
 const getShapeByName = (shapeName: string) => {
   let result: IShapes = { shapeName: '', shapeImg: '' };
@@ -29,6 +30,7 @@ export default function SpeedMatch() {
   const { t } = useTranslation();
   const [isStarted, setIsStarted] = useState(false);
   const [isSuccess, setIsSuccess] = useState(true);
+  const [isHowToPlayOpen, setIsHowToPlayOpen] = useState(false);
   const [isAnswerGetted, setIsAnswerGetted] = useState(false);
   const [currentCard, setCurrentCard] = useState<IShapes>({
     shapeName: 'rectangle',
@@ -202,6 +204,10 @@ export default function SpeedMatch() {
     setIsStarted(true);
     startGameTimerHandle();
   };
+  const onPlayInHowToPlayHandler = () => {
+    setIsHowToPlayOpen(false);
+    onPlayHandler();
+  };
 
   const onRetryHandler = () => {
     setEndOfGame(false);
@@ -237,7 +243,9 @@ export default function SpeedMatch() {
       handleUserMove(key);
     }
   };
-
+  const onHowToPlayHandler = () => {
+    setIsHowToPlayOpen(true);
+  };
   useEffect(() => {
     document.addEventListener('keydown', onKeyControlsHandler);
     document.addEventListener('click', onBtnCountrolsHandler);
@@ -245,12 +253,13 @@ export default function SpeedMatch() {
 
   return (
     <div className="speed-match">
-      {!isStarted && !isGameEnd && (
+      {!isStarted && !isGameEnd && !isHowToPlayOpen && (
         <StartGame
           title="Memory Match"
           description={t('memoryMatch.description')}
           onPlayHandler={onPlayHandler}
           colorStyle={'speed-match'}
+          onHowToPlayHandler={onHowToPlayHandler}
         />
       )}
       {isStarted && (
@@ -278,6 +287,15 @@ export default function SpeedMatch() {
           {isAnswerGetted && <AnswerIndicator isSuccess={isSuccess} />}
           <Controls />
         </>
+      )}
+
+      {isHowToPlayOpen ? (
+        <HowToPlay
+          gameRules={t('memoryMatch.howToPlay')}
+          onPlayHandler={onPlayInHowToPlayHandler}
+        />
+      ) : (
+        ''
       )}
       {isGameEnd && (
         <Results
