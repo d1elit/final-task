@@ -11,6 +11,9 @@ interface BoardProps {
   addScore: () => void;
   addBonusScore: () => void;
   gameMessage: (tapsDone: number, tapsSuccess: number) => void;
+  tutorMessage: (levelState: string) => void;
+  endTutorial: () => void;
+  isTutorial: boolean;
   children?: JSX.Element;
 }
 
@@ -87,6 +90,9 @@ export default function Board({
   addScore,
   addBonusScore,
   gameMessage,
+  tutorMessage,
+  endTutorial,
+  isTutorial,
 }: BoardProps) {
   const [board, setBoard] = useState<string[]>([]);
 
@@ -112,12 +118,13 @@ export default function Board({
     return () => {
       clearTimeout(timer);
     };
-  }, [trial]);
+  }, [trial, isTutorial]);
 
   useEffect(() => {
     if (isLevelLoaded) {
       console.log('Load Default Board');
       setBoard(generateBoard(tiles));
+      tutorMessage('loading');
 
       const timerStartGame: ReturnType<typeof setTimeout> = setTimeout(() => {
         setIsGame(() => true);
@@ -126,6 +133,7 @@ export default function Board({
         setTapsDone(0);
         setLastTileIndex(0);
         console.log('Start Game');
+        tutorMessage('game');
         clearTimeout(timerStartGame);
       }, 4500);
       return () => {
@@ -139,6 +147,7 @@ export default function Board({
       setIsLevelLoaded(false);
       // setIsLevelEnd(false);
       console.log('Unload Level');
+      // if (tiles === 3) endTutorial();
       setBoard(prev =>
         prev.map(el => {
           // console.log('el =====', el);
@@ -154,6 +163,21 @@ export default function Board({
         setIsLevelEnd(false);
         setBoard(() => []);
         setTiles(prev => {
+          // Tutorial rules =========================================
+          if (isTutorial) {
+            if (tapsSuccess === tapsCount) {
+              if (tiles === 3) {
+                endTutorial();
+                setTrial(() => 2);
+                return 3;
+              }
+            }
+            if (tapsSuccess < tapsCount) {
+              return prev;
+            }
+          }
+          //  Tutorial rules end ======================================
+
           if (tapsSuccess === tapsCount) {
             return prev >= 30 ? prev : prev + 1;
           }
@@ -164,7 +188,9 @@ export default function Board({
           return prev;
         });
         console.log('Next Level');
-        setTrial(prev => prev + 1);
+
+        isTutorial ? setTrial(prev => prev - 1) : setTrial(prev => prev + 1);
+        // setTrial(prev => prev + 1);
         clearTimeout(timerNextLevel);
       }, 3000);
     }
