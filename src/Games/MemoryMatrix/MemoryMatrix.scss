@@ -2,6 +2,7 @@
   width: 640px;
   height: 480px;
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
   position: relative;
   justify-content: center;
@@ -11,6 +12,7 @@
   background: url("../../assets/images/gameBackgrounds/bgBrown.jpg");
   background: url("../../assets/images/gameBackgrounds/bgWood.jpg");
   border-radius: 10px;
+  overflow: hidden;
   text-align: center;
   user-select: none;
   &__title {
