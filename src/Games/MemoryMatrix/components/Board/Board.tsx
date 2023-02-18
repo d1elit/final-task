@@ -122,7 +122,7 @@ export default function Board({
 
   useEffect(() => {
     if (isLevelLoaded) {
-      console.log('Load Default Board');
+      // console.log('Load Default Board');
       setBoard(generateBoard(tiles));
       tutorMessage('loading');
 
@@ -132,7 +132,7 @@ export default function Board({
         setTapsSuccess(0);
         setTapsDone(0);
         setLastTileIndex(0);
-        console.log('Start Game');
+        // console.log('Start Game');
         tutorMessage('game');
         clearTimeout(timerStartGame);
       }, 4500);
@@ -146,7 +146,7 @@ export default function Board({
     if (isLevelLoaded && isLevelEnd) {
       setIsLevelLoaded(false);
       // setIsLevelEnd(false);
-      console.log('Unload Level');
+      // console.log('Unload Level');
       // if (tiles === 3) endTutorial();
       setBoard(prev =>
         prev.map(el => {
@@ -187,7 +187,7 @@ export default function Board({
           }
           return prev;
         });
-        console.log('Next Level');
+        // console.log('Next Level');
 
         isTutorial ? setTrial(prev => prev - 1) : setTrial(prev => prev + 1);
         // setTrial(prev => prev + 1);
@@ -197,7 +197,7 @@ export default function Board({
   }, [isLevelEnd]);
 
   useEffect(() => {
-    console.log(tapsCount, tapsSuccess, tapsDone);
+    // console.log(tapsCount, tapsSuccess, tapsDone);
     gameMessage(tapsDone, tapsSuccess);
     if (tapsCount === tapsSuccess) {
       addBonusScore();
@@ -213,7 +213,7 @@ export default function Board({
     if (tapsCount === tapsDone) {
       setIsGame(() => false);
       setIsLevelEnd(true);
-      console.log('all tapes done!!!!', lastTileIndex);
+      // console.log('all tapes done!!!!', lastTileIndex);
     }
   }, [tapsDone, tapsSuccess]);
 
