@@ -192,12 +192,22 @@ $background: #a97c57b8;
   @keyframes flipped_end {
     0% {
       transform: rotateY(0deg);
-    }
-    55% {
       background-color: $background;
     }
-    70% {
+    50% {
+      transform: rotateY(0deg);
+      background-color: $background;
+    }
+    50% {
+      transform: rotateY(0deg);
+      background-color: $background;
+    }
+    60% {
+      background-color: $background;
+    }
+    90% {
       background-color: $blueOriginal;
+      transform: rotateY(180deg);
     }
     100% {
       background-color: $blueOriginal;
