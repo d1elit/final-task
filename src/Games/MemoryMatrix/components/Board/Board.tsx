@@ -183,6 +183,29 @@ export default function Board({
     }
   }, [tapsDone, tapsSuccess]);
 
+  const onTileClick = (index: number) => {
+    isGame &&
+      setBoard(prevBoard =>
+        prevBoard.map((el, i) => {
+          if (i === index) {
+            setLastTileIndex(() => i);
+            setTapsDone(prev => prev + 1);
+            if (el.includes('tile_default')) {
+              return 'tile tile_wrong';
+            } else if (el.includes('tile_guess')) {
+              setTapsSuccess(prev => prev + 1);
+              if (tapsSuccess === tapsCount) {
+                return 'tile tile_allright';
+              } else {
+                return 'tile_guess flipped_guess';
+              }
+            }
+          }
+          return el;
+        })
+      );
+  };
+
   return (
     <div
       className="board"
@@ -200,19 +223,7 @@ export default function Board({
             ['tile-outer_hide-win']: isLevelEnd && tapsSuccess === tapsCount,
           })}
         >
-          <Tile
-            className={tileClassName}
-            index={i}
-            isGame={isGame}
-            setBoard={setBoard}
-            tapsCount={tapsCount}
-            setTapsCount={setTapsCount}
-            tapsSuccess={tapsSuccess}
-            setTapsSuccess={setTapsSuccess}
-            tapsDone={tapsDone}
-            setTapsDone={setTapsDone}
-            setLastTileIndex={setLastTileIndex}
-          />
+          <Tile className={tileClassName} index={i} onClick={onTileClick} />
         </div>
       ))}
     </div>
