@@ -28,6 +28,10 @@
     "score": "ОЧКИ",
     "correct": "ВЕРНО",
     "accuracy": "ТОЧНОСТЬ",
+    "bestBoard": "ЛУЧШАЯ ДОСКА",
+    "bestBoardDescription1": "Плитка",
+    "bestBoardDescription234": "Плитки",
+    "bestBoardDescription567890": "Плиток",
     "tryAgain": "Попробовать снова"
   },
   "login": {
