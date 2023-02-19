@@ -8,7 +8,7 @@ import {
 import scoreApi from '../shared/api/score';
 import withAuth from '../shared/hoc/withAuth';
 import { useAppSelector } from '../shared/hooks/store';
-import { GameScore } from '../shared/types/score';
+import { GameResult } from '../shared/types/score';
 
 type GameSelect = {
   value: string;
@@ -33,7 +33,7 @@ const selectOptions: GameSelect[] = [
 const Stats: FC = () => {
   const userId = useAppSelector(state => state.user.data?._id);
   const [game, setGame] = useState<string>('speed-match');
-  const [bests, setBests] = useState<GameScore[]>();
+  const [bests, setBests] = useState<GameResult[]>();
 
   const handleSelectChange: ChangeEventHandler<HTMLSelectElement> = e => {
     setGame(e.target.value);

@@ -19,7 +19,7 @@ import rectangle from '../../assets/images/shapes/rectangle.png';
 
 import scoreApi from '../../shared/api/score';
 
-import type { SpeedMatchScore } from '../../shared/types/score';
+import type { SpeedMatchResult } from '../../shared/types/score';
 
 export default function SpeedMatch() {
   const { t } = useTranslation();
@@ -61,7 +61,7 @@ export default function SpeedMatch() {
     };
 
     try {
-      void scoreApi.saveResults<SpeedMatchScore>('speed-match', results);
+      void scoreApi.saveResults<SpeedMatchResult>('speed-match', results);
     } catch (e) {
       const err = e as Error;
       setError(err.message);

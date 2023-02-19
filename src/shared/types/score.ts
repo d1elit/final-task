@@ -1,11 +1,11 @@
-export interface BasicGameScore {
+export interface BasicGameResult {
   game?: string;
   score: number;
 }
 
-export interface SpeedMatchScore extends BasicGameScore {
+export interface SpeedMatchResult extends BasicGameResult {
   correct: string;
   accuracy: string;
 }
 
-export type GameScore = SpeedMatchScore;
+export type GameResult = SpeedMatchResult;
