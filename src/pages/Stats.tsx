@@ -33,14 +33,14 @@ const selectOptions: GameSelect[] = [
 const Stats: FC = () => {
   const userId = useAppSelector(state => state.user.data?._id);
   const [game, setGame] = useState<string>('speed-match');
-  const [bests, setBests] = useState<GameScore>();
+  const [bests, setBests] = useState<GameScore[]>();
 
   const handleSelectChange: ChangeEventHandler<HTMLSelectElement> = e => {
     setGame(e.target.value);
   };
 
   const getStats = useCallback(async () => {
-    const bests = await scoreApi.getUserBestScore(game);
+    const bests = await scoreApi.getUserBestResults(game);
     setBests(bests);
   }, [game]);
 
