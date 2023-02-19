@@ -5,35 +5,19 @@ import {
   useEffect,
   useState,
 } from 'react';
+import LastResult from '../components/LastResult/LastResult';
+import ScoreTable from '../components/ScoreTable/ScoreTable';
 import scoreApi from '../shared/api/score';
 import withAuth from '../shared/hoc/withAuth';
-import { useAppSelector } from '../shared/hooks/store';
-import { GameResult } from '../shared/types/score';
+import { Games } from '../shared/types/games';
+import type { GameResult } from '../shared/types/score';
 
-type GameSelect = {
-  value: string;
-  title: string;
-};
-
-const selectOptions: GameSelect[] = [
-  {
-    value: 'speed-match',
-    title: 'Speed Match',
-  },
-  {
-    value: 'memory-match',
-    title: 'Memory Match',
-  },
-  {
-    value: 'memory-matrix',
-    title: 'Memory Matrix',
-  },
-];
+const selectOptions = ['Speed Match', 'Memory Match', 'Memory Matrix'];
 
 const Stats: FC = () => {
-  const userId = useAppSelector(state => state.user.data?._id);
   const [game, setGame] = useState<string>('speed-match');
-  const [bests, setBests] = useState<GameResult[]>();
+  const [bests, setBests] = useState<GameResult[]>([]);
+  const [lastResult, setLastResult] = useState<GameResult>();
 
   const handleSelectChange: ChangeEventHandler<HTMLSelectElement> = e => {
     setGame(e.target.value);
@@ -41,7 +25,9 @@ const Stats: FC = () => {
 
   const getStats = useCallback(async () => {
     const bests = await scoreApi.getUserBestResults(game);
-    setBests(bests);
+    const lastResult = await scoreApi.getUserLastResult(game);
+    setBests(bests.results as GameResult[]);
+    setLastResult(lastResult.results as GameResult);
   }, [game]);
 
   useEffect(() => {
@@ -53,11 +39,19 @@ const Stats: FC = () => {
       <div className="container">
         <select onChange={handleSelectChange}>
           {selectOptions.map(game => (
-            <option key={game.value} value={game.value}>
-              {game.title}
+            <option key={game} value={Games[game as keyof typeof Games]}>
+              {game}
             </option>
           ))}
         </select>
+        {lastResult ? (
+          <>
+            <LastResult result={lastResult} />
+            <ScoreTable title="Your best results" results={bests} />
+          </>
+        ) : (
+          <h3>No Results</h3>
+        )}
       </div>
     </div>
   );

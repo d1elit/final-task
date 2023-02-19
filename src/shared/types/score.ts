@@ -1,5 +1,7 @@
 export interface BasicGameResult {
+  _id?: string;
   game?: string;
+  date?: string;
   score: number;
 }
 
