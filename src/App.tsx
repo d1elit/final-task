@@ -4,10 +4,11 @@ import MemoryMatrix from './Games/MemoryMatrix/MemoryMatrix';
 
 import Session from './components/Session/Session';
 import SpeedMatch from './Games/GameSpeedMatch/SpeedMatch';
-import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.scss';
 import MemoryMatch from './Games/GameMemoryMatch/MemoryMatch';
 import { Suspense } from 'react';
+import Stats from './pages/Stats';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route path="/memorymatch" element={<MemoryMatch />} />
             <Route path="/login" element={<Login />} />
             <Route path="/memorymatrix" element={<MemoryMatrix />} />
+            <Route path="/stats" element={<Stats />} />
             <Route path="*" element={<div>Home</div>} />
           </Routes>
         </Session>

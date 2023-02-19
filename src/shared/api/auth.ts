@@ -1,4 +1,4 @@
-import axios, { AxiosError, isAxiosError } from 'axios';
+import { AxiosError, isAxiosError } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import type { User, UserData } from '../types/User';
@@ -8,11 +8,7 @@ import {
 } from '@reduxjs/toolkit/dist/matchers';
 import { APIError } from '../types/api';
 
-export const authHost = axios.create({
-  withCredentials: true,
-  baseURL: `${process.env.REACT_APP_API_URL as string}/auth`,
-  validateStatus: (status: number) => status < 400,
-});
+import { authHost } from '.';
 
 const login = createAsyncThunk(
   'user/login',
@@ -21,7 +17,7 @@ const login = createAsyncThunk(
     { rejectWithValue }
   ): Promise<User | RejectedActionFromAsyncThunk<AnyAsyncThunk>> => {
     try {
-      const res = await authHost.post<User>('/login', {
+      const res = await authHost.post<User>('/auth/login', {
         username: userData.username,
         password: userData.password,
       });
@@ -51,7 +47,7 @@ const register = createAsyncThunk(
     { rejectWithValue }
   ): Promise<User | RejectedActionFromAsyncThunk<AnyAsyncThunk>> => {
     try {
-      const res = await authHost.post<User>('/register', {
+      const res = await authHost.post<User>('/auth/register', {
         username: userData.username,
         password: userData.password,
       });
@@ -74,7 +70,7 @@ const getMe = createAsyncThunk(
     { rejectWithValue }
   ): Promise<User | RejectedActionFromAsyncThunk<AnyAsyncThunk>> => {
     try {
-      const res = await authHost.get<User>('/me');
+      const res = await authHost.get<User>('/auth/me');
       return res.data;
     } catch (e) {
       const err = e as AxiosError<APIError>;
@@ -94,7 +90,7 @@ const logout = createAsyncThunk(
     { rejectWithValue }
   ): Promise<User | RejectedActionFromAsyncThunk<AnyAsyncThunk>> => {
     try {
-      const res = await authHost.get('/logout');
+      const res = await authHost.get('/auth/logout');
       return res.data;
     } catch (e) {
       const err = e as AxiosError<APIError>;
