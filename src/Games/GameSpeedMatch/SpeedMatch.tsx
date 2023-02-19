@@ -47,7 +47,7 @@ export default function SpeedMatch() {
   const [startGameTimer, setStartGameTimer] = useState(3);
   const isStartTimerEnd = useRef(false);
 
-  const [error, setError] = useState<string>('');
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   const saveResults = useCallback(() => {
     const results = {
@@ -64,7 +64,7 @@ export default function SpeedMatch() {
       void scoreApi.saveResults<SpeedMatchResult>('speed-match', results);
     } catch (e) {
       const err = e as Error;
-      setError(err.message);
+      setErrorMessage(err.message);
     }
   }, [answersCount, rightAnswersCount, score]);
 
