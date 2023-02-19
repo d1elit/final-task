@@ -7,7 +7,7 @@ import cn from 'classnames';
 import Results from '../../components/Results/Results';
 
 const TILES_DEFAULT = 3;
-const TRIAL_DEFAULT = 10;
+const TRIAL_DEFAULT = 1;
 const SCORE_DEFAULT = 0;
 
 const BEST_BOARD_DEFAULT = 3;
