@@ -72,5 +72,5 @@
       "react-app/jest"
     ]
   },
-  "proxy": "https://final-task-backend-yl11.onrender.com"
+  "proxy": "https://final-task-backend1.onrender.com"
 }

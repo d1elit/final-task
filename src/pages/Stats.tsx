@@ -8,7 +8,7 @@ import {
 import scoreApi from '../shared/api/score';
 import withAuth from '../shared/hoc/withAuth';
 import { useAppSelector } from '../shared/hooks/store';
-import { GameScore, SpeedMatchScore } from '../shared/types/score';
+import { GameScore } from '../shared/types/score';
 
 type GameSelect = {
   value: string;
