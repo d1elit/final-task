@@ -1,6 +1,20 @@
-import React from 'react';
 import './Tile.scss';
 
-export default function Tile() {
-  return <div className="tile"></div>;
+interface TileProps {
+  className?: string;
+  index: number;
+  onClick: (index: number) => void;
+}
+
+export default function Tile({
+  className,
+  index,
+  onClick,
+}: TileProps): JSX.Element {
+  return (
+    <div
+      className={`tile ${className ? className : ''}`}
+      onClick={() => onClick(index)}
+    ></div>
+  );
 }
