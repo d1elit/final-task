@@ -25,3 +25,10 @@
   font-size: 28px;
   color: #dddddd;
 }
+
+.scoreTable {
+  &__title {
+    color: #fff;
+    text-align: center;
+  }
+}

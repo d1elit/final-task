@@ -5,6 +5,7 @@ import {
   useEffect,
   useState,
 } from 'react';
+import LastResult from '../components/LastResult/LastResult';
 import ScoreTable from '../components/ScoreTable/ScoreTable';
 import scoreApi from '../shared/api/score';
 import withAuth from '../shared/hoc/withAuth';
@@ -16,6 +17,7 @@ const selectOptions = ['Speed Match', 'Memory Match', 'Memory Matrix'];
 const Stats: FC = () => {
   const [game, setGame] = useState<string>('speed-match');
   const [bests, setBests] = useState<GameResult[]>([]);
+  const [lastResult, setLastResult] = useState<GameResult>();
 
   const handleSelectChange: ChangeEventHandler<HTMLSelectElement> = e => {
     setGame(e.target.value);
@@ -23,7 +25,9 @@ const Stats: FC = () => {
 
   const getStats = useCallback(async () => {
     const bests = await scoreApi.getUserBestResults(game);
+    const lastResult = await scoreApi.getUserLastResult(game);
     setBests(bests.results as GameResult[]);
+    setLastResult(lastResult.results as GameResult);
   }, [game]);
 
   useEffect(() => {
@@ -40,7 +44,14 @@ const Stats: FC = () => {
             </option>
           ))}
         </select>
-        <ScoreTable results={bests} />
+        {lastResult ? (
+          <>
+            <LastResult result={lastResult} />
+            <ScoreTable title="Your best results" results={bests} />
+          </>
+        ) : (
+          <h3>No Results</h3>
+        )}
       </div>
     </div>
   );
