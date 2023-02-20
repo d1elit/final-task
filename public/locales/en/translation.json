@@ -18,6 +18,7 @@
     "time": "TIME",
     "score": "SCORE",
     "trial": "TRIAL",
+    "trialDivider": "of",
     "tiles": "TILES"
   },
   "controls": {

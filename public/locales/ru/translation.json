@@ -18,6 +18,7 @@
     "time": "ВРЕМЯ",
     "score": "ОЧКИ",
     "trial": "ПОПЫТКА",
+    "trialDivider": "/",
     "tiles": "ПЛИТКА"
   },
   "controls": {

@@ -1,12 +1,11 @@
 .game-stats {
   position: absolute;
   justify-content: space-between;
-  right: 3px;
-  top: 0px;
+  top: 10px;
   display: flex;
   user-select: none;
   &__item {
-    width: 130px;
+    width: 135px;
     height: 30px;
 
     margin: 5px 2px;
@@ -22,6 +21,18 @@
   }
   &__value {
     font-weight: bold;
+  }
+
+  animation: game-stats 1s forwards cubic-bezier(0.68, -0.255, 0.265, 1.55);
+  @keyframes game-stats {
+    0% {
+      opacity: 0;
+      transform: translate(0px, -50px);
+    }
+    100% {
+      opacity: 1;
+      transform: translate(0px, 0px);
+    }
   }
 }
 
