@@ -14,10 +14,13 @@ interface BoardProps {
   tutorMessage: (levelState: string) => void;
   endTutorial: () => void;
   isTutorial: boolean;
+  setIsGameEnd: React.Dispatch<React.SetStateAction<boolean>>;
+  refreshBestBoard: () => void;
   children?: JSX.Element;
 }
 
 const BOARD_ZOOM = 42;
+const TRIAL_MAX = 12;
 
 const boardSizes: Map<number, { w: number; h: number }> = new Map([
   [1, { w: 2, h: 2 }],
@@ -93,6 +96,8 @@ export default function Board({
   tutorMessage,
   endTutorial,
   isTutorial,
+  setIsGameEnd,
+  refreshBestBoard,
 }: BoardProps) {
   const [board, setBoard] = useState<string[]>([]);
 
@@ -108,6 +113,10 @@ export default function Board({
   const boardSize = boardSizes.get(tiles);
   const boardWidth = boardSize?.w !== undefined ? boardSize.w : 3;
   const boardHeight = boardSize?.h !== undefined ? boardSize.h : 3;
+
+  function checkEndOfGame() {
+    return trial >= TRIAL_MAX;
+  }
 
   useEffect(() => {
     const timer: ReturnType<typeof setTimeout> = setTimeout(() => {
@@ -188,8 +197,15 @@ export default function Board({
           return prev;
         });
         // console.log('Next Level');
+        refreshBestBoard();
+        // check End Of GAME
+        if (checkEndOfGame()) {
+          setIsGameEnd(true);
+        } else {
+          isTutorial ? setTrial(prev => prev - 1) : setTrial(prev => prev + 1);
+        }
 
-        isTutorial ? setTrial(prev => prev - 1) : setTrial(prev => prev + 1);
+        // isTutorial ? setTrial(prev => prev - 1) : setTrial(prev => prev + 1);
         // setTrial(prev => prev + 1);
         clearTimeout(timerNextLevel);
       }, 3000);

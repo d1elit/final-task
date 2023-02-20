@@ -8,6 +8,7 @@ interface Props {
   gameName: string;
   correct?: number;
   count?: number;
+  bestBoard?: number;
   colorStyle?: string;
   onRetryHandler: () => void;
 }
@@ -16,6 +17,7 @@ export default function Results({
   score,
   correct,
   count,
+  bestBoard,
   colorStyle,
   onRetryHandler,
   gameName,
@@ -25,19 +27,63 @@ export default function Results({
     <div className="results">
       <h2 className="results__title">{gameName}</h2>
       <div className="results__item results__score">
-        {t('results.score')}: <span className="results__data"> {score}</span>
-      </div>
-      <div className="results__item">
-        {t('results.correct')}:{' '}
-        <span className="results__data">
-          {correct}/{count}
+        <span className="results__item-name">{t('results.score')}:</span>
+        <span
+          className={cn(
+            'results__data',
+            colorStyle && `results__data_${colorStyle}`
+          )}
+        >
+          {score}
         </span>
       </div>
       {correct !== undefined && count !== undefined && (
+        <>
+          <div className="results__item">
+            <span className="results__item-name">{t('results.correct')}:</span>
+            <span
+              className={cn(
+                'results__data',
+                colorStyle && `results__data_${colorStyle}`
+              )}
+            >
+              {correct}/{count}
+            </span>
+          </div>
+
+          <div className="results__item">
+            <span className="results__item-name">{t('results.accuracy')}:</span>
+            <span
+              className={cn(
+                'results__data',
+                colorStyle && `results__data_${colorStyle}`
+              )}
+            >
+              {correct !== 0 ? Math.round((correct / count) * 100) : 0}%
+            </span>
+          </div>
+        </>
+      )}
+      {bestBoard !== undefined && (
         <div className="results__item">
-          {t('results.accuracy')}:
-          <span className="results__data">
-            {correct !== 0 ? Math.round((correct / count) * 100) : 0}%
+          <span className="results__item-name">{t('results.bestBoard')}:</span>
+          <span
+            className={cn(
+              'results__data',
+              colorStyle && `results__data_${colorStyle}`
+            )}
+          >
+            {bestBoard}{' '}
+            {bestBoard % 2 === 0 || bestBoard % 3 === 0 || bestBoard % 4 === 0
+              ? t('results.bestBoardDescription234')
+              : bestBoard % 5 === 0 ||
+                bestBoard % 6 === 0 ||
+                bestBoard % 7 === 0 ||
+                bestBoard % 8 === 0 ||
+                bestBoard % 9 === 0 ||
+                bestBoard % 10 === 0
+              ? t('results.bestBoardDescription567890')
+              : t('results.bestBoardDescription1')}
           </span>
         </div>
       )}

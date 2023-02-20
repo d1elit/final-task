@@ -4,17 +4,22 @@ import GameStats from '../../components/GameStats/GameStats';
 import React, { useState } from 'react';
 import StartGame from '../../components/StartGame/StartGame';
 import cn from 'classnames';
+import Results from '../../components/Results/Results';
 
 const TILES_DEFAULT = 3;
 const TRIAL_DEFAULT = 1;
 const SCORE_DEFAULT = 0;
+
+const BEST_BOARD_DEFAULT = 3;
+
 const ADD_SCORE = 250;
 const BONUS_MULTIPLIER = 100;
+
 const TIMER_COINS = 10;
 const TIMER_STEP = 50;
 
 export default function MemoryMatrix() {
-  const [isGameMode, setIsGameMode] = useState(true);
+  // const [isGameMode, setIsGameMode] = useState(true);
   const [isTutorial, setIsTutorial] = useState(false);
   const [isPause, setIsPause] = useState(false);
 
@@ -25,8 +30,8 @@ export default function MemoryMatrix() {
   const [trial, setTrial] = useState(TRIAL_DEFAULT);
   const [score, setScore] = useState(SCORE_DEFAULT);
 
-  const [bestBoard, setBestBoard] = useState(TILES_DEFAULT);
   const [lastBoard, setLastBoard] = useState(TILES_DEFAULT);
+  const [bestBoard, setBestBoard] = useState(BEST_BOARD_DEFAULT);
 
   const [message, setMessage] = useState('');
   const [tutorialMessage, setTutorialMessage] = useState('');
@@ -36,21 +41,21 @@ export default function MemoryMatrix() {
     setIsGameEnd(false);
     setIsPause(false);
 
-    setIsGameMode(true);
+    // setIsGameMode(true);
     setIsTutorial(false);
     setTiles(() => TILES_DEFAULT);
     setTrial(() => TRIAL_DEFAULT);
     setScore(() => SCORE_DEFAULT);
   };
 
-  const initTutorial = () => {
-    setTiles(prev => 2);
+  // === initTutorial ===
+  const onHowToPlayHandler = () => {
+    setIsTutorial(true);
+
+    setTiles(() => 2);
     setIsStarted(true);
     setIsGameEnd(false);
     setIsPause(false);
-
-    setIsGameMode(false);
-    setIsTutorial(true);
   };
 
   // const onHowToPlayHandler = () => {};
@@ -71,6 +76,12 @@ export default function MemoryMatrix() {
 
   function endTutorial() {
     initGame();
+  }
+
+  function refreshBestBoard() {
+    if (tiles > bestBoard) {
+      setBestBoard(tiles);
+    }
   }
 
   function gameMessage(tapsDone: number, tapsSuccess: number) {
@@ -99,6 +110,10 @@ export default function MemoryMatrix() {
       });
   }
 
+  function onRetryHandler() {
+    initGame();
+  }
+
   return (
     <div className="memory-matrix">
       {!isStarted && !isGameEnd && (
@@ -107,20 +122,20 @@ export default function MemoryMatrix() {
           colorStyle={'memory-matrix'}
           description={gameDescription}
           onPlayHandler={initGame}
-          onHowToPlayHandler={initTutorial}
+          onHowToPlayHandler={onHowToPlayHandler}
         />
       )}
 
-      {isStarted && (
+      {isStarted && !isGameEnd && (
         <>
-          <div style={isTutorial ? { opacity: '0' } : { opacity: '1' }}>
+          {!isTutorial && (
             <GameStats
               tiles={tiles}
               trial={trial}
               score={score}
               colorStyle={'memory-matrix'}
             />
-          </div>
+          )}
           <Board
             tiles={tiles}
             setTiles={setTiles}
@@ -132,6 +147,8 @@ export default function MemoryMatrix() {
             tutorMessage={tutorMessage}
             endTutorial={endTutorial}
             isTutorial={isTutorial}
+            setIsGameEnd={setIsGameEnd}
+            refreshBestBoard={refreshBestBoard}
           />
 
           <div
@@ -153,6 +170,15 @@ export default function MemoryMatrix() {
             {message}
           </div>
         </>
+      )}
+      {isGameEnd && (
+        <Results
+          score={score}
+          bestBoard={bestBoard}
+          colorStyle={'memory-matrix'}
+          onRetryHandler={onRetryHandler}
+          gameName="Memory Matrix"
+        />
       )}
     </div>
   );

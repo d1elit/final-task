@@ -28,6 +28,10 @@
     "score": "SCORE",
     "correct": "CORRECT",
     "accuracy": "ACCURACY",
+    "bestBoard": "BEST BOARD",
+    "bestBoardDescription1": "Tiles",
+    "bestBoardDescription234": "Tiles",
+    "bestBoardDescription567890": "Tiles",
     "tryAgain": "Try again"
   },
   "login": {
