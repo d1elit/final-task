@@ -1,7 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import auth from '../../shared/api/auth';
+import type { PayloadAction } from '@reduxjs/toolkit';
 
-import type { User } from '../../shared/types/User';
+import auth from '../../shared/api/auth';
+import user from '../../shared/api/user';
+
+import type { GameName } from '../../shared/types/games';
+import type { User } from '../../shared/types/user';
 
 type UserState = {
   isAuth: boolean;
@@ -17,13 +21,14 @@ const initialState: UserState = {
   error: null,
 };
 
-const setUser = (state: UserState, action: { payload: User | string }) => {
+const setUser = (state: UserState, action: PayloadAction<User>) => {
   state.status = 'success';
+  state.error = null;
   state.isAuth = true;
-  state.data = action.payload as User;
+  state.data = action.payload;
 };
 
-const setError = (state: UserState, action: { payload: unknown }) => {
+const setError = (state: UserState, action: PayloadAction<unknown>) => {
   state.status = 'error';
   state.data = null;
   state.error = action.payload as string;
@@ -31,6 +36,21 @@ const setError = (state: UserState, action: { payload: unknown }) => {
 
 const setStatusToLoading = (state: UserState) => {
   state.status = 'loading';
+};
+
+const setPlayedGames = (
+  state: UserState,
+  action: PayloadAction<GameName[]>
+) => {
+  if (state.data) {
+    state.data.playedGames = action.payload;
+  }
+};
+
+const logout = (state: UserState) => {
+  state.status = 'success';
+  state.isAuth = false;
+  state.data = null;
 };
 
 const userSlice = createSlice({
@@ -49,12 +69,10 @@ const userSlice = createSlice({
       .addCase(auth.getMe.fulfilled, setUser)
       .addCase(auth.getMe.rejected, setError)
       .addCase(auth.logout.pending, setStatusToLoading)
-      .addCase(auth.logout.fulfilled, (state: UserState) => {
-        state.status = 'success';
-        state.isAuth = false;
-        state.data = null;
-      })
-      .addCase(auth.logout.rejected, setError),
+      .addCase(auth.logout.fulfilled, logout)
+      .addCase(auth.logout.rejected, setError)
+      .addCase(user.updatePlayedGames.fulfilled, setPlayedGames)
+      .addCase(user.updatePlayedGames.rejected, setError),
 });
 
 export const { reducer: userReducer, actions: userActions } = userSlice;

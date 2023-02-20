@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 
-import { UserData } from '../../shared/types/User';
+import { UserData } from '../../shared/types/user';
 
 import './LoginForm.scss';
 
