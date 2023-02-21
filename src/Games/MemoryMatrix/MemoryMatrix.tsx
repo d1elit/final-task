@@ -5,7 +5,7 @@ import HowToPlayMemoryMatrix from './components/HowToPlayMemoryMatrix/HowToPlayM
 import React, { useState } from 'react';
 import Results from '../../components/Results/Results';
 import StartGame from '../../components/StartGame/StartGame';
-import { GetEndOfWord } from '../../utils/endOfWord';
+import { getEndOfWord } from '../../utils/endOfWord';
 import { useTranslation } from 'react-i18next';
 import './MemoryMatrix.scss';
 import HowToPlayDone, {
@@ -168,7 +168,7 @@ export default function MemoryMatrix() {
             >
               {`${t('MemoryMatrix.game.hintStart')} ${tilesLeft} ${t(
                 'MemoryMatrix.gameHintEnd'
-              )}${GetEndOfWord(i18n.language, tilesLeft, 'ку', 'ки', 'ок')}`}
+              )}${getEndOfWord(i18n.language, tilesLeft, 'ку', 'ки', 'ок')}`}
             </div>
           </div>
         </>

@@ -1,7 +1,7 @@
 import cn from 'classnames';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { GetEndOfWord } from '../../utils/endOfWord';
+import { getEndOfWord } from '../../utils/endOfWord';
 import './Results.scss';
 
 interface Props {
@@ -75,7 +75,7 @@ export default function Results({
             )}
           >
             {bestBoard} {t('results.bestBoardTiles')}
-            {GetEndOfWord(i18n.language, bestBoard, 'ка', 'ки', 'ок')}
+            {getEndOfWord(i18n.language, bestBoard, 'ка', 'ки', 'ок')}
           </span>
         </div>
       )}
