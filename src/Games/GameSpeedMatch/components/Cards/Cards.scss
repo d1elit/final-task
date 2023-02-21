@@ -1,27 +1,100 @@
 .cards {
-  display:  flex;
+  display: flex;
   width: 70%;
   justify-content: space-between;
   margin-top: -90px;
+
   &__card-field {
-    width: 200px;
-    height: 200px;  
+    position: relative;
+    z-index: 10;
+    width: 190px;
+    height: 190px;
     background-color: rgba(236, 234, 240, 0.062);
     border-radius: 5px;
-    transition: .05s;
+    transition: 0.05s;
   }
   &__field-previous {
+    position: relative;
+    z-index: 20;
     &_used {
-      background-color: rgba(53, 48, 122, 0.719);
     }
   }
+  &__field-current .card:first-child {
+    z-index: 1;
+
+    animation: myAnimation 1s linear;
+  }
+}
+
+.animate-prev {
+  animation: prevAnim 0.5s linear;
 }
 
 .animate {
-  // animation: myAnimation .2s linear;
+  z-index: 5;
+  position: absolute;
+  top: 0;
+  transform: translateX(-256px);
+  animation: myAnimation2 0.5s linear;
+  background-color: #fff;
+  img {
+    animation: figureAnim 0.5s linear;
+  }
+  .card__figure {
+    animation: figureAnim 0.5s linear;
+  }
+}
+
+@keyframes figureAnim {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes myAnimation2 {
+  0% {
+    transform: translateX(0px);
+  }
+  50% {
+    transform: translateX(-90px) rotateY(90deg);
+    opacity: 1;
+  }
+  100% {
+    background-image: url(../../../../assets/images/shapes/card-background.jpg);
+    background-repeat: no-repeat;
+    background-position-x: 30px;
+    background-position-y: 22px;
+    // background-size: 150px 150px;
+    // background-position: 25px 25px;
+    transform: translateX(-256px) rotateY(180deg);
+    // opacity: 0;
+  }
 }
 
 @keyframes myAnimation {
-  from { transform: translateX(0); }
-  to { transform: translateX(-250px) rotateY(-180deg); }
+  0% {
+    transform: translateX(300px);
+  }
+  25% {
+    transform: translateX(-20px);
+  }
+  50% {
+    transform: translateX(10px);
+  }
+  100% {
+    transform: translateX(0px);
+  }
+}
+
+@keyframes prevAnim {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-300px);
+  }
 }

@@ -9,14 +9,14 @@ type Props = {
 
 export default function Cards({ currentCard, secondCard, thirdCard }: Props) {
   return (
-    <div className="cards">
-      <div className="cards__card-field cards__field-previous">
+    <div className="cards-memory">
+      <div className="cards-memory__card-field cards-memory__field-previous">
         <Card shapeImg={thirdCard} />
       </div>
-      <div className="cards__card-field cards__field-previous">
+      <div className="cards-memory__card-field cards-memory__field-previous">
         <Card shapeImg={secondCard} />
       </div>
-      <div className="cards__card-field">
+      <div className="cards-memory__card-field">
         <Card shapeImg={currentCard} />
       </div>
     </div>
