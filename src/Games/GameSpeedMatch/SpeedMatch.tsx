@@ -39,7 +39,7 @@ export default function SpeedMatch() {
   const [streak, setStreak] = useState(0);
   const [multiplier, setMultiplier] = useState(1);
   const [score, setScore] = useState(0);
-  const [gameTimer, setGameTimer] = useState(450);
+  const [gameTimer, setGameTimer] = useState(45);
   const [isGameEnd, setIsGameEnd] = useState(false);
   const [answersCount, setAnswersCount] = useState(0);
   const [rightAnswersCount, setRightAnswersCount] = useState(0);
