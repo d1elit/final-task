@@ -3,12 +3,20 @@
   height: 480px;
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   position: relative;
   justify-content: center;
   align-items: center;
   align-content: center;
   margin: 20px auto;
+  background: url("../../assets/images/gameBackgrounds/bgBlue.jpg");
+  background: url("../../assets/images/gameBackgrounds/bgBrown.jpg");
+  background: url("../../assets/images/gameBackgrounds/bgFiol.jpg");
+  background: url("../../assets/images/gameBackgrounds/bgGradient.jpg");
+  background: url("../../assets/images/gameBackgrounds/bgGreen.jpg");
+  background: url("../../assets/images/gameBackgrounds/bgSky.jpg");
+  background: url("../../assets/images/gameBackgrounds/bgWhite.jpg");
+  background: url("../../assets/images/gameBackgrounds/bgWood.jpg");
   background: url("../../assets/images/gameBackgrounds/bgBrown.jpg");
   background: url("../../assets/images/gameBackgrounds/bgWood.jpg");
   border-radius: 10px;
@@ -23,10 +31,24 @@
   }
 }
 
-.memory-matrix__message {
+.matrix__after-board {
   position: absolute;
-  bottom: 30px;
+  bottom: -10px;
+  width: 100%;
+  height: 200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+.memory-matrix__message {
+  position: relative;
+  top: 130px;
+
+  font-size: 17px;
   color: #e1e1e1;
+
+  opacity: 0;
 }
 
 .memory-matrix__message_show {
@@ -50,18 +72,15 @@
   }
 }
 
-.memory-matrix__tutorial-message {
+.memory-matrix__tutorial-message_loading {
   position: inherit;
   top: 30px;
   color: #e1e1e1;
   font-size: 20px;
   opacity: 0;
   transition: 2s;
-}
+  animation: 3s infinite memory-matrix__tutorial-message_loading ease-in-out;
 
-.memory-matrix__tutorial-message_loading {
-  animation: 3s infinite memory-matrix__tutorial-message_loading;
-  transition: 2s;
   @keyframes memory-matrix__tutorial-message_loading {
     0% {
       opacity: 1;
@@ -80,8 +99,14 @@
 }
 
 .memory-matrix__tutorial-message_game {
+  position: inherit;
+  top: 30px;
+  color: #e1e1e1;
+  font-size: 20px;
+  opacity: 0;
   transition: 2s;
-  animation: 3s infinite memory-matrix__tutorial-message_game;
+  animation: 2.5s infinite memory-matrix__tutorial-message_game ease-in-out;
+
   @keyframes memory-matrix__tutorial-message_game {
     0% {
       opacity: 1;

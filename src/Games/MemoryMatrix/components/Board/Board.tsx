@@ -1,5 +1,6 @@
 import cn from 'classnames';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import Tile from '../Tile/Tile';
 import './Board.scss';
 

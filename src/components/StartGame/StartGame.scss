@@ -42,6 +42,33 @@
       }
     }
   }
+  animation: 1.8s forwards start-game-in cubic-bezier(0.19, 1, 0.22, 1);
+
+  @keyframes start-game-in {
+    0% {
+      opacity: 0;
+      transform: translateY(70px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+.start-game-out {
+  animation: 1s forwards start-game-out cubic-bezier(0.645, 0.045, 0.355, 1);
+
+  @keyframes start-game-out {
+    1% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-400px);
+    }
+  }
 }
 
 .start-game_speed-match {

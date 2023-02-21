@@ -1,0 +1,88 @@
+.how-to-play-done {
+  position: absolute;
+  width: 80%;
+  max-width: 415px;
+
+  font-size: 1rem;
+  font-family: Roboto;
+
+  margin: 0 auto;
+
+  border: 7px solid rgba(0, 0, 0, 0.3);
+  border-radius: 3px;
+  animation: 1s how-to-play-done-in cubic-bezier(0.075, 0.82, 0.165, 1);
+
+  @keyframes how-to-play-done-in {
+    0% {
+      transform: translateY(500px) scale(0.1);
+    }
+    100% {
+      transform: translateY(0px) scale(1);
+    }
+  }
+
+  &__title {
+    text-align: left;
+    margin-bottom: 30px;
+    font-size: 18px;
+    font-weight: 500;
+  }
+  &__p {
+    text-align: left;
+    font-size: 16px;
+    &:last-child {
+      margin-bottom: 25px;
+    }
+  }
+  &__text {
+    text-align: center;
+    font-size: 1.3rem;
+    &:first-child {
+      margin-bottom: 25px;
+    }
+  }
+}
+
+.how-to-play-done__window {
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  padding: 20px 30px;
+
+  background-color: #fff;
+}
+
+.how-to-play-done-out {
+  animation: 0.5s forwards how-to-play-done-out cubic-bezier(0.6, -0.28, 0.735, 0.045);
+
+  @keyframes how-to-play-done-out {
+    0% {
+      transform: translateY(0px) scale(1);
+    }
+    100% {
+      transform: translateY(50px) scale(0);
+    }
+  }
+}
+
+.how-to-play-done__btn {
+  position: absolute;
+  width: 100%;
+  height: 10px;
+  bottom: -25px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 19px;
+  animation: 3s infinite how-to-play-done__btn ease-in-out;
+
+  @keyframes how-to-play-done__btn {
+    0% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(4px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+  }
+}

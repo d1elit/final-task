@@ -1,10 +1,16 @@
-import './MemoryMatrix.scss';
 import Board from './components/Board/Board';
-import GameStats from '../../components/GameStats/GameStats';
-import React, { useState } from 'react';
-import StartGame from '../../components/StartGame/StartGame';
 import cn from 'classnames';
+import GameStats from '../../components/GameStats/GameStats';
+import HowToPlayMemoryMatrix from './components/HowToPlayMemoryMatrix/HowToPlayMemoryMatrix';
+import React, { useState } from 'react';
 import Results from '../../components/Results/Results';
+import StartGame from '../../components/StartGame/StartGame';
+import { getEndOfWord } from '../../utils/endOfWord';
+import { useTranslation } from 'react-i18next';
+import './MemoryMatrix.scss';
+import HowToPlayDone, {
+  TypeConfirm,
+} from '../../components/HowToPlayDone/HowToPlayDone';
 
 const TILES_DEFAULT = 3;
 const TRIAL_DEFAULT = 1;
@@ -19,8 +25,11 @@ const TIMER_COINS = 10;
 const TIMER_STEP = 50;
 
 export default function MemoryMatrix() {
+  const { i18n, t } = useTranslation();
+
   // const [isGameMode, setIsGameMode] = useState(true);
   const [isTutorial, setIsTutorial] = useState(false);
+  const [isHowToPlayDone, setIsHowToPlayDone] = useState(false);
   const [isPause, setIsPause] = useState(false);
 
   const [isStarted, setIsStarted] = useState(false);
@@ -32,15 +41,16 @@ export default function MemoryMatrix() {
 
   const [lastBoard, setLastBoard] = useState(TILES_DEFAULT);
   const [bestBoard, setBestBoard] = useState(BEST_BOARD_DEFAULT);
+  const [tilesLeft, setTilesLeft] = useState(0);
+  const [showMessage, setShowMessage] = useState(false);
 
-  const [message, setMessage] = useState('');
   const [tutorialMessage, setTutorialMessage] = useState('');
 
   const initGame = () => {
     setIsStarted(true);
     setIsGameEnd(false);
     setIsPause(false);
-
+    setIsHowToPlayDone(false);
     // setIsGameMode(true);
     setIsTutorial(false);
     setTiles(() => TILES_DEFAULT);
@@ -58,12 +68,9 @@ export default function MemoryMatrix() {
     setIsPause(false);
   };
 
-  // const onHowToPlayHandler = () => {};
-
-  const gameDescription =
-    'Train your spatial recall by remembering the pattern of tiles';
-  const tutorialMessage1 = 'Remember the highlighted tiles.';
-  const tutorialMessage2 = 'Click the tiles to recreate the pattern.';
+  const gameDescription = t('MemoryMatrix.description');
+  const tutorialMessage1 = t('MemoryMatrix.howToPlay.message1');
+  const tutorialMessage2 = t('MemoryMatrix.howToPlay.message2');
 
   function addScore() {
     setScore(prev => prev + ADD_SCORE);
@@ -75,7 +82,9 @@ export default function MemoryMatrix() {
   }
 
   function endTutorial() {
-    initGame();
+    setIsStarted(true);
+    setIsHowToPlayDone(true);
+    // initGame();
   }
 
   function refreshBestBoard() {
@@ -85,29 +94,18 @@ export default function MemoryMatrix() {
   }
 
   function gameMessage(tapsDone: number, tapsSuccess: number) {
-    setMessage(() => {
-      if (tapsDone === tapsSuccess) {
-        return '';
-      } else if (tapsDone < tiles && tapsDone > 0) {
-        const remains = tiles - tapsDone;
-        return `Keep clicking. You can uncover ${remains} more tile${
-          remains > 1 ? 's' : ' '
-        }`;
-      }
-      return '';
-    });
+    if (tapsDone === tapsSuccess) {
+      setTilesLeft(() => 0);
+      return;
+    } else if (tapsDone < tiles && tapsDone > 0) {
+      setTilesLeft(() => tiles - tapsDone);
+    } else {
+      setTilesLeft(() => 0);
+    }
   }
 
   function tutorMessage(levelState: string) {
-    isTutorial &&
-      setTutorialMessage(() => {
-        if (levelState === 'loading') {
-          return tutorialMessage1;
-        } else if (levelState === 'game') {
-          return tutorialMessage2;
-        }
-        return '';
-      });
+    isTutorial && setTutorialMessage(levelState);
   }
 
   function onRetryHandler() {
@@ -125,8 +123,7 @@ export default function MemoryMatrix() {
           onHowToPlayHandler={onHowToPlayHandler}
         />
       )}
-
-      {isStarted && !isGameEnd && (
+      {isStarted && !isGameEnd && !isHowToPlayDone && (
         <>
           {!isTutorial && (
             <GameStats
@@ -151,25 +148,39 @@ export default function MemoryMatrix() {
             refreshBestBoard={refreshBestBoard}
           />
 
-          <div
-            className={cn('memory-matrix__tutorial-message', {
-              ['memory-matrix__tutorial-message_loading']:
-                tutorialMessage === tutorialMessage1,
-              ['memory-matrix__tutorial-message_game']:
-                tutorialMessage === tutorialMessage2,
-            })}
-          >
-            {isTutorial && tutorialMessage}
-          </div>
+          <div className="matrix__after-board">
+            {isTutorial && (
+              <div className="memory-matrix__tutorial-message_loading">
+                {tutorialMessage === 'loading' && tutorialMessage1}
+              </div>
+            )}
 
-          <div
-            className={cn('memory-matrix__message', {
-              ['memory-matrix__message_show']: message,
-            })}
-          >
-            {message}
+            {isTutorial && (
+              <div className="memory-matrix__tutorial-message_game">
+                {tutorialMessage === 'game' && tutorialMessage2}
+              </div>
+            )}
+
+            <div
+              className={cn('memory-matrix__message', {
+                ['memory-matrix__message_show']: tilesLeft > 0,
+              })}
+            >
+              {`${t('MemoryMatrix.game.hintStart')} ${tilesLeft} ${t(
+                'MemoryMatrix.gameHintEnd'
+              )}${getEndOfWord(i18n.language, tilesLeft, 'ку', 'ки', 'ок')}`}
+            </div>
           </div>
         </>
+      )}
+      {isHowToPlayDone && (
+        <HowToPlayDone
+          colorStyle={'memory-matrix'}
+          onPlayHandler={initGame}
+          typeConfirm={TypeConfirm.button}
+        >
+          <HowToPlayMemoryMatrix />
+        </HowToPlayDone>
       )}
       {isGameEnd && (
         <Results

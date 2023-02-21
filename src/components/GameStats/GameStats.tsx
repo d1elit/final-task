@@ -54,7 +54,9 @@ export default function GameStats({
       {trial !== undefined && (
         <div className="game-stats__item game-stats__timer">
           <span className="game-stats__name">{t('stats.trial')}</span>
-          <span className="game-stats__value">{`${trial} of 12`}</span>
+          <span className="game-stats__value">{`${trial} ${t(
+            'stats.trialDivider'
+          )} 12`}</span>
         </div>
       )}
       {timer !== undefined && (
