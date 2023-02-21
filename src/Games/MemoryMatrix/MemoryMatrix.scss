@@ -9,6 +9,14 @@
   align-items: center;
   align-content: center;
   margin: 20px auto;
+  background: url("../../assets/images/gameBackgrounds/bgBlue.jpg");
+  background: url("../../assets/images/gameBackgrounds/bgBrown.jpg");
+  background: url("../../assets/images/gameBackgrounds/bgFiol.jpg");
+  background: url("../../assets/images/gameBackgrounds/bgGradient.jpg");
+  background: url("../../assets/images/gameBackgrounds/bgGreen.jpg");
+  background: url("../../assets/images/gameBackgrounds/bgSky.jpg");
+  background: url("../../assets/images/gameBackgrounds/bgWhite.jpg");
+  background: url("../../assets/images/gameBackgrounds/bgWood.jpg");
   background: url("../../assets/images/gameBackgrounds/bgBrown.jpg");
   background: url("../../assets/images/gameBackgrounds/bgWood.jpg");
   border-radius: 10px;
@@ -63,8 +71,6 @@
     }
   }
 }
-
-
 
 .memory-matrix__tutorial-message_loading {
   position: inherit;
