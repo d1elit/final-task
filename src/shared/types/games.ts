@@ -3,3 +3,5 @@ export enum Games {
   'Memory Match' = 'memory-match',
   'Memory Matrix' = 'memory-matrix',
 }
+
+export type GameName = 'speed-match' | 'memory-match' | 'memory-matrix';

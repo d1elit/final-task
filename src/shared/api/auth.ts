@@ -1,14 +1,14 @@
 import { AxiosError, isAxiosError } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import type { User, UserData } from '../types/User';
 import {
   AnyAsyncThunk,
   RejectedActionFromAsyncThunk,
 } from '@reduxjs/toolkit/dist/matchers';
-import { APIError } from '../types/api';
 
 import { authHost } from '.';
+import type { APIError } from '../types/api';
+import type { User, UserData } from '../types/user';
 
 const login = createAsyncThunk(
   'user/login',
@@ -21,6 +21,7 @@ const login = createAsyncThunk(
         username: userData.username,
         password: userData.password,
       });
+
       return res.data;
     } catch (e) {
       const err = e as AxiosError<APIError>;

@@ -4,7 +4,7 @@ import withoutAuth from '../shared/hoc/withoutAuth';
 import { useActionCreators, useAppSelector } from '../shared/hooks/store';
 import authApi from '../shared/api/auth';
 
-import type { UserData } from '../shared/types/User';
+import type { UserData } from '../shared/types/user';
 
 function Login() {
   const actions = useActionCreators(authApi);
