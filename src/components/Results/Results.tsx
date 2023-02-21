@@ -1,6 +1,7 @@
 import cn from 'classnames';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { GetEndOfWord } from '../../utils/endOfWord';
 import './Results.scss';
 
 interface Props {
@@ -22,7 +23,7 @@ export default function Results({
   onRetryHandler,
   gameName,
 }: Props) {
-  const { t } = useTranslation();
+  const { i18n, t } = useTranslation();
   return (
     <div className="results">
       <h2 className="results__title">{gameName}</h2>
@@ -73,17 +74,8 @@ export default function Results({
               colorStyle && `results__data_${colorStyle}`
             )}
           >
-            {bestBoard}{' '}
-            {bestBoard % 2 === 0 || bestBoard % 3 === 0 || bestBoard % 4 === 0
-              ? t('results.bestBoardDescription234')
-              : bestBoard % 5 === 0 ||
-                bestBoard % 6 === 0 ||
-                bestBoard % 7 === 0 ||
-                bestBoard % 8 === 0 ||
-                bestBoard % 9 === 0 ||
-                bestBoard % 10 === 0
-              ? t('results.bestBoardDescription567890')
-              : t('results.bestBoardDescription1')}
+            {bestBoard} {t('results.bestBoardTiles')}
+            {GetEndOfWord(i18n.language, bestBoard, 'ка', 'ки', 'ок')}
           </span>
         </div>
       )}
