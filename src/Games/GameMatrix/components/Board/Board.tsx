@@ -21,11 +21,18 @@ interface BoardProps {
   isTutorial: boolean;
   setIsGameEnd: React.Dispatch<React.SetStateAction<boolean>>;
   refreshBestBoard: () => void;
+  isRotation: boolean;
   children?: JSX.Element;
 }
 
-const BOARD_ZOOM = 42;
+const BOARD_ZOOM = 40;
 const TRIAL_MAX = 12;
+
+const DELAY_LOAD_BG = 1000;
+const DELAY_FLIP_IN = 1000;
+const DELAY_FLIP_OUT = 3700;
+const DELAY_GAME = 4200;
+const DELAY_ROTATION = 1000;
 
 const boardSizes: Map<number, { w: number; h: number }> = new Map([
   [1, { w: 2, h: 2 }],
@@ -103,6 +110,7 @@ export default function Board({
   isTutorial,
   setIsGameEnd,
   refreshBestBoard,
+  isRotation,
 }: BoardProps) {
   const [board, setBoard] = useState<string[]>([]);
 
@@ -114,7 +122,8 @@ export default function Board({
   const [tapsSuccess, setTapsSuccess] = useState<number>(0);
   const [tapsDone, setTapsDone] = useState<number>(0);
   const [lastTileIndex, setLastTileIndex] = useState<number>(0);
-
+  const [boardRotation, setBoardRotation] = useState('board_init');
+  const [tileRotation, setTileRotation] = useState('tile_init');
   const flipGood = new Audio(flipGoodPath);
   const flipBad = new Audio(flipBadPath);
   const flipWin = new Audio(flipWinPath);
@@ -123,19 +132,43 @@ export default function Board({
   const boardWidth = boardSize?.w !== undefined ? boardSize.w : 3;
   const boardHeight = boardSize?.h !== undefined ? boardSize.h : 3;
 
+  const DELAY_START_GAME = isRotation
+    ? DELAY_GAME + DELAY_ROTATION
+    : DELAY_GAME;
+
   function checkEndOfGame() {
     return trial >= TRIAL_MAX;
   }
 
+  function rotateBoard() {
+    if (
+      boardRotation === 'board_init' ||
+      boardRotation === 'board_right_center' ||
+      boardRotation === 'board_left_center'
+    ) {
+      const wayNumber = Math.floor(Math.random() * 2);
+      if (wayNumber > 0) {
+        setBoardRotation(() => 'board_left');
+        setTileRotation(() => 'tile_left');
+      } else {
+        setBoardRotation(() => 'board_right');
+        setTileRotation(() => 'tile_right');
+      }
+    } else if (boardRotation === 'board_right') {
+      setBoardRotation(() => 'board_right_center');
+      setTileRotation(() => 'tile__init');
+    } else if (boardRotation === 'board_left') {
+      setBoardRotation(() => 'board_left_center');
+      setTileRotation(() => 'tile__init');
+    }
+  }
+
   // Waiting BG loaded
   useEffect(() => {
-    // void new Audio(moveBg).play();
-
     const timer: ReturnType<typeof setTimeout> = setTimeout(() => {
       setIsLevelLoaded(() => true);
-      // console.log('Board BG loaded');
       clearTimeout(timer);
-    }, 1000);
+    }, DELAY_LOAD_BG);
     return () => {
       clearTimeout(timer);
     };
@@ -147,15 +180,23 @@ export default function Board({
       setBoard(generateBoard(tiles));
       tutorMessage('loading');
 
-      const timerCoupIn: ReturnType<typeof setTimeout> = setTimeout(() => {
+      const timerFlipIn: ReturnType<typeof setTimeout> = setTimeout(() => {
         void flipGood.play();
-        clearTimeout(timerCoupIn);
-      }, 1200);
+        clearTimeout(timerFlipIn);
+      }, DELAY_FLIP_IN);
 
-      const timerCoupOut: ReturnType<typeof setTimeout> = setTimeout(() => {
+      const timerFlipOut: ReturnType<typeof setTimeout> = setTimeout(() => {
         void flipGood.play();
-        clearTimeout(timerCoupOut);
-      }, 4500);
+        clearTimeout(timerFlipOut);
+      }, DELAY_FLIP_OUT);
+
+      const timerRotation: ReturnType<typeof setTimeout> = setTimeout(() => {
+        // START GAME
+        if (isRotation) {
+          rotateBoard();
+        }
+        clearTimeout(timerRotation);
+      }, DELAY_GAME);
 
       // Waiting coup tiles and Start Game
       const timerStartGame: ReturnType<typeof setTimeout> = setTimeout(() => {
@@ -167,7 +208,7 @@ export default function Board({
         setLastTileIndex(0);
         tutorMessage('game');
         clearTimeout(timerStartGame);
-      }, 4500);
+      }, DELAY_START_GAME - 300);
       return () => {
         clearTimeout(timerStartGame);
       };
@@ -177,11 +218,9 @@ export default function Board({
   useEffect(() => {
     if (isLevelLoaded && isLevelEnd) {
       setIsLevelLoaded(false);
-      // setIsLevelEnd(false);
-      // console.log('Unload Level');
+      // Unload Level
       setBoard(prev =>
         prev.map(el => {
-          // console.log('el =====', el);
           if (el.includes('tile_guess') && !el.includes('flipped_guess')) {
             return el + ' flipped_end';
           } else {
@@ -218,7 +257,7 @@ export default function Board({
           }
           return prev;
         });
-        // console.log('Next Level');
+        // Next Level
         refreshBestBoard();
         // check End Of GAME
         if (checkEndOfGame()) {
@@ -227,15 +266,12 @@ export default function Board({
           isTutorial ? setTrial(prev => prev - 1) : setTrial(prev => prev + 1);
         }
 
-        // isTutorial ? setTrial(prev => prev - 1) : setTrial(prev => prev + 1);
-        // setTrial(prev => prev + 1);
         clearTimeout(timerNextLevel);
       }, 3000);
     }
   }, [isLevelEnd]);
 
   useEffect(() => {
-    // console.log(tapsCount, tapsSuccess, tapsDone);
     gameMessage(tapsDone, tapsSuccess);
     if (tapsCount === tapsSuccess) {
       // All taps Success
@@ -251,7 +287,7 @@ export default function Board({
               },
               1300
             );
-            return 'tile tile_allright';
+            return `tile tile_allright ${tileRotation}`;
           }
           return el;
         })
@@ -278,7 +314,7 @@ export default function Board({
               addScore();
               setTapsSuccess(prev => prev + 1);
               if (tapsSuccess === tapsCount) {
-                return 'tile tile_allright';
+                return `tile tile_allright ${tileRotation}`;
               } else {
                 void flipGood.play();
                 return 'tile_guess flipped_guess';
@@ -292,7 +328,8 @@ export default function Board({
 
   return (
     <div
-      className="board"
+      id="board"
+      className={`board ${boardRotation}`}
       style={{
         width: `${boardWidth * BOARD_ZOOM}px`,
         height: `${boardHeight * BOARD_ZOOM}px`,
@@ -307,7 +344,11 @@ export default function Board({
             ['tile-outer_hide-win']: isLevelEnd && tapsSuccess === tapsCount,
           })}
         >
-          <Tile className={tileClassName} index={i} onClick={onTileClick} />
+          <Tile
+            className={`tile ${tileClassName}`}
+            index={i}
+            onClick={onTileClick}
+          />
         </div>
       ))}
     </div>
