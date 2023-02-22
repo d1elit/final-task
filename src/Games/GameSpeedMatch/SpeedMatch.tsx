@@ -137,19 +137,35 @@ export default function SpeedMatch() {
     gameEndTemp.current = isGameEnd;
   };
 
+  const onAnim = () => {
+    const bito = document.querySelector('.card:first-child') as HTMLElement;
+    bito.classList.remove('animate-prev');
+    bito.removeEventListener('click', onAnim);
+  };
+
   const animate = () => {
-    document.querySelector('.cards__field-current')?.classList.add('animate');
+    const prev = document.querySelector('.animate');
+    const bito = document.querySelector('.card:first-child') as HTMLElement;
+    bito?.classList.add('animate-prev');
+    bito.addEventListener('animationend', onAnim);
+    if (prev && prev !== null && prev.parentNode) {
+      prev.parentNode.removeChild(prev);
+    }
+    const curcar = document.querySelector(
+      '.cards__field-current .card'
+    ) as HTMLElement;
+    const copy = curcar.cloneNode(true) as HTMLElement;
+    const field = curcar?.closest('.cards__card-field');
+    copy.classList.add('animate');
+    field?.append(copy);
   };
 
   const handleUserMove = (key: string) => {
-    document
-      .querySelector('.cards__field-current')
-      ?.classList.remove('animate');
+    animate();
     document
       .querySelector('.cards__field-previous')
       ?.classList.add('cards__field-previous_used');
     setCurrentCard(currentCard => {
-      document.querySelector('.cards__field-current')?.classList.add('animate');
       setSecondCard({ shapeName: '', shapeImg: cardBackground });
       setIsAnswerGetted(true);
       chekIsRightAnswer(key, currentCard.shapeName, prevCard.current);
@@ -191,6 +207,7 @@ export default function SpeedMatch() {
       isStartTimerEnd.current = true;
       startTimer();
       setShapesToStart();
+      animate();
     }, 3000);
   };
 

@@ -225,8 +225,8 @@ export default function SpeedMatch() {
     setIsAnswerGetted(false);
     startGameTimerHandle();
     document
-      .querySelector('.cards__field-previous')
-      ?.classList.toggle('cards__field-previous_used');
+      .querySelector('.cards-memory__field-previous')
+      ?.classList.toggle('cards-memory__field-previous_used');
   };
 
   const onBtnCountrolsHandler = (e: Event) => {
