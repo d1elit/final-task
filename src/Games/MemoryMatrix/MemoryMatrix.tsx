@@ -25,7 +25,6 @@ const BONUS_MULTIPLIER = 100;
 
 const TIMER_COINS = 10;
 const TIMER_STEP = 50;
-const moveBg = new Audio(moveBgPath);
 
 export default function MemoryMatrix() {
   const { i18n, t } = useTranslation();
@@ -48,6 +47,8 @@ export default function MemoryMatrix() {
   const [showMessage, setShowMessage] = useState(false);
 
   const [tutorialMessage, setTutorialMessage] = useState('');
+
+  const moveBg = new Audio(moveBgPath);
 
   const initGame = () => {
     setIsStarted(true);
