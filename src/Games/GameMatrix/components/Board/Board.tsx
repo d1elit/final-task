@@ -25,7 +25,7 @@ interface BoardProps {
   children?: JSX.Element;
 }
 
-const BOARD_ZOOM = 41;
+const BOARD_ZOOM = 40;
 const TRIAL_MAX = 12;
 
 const DELAY_LOAD_BG = 1000;
