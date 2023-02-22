@@ -10,38 +10,35 @@
     width: 190px;
     height: 190px;
     background-color: rgba(236, 234, 240, 0.062);
-    border-radius: 5px;
+    border-radius: 15px;
     transition: 0.05s;
   }
   &__field-previous {
     position: relative;
     z-index: 20;
-    &_used {
-    }
   }
   &__field-current .card:first-child {
     z-index: 1;
-
     animation: myAnimation 1s linear;
   }
 }
 
 .animate-prev {
-  animation: prevAnim 0.5s linear;
+  animation: prevAnim 0.2s linear;
 }
 
-.animate {
+.animate-speedMatch {
   z-index: 5;
   position: absolute;
   top: 0;
-  transform: translateX(-256px);
-  animation: myAnimation2 0.5s linear;
-  background-color: #fff;
+  transform: translateX(-258px);
+  animation: myAnimation2 0.2s linear;
+  background-color: rgb(139, 151, 255);
   img {
-    animation: figureAnim 0.5s linear;
+    animation: figureAnim 0.2s linear;
   }
   .card__figure {
-    animation: figureAnim 0.5s linear;
+    animation: figureAnim 0.2s linear;
   }
 }
 
@@ -68,7 +65,8 @@
     background-repeat: no-repeat;
     background-position-x: 30px;
     background-position-y: 22px;
-    transform: translateX(-256px) rotateY(180deg);
+    transform: translateX(-258px) rotateY(180deg);
+    opacity: 0;
   }
 }
 
