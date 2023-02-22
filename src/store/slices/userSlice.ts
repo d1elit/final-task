@@ -65,6 +65,7 @@ const userSlice = createSlice({
       .addCase(auth.register.pending, setStatusToLoading)
       .addCase(auth.register.fulfilled, setUser)
       .addCase(auth.register.rejected, setError)
+      .addCase(auth.googleLogin.pending, setStatusToLoading)
       .addCase(auth.getMe.pending, setStatusToLoading)
       .addCase(auth.getMe.fulfilled, setUser)
       .addCase(auth.getMe.rejected, setError)

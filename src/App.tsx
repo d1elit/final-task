@@ -14,8 +14,8 @@ function App() {
   return (
     <Suspense fallback={''}>
       <BrowserRouter>
+        <Header />
         <Session>
-          <Header />
           <Routes>
             <Route path="/" element={<div>Home</div>} />
             <Route path="/speedmatch" element={<SpeedMatch />} />
