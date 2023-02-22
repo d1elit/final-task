@@ -15,7 +15,11 @@ import StartGameTimer from '../../components/StartGameTimer/StartGameTimer';
 import cardBackground from '../../assets/images/shapes/card-background.jpg';
 import { IShapes } from '../../types/MatchGamesTypes';
 import { useTranslation } from 'react-i18next';
-import { getNextCard, shapes } from '../../utils/matchGamesUtils';
+import {
+  animateMemoryMatch,
+  getNextCard,
+  shapes,
+} from '../../utils/matchGamesUtils';
 import HowToPlay from '../../components/HowToPlay/HowToPlay';
 
 const getShapeByName = (shapeName: string) => {
@@ -148,6 +152,7 @@ export default function SpeedMatch() {
   };
 
   const handleUserMove = (key: string) => {
+    animateMemoryMatch();
     document
       .querySelector('.cards__field-previous')
       ?.classList.add('cards__field-previous_used');
@@ -197,6 +202,7 @@ export default function SpeedMatch() {
       isStartTimerEnd.current = true;
       startTimer();
       setShapesToStart();
+      animateMemoryMatch();
     }, 3000);
   };
 

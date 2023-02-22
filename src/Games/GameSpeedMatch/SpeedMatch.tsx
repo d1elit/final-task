@@ -14,7 +14,7 @@ import StartGameTimer from '../../components/StartGameTimer/StartGameTimer';
 import { IShapes } from '../../types/MatchGamesTypes';
 import cardBackground from '../../assets/images/shapes/card-background.jpg';
 import { useTranslation } from 'react-i18next';
-import { getNextCard } from '../../utils/matchGamesUtils';
+import { animateSpeedMatch, getNextCard } from '../../utils/matchGamesUtils';
 import rectangle from '../../assets/images/shapes/rectangle.png';
 import HowToPlay from '../../components/HowToPlay/HowToPlay';
 
@@ -137,31 +137,8 @@ export default function SpeedMatch() {
     gameEndTemp.current = isGameEnd;
   };
 
-  const onAnim = () => {
-    const bito = document.querySelector('.card:first-child') as HTMLElement;
-    bito.classList.remove('animate-prev');
-    bito.removeEventListener('click', onAnim);
-  };
-
-  const animate = () => {
-    const prev = document.querySelector('.animate');
-    const bito = document.querySelector('.card:first-child') as HTMLElement;
-    bito?.classList.add('animate-prev');
-    bito.addEventListener('animationend', onAnim);
-    if (prev && prev !== null && prev.parentNode) {
-      prev.parentNode.removeChild(prev);
-    }
-    const curcar = document.querySelector(
-      '.cards__field-current .card'
-    ) as HTMLElement;
-    const copy = curcar.cloneNode(true) as HTMLElement;
-    const field = curcar?.closest('.cards__card-field');
-    copy.classList.add('animate');
-    field?.append(copy);
-  };
-
   const handleUserMove = (key: string) => {
-    animate();
+    animateSpeedMatch();
     document
       .querySelector('.cards__field-previous')
       ?.classList.add('cards__field-previous_used');
@@ -207,7 +184,7 @@ export default function SpeedMatch() {
       isStartTimerEnd.current = true;
       startTimer();
       setShapesToStart();
-      animate();
+      animateSpeedMatch();
     }, 3000);
   };
 
