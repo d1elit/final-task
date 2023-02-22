@@ -2,6 +2,7 @@ import { ReactNode, useEffect } from 'react';
 
 import { useActionCreators, useAppSelector } from '../../shared/hooks/store';
 import authApi from '../../shared/api/auth';
+import Loader from '../Loader/Loader';
 
 const Session: React.FC<{ children: ReactNode }> = ({ children }) => {
   const actions = useActionCreators(authApi);
@@ -11,12 +12,7 @@ const Session: React.FC<{ children: ReactNode }> = ({ children }) => {
     void actions.getMe(null);
   }, [actions]);
 
-  if (status === 'init')
-    return (
-      <div style={{ fontSize: 50, color: '#fff', textAlign: 'center' }}>
-        Loading...
-      </div>
-    );
+  if (status === 'loading') return <Loader />;
 
   return <>{children}</>;
 };
