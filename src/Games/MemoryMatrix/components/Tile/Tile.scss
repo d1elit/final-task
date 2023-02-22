@@ -38,7 +38,7 @@ $background: #a97c57b8;
 }
 
 .tile-outer_hide-win {
-  animation: 3s forwards tile-tile-outer_hide-win;
+  animation: 1.7s forwards tile-tile-outer_hide-win;
 
   @keyframes tile-tile-outer_hide-win {
     0% {
@@ -51,7 +51,7 @@ $background: #a97c57b8;
       transform: rotateY(0deg);
     }
     100% {
-      background: rgba(255, 255, 255, 100);
+      background: rgba(255, 255, 255, 1);
       filter: brightness(2);
       transform: rotateY(90deg);
     }

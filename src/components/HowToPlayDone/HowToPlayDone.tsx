@@ -4,16 +4,21 @@ import './HowToPlayDone.scss';
 import '../StartGame/StartGame.scss';
 import cn from 'classnames';
 
+import howToIn from '../../assets/sounds/howTo/howToIn.mp3';
+import howToOut from '../../assets/sounds/howTo/howToOut.mp3';
+
 export enum TypeConfirm {
   button = 'button',
   keys = 'keys',
 }
+
 type Props = {
   colorStyle?: string;
   onPlayHandler: () => void;
   typeConfirm: TypeConfirm;
   children?: JSX.Element;
 };
+
 const HIDE_DELAY = 700;
 
 export default function HowToPlayDone({
@@ -26,8 +31,11 @@ export default function HowToPlayDone({
 
   const [hideWindow, setHideWindow] = useState(false);
 
+  void new Audio(howToIn).play();
+
   const onClick = () => {
     setHideWindow(true);
+    void new Audio(howToOut).play();
 
     const timer: ReturnType<typeof setTimeout> = setTimeout(() => {
       onPlayHandler();
