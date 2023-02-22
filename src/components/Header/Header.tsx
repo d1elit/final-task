@@ -33,22 +33,27 @@ export default function Header() {
         <nav className="header__menu">
           <ul className="header__menu-list">
             <li className="header__menu-item">
-              <Link className="header__menu-link" to={'./speedmatch'}>
+              <Link className="header__menu-link" to="./speedmatch">
                 Speed Match
               </Link>
             </li>
             <li className="header__menu-item">
-              <Link className="header__menu-link" to={'./memorymatch'}>
+              <Link className="header__menu-link" to="./memorymatch">
                 Memory Match
               </Link>
             </li>
             <li className="header__menu-item">
-              <Link className="header__menu-link" to={'./memorymatrix'}>
+              <Link className="header__menu-link" to="./memorymatrix">
                 Memory Matrix
               </Link>
             </li>
             <li className="header__menu-item">
-              <Link className="header__menu-link" to={'./stats'}>
+              <Link className="header__menu-link" to="./rotationmatrix">
+                Rotation Matrix
+              </Link>
+            </li>
+            <li className="header__menu-item">
+              <Link className="header__menu-link" to="./stats">
                 Stats
               </Link>
             </li>
