@@ -12,7 +12,7 @@ import HowToPlayDone, {
   TypeConfirm,
 } from '../../components/HowToPlayDone/HowToPlayDone';
 
-import moveBgPath from '../../assets/sounds/matrix/moveBg.mp3';
+import moveBgPath from '../../assets/sounds/matrixSounds/moveBg.mp3';
 
 const TILES_DEFAULT = 3;
 const TRIAL_DEFAULT = 1;

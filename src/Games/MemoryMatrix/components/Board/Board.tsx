@@ -3,10 +3,10 @@ import React, { useEffect, useState } from 'react';
 import Tile from '../Tile/Tile';
 import './Board.scss';
 
-import flipGoodPath from '../../../../assets/sounds/matrix/flipGood.mp3';
-import flipBadPath from '../../../../assets/sounds/matrix/flipBad.mp3';
-import flipWinPath from '../../../../assets/sounds/matrix/flipWin.mp3';
-import flipWinAll from '../../../../assets/sounds/matrix/flipWinAll.mp3';
+import flipGoodPath from '../../../../assets/sounds/matrixSounds/flipGood.mp3';
+import flipBadPath from '../../../../assets/sounds/matrixSounds/flipBad.mp3';
+import flipWinPath from '../../../../assets/sounds/matrixSounds/flipWin.mp3';
+import flipWinAll from '../../../../assets/sounds/matrixSounds/flipWinAll.mp3';
 
 interface BoardProps {
   tiles: number;
