@@ -2,7 +2,7 @@ import Board from './components/Board/Board';
 import cn from 'classnames';
 import GameStats from '../../components/GameStats/GameStats';
 import HowToPlayMemoryMatrix from './components/HowToPlayMemoryMatrix/HowToPlayMemoryMatrix';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Results from '../../components/Results/Results';
 import StartGame from '../../components/StartGame/StartGame';
 import { getEndOfWord } from '../../utils/endOfWord';
@@ -11,6 +11,8 @@ import './MemoryMatrix.scss';
 import HowToPlayDone, {
   TypeConfirm,
 } from '../../components/HowToPlayDone/HowToPlayDone';
+
+import moveBgPath from '../../assets/sounds/Matrix/moveBg.mp3';
 
 const TILES_DEFAULT = 3;
 const TRIAL_DEFAULT = 1;
@@ -23,6 +25,7 @@ const BONUS_MULTIPLIER = 100;
 
 const TIMER_COINS = 10;
 const TIMER_STEP = 50;
+const moveBg = new Audio(moveBgPath);
 
 export default function MemoryMatrix() {
   const { i18n, t } = useTranslation();
@@ -111,6 +114,12 @@ export default function MemoryMatrix() {
   function onRetryHandler() {
     initGame();
   }
+
+  useEffect(() => {
+    if (isStarted) {
+      void moveBg.play();
+    }
+  }, [isStarted]);
 
   return (
     <div className="memory-matrix">
