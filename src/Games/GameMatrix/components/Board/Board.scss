@@ -28,20 +28,6 @@
   }
 }
 
-// .board_center {
-//   animation: board_center 1s forwards cubic-bezier(0.23, 1, 0.32, 1);
-//   transition: 1s;
-//   // transform: rotateZ(0);
-//   @keyframes board_center {
-//     0% {
-//       transform: rotateZ(90deg);
-//     }
-//     100% {
-//       transform: rotateZ(0);
-//     }
-//   }
-// }
-
 .board_right {
   animation: board_right 1s forwards cubic-bezier(0.23, 1, 0.32, 1);
   @keyframes board_right {
