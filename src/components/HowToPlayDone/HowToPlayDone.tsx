@@ -4,8 +4,8 @@ import './HowToPlayDone.scss';
 import '../StartGame/StartGame.scss';
 import cn from 'classnames';
 
-import howToIn from '../../assets/sounds/HowTo/howToIn.mp3';
-import howToOut from '../../assets/sounds/HowTo/howToOut.mp3';
+import howToIn from '../../assets/sounds/howTo/howToIn.mp3';
+import howToOut from '../../assets/sounds/howTo/howToOut.mp3';
 
 export enum TypeConfirm {
   button = 'button',
