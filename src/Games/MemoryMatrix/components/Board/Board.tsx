@@ -181,7 +181,6 @@ export default function Board({
       setIsLevelLoaded(false);
       // setIsLevelEnd(false);
       // console.log('Unload Level');
-      // if (tiles === 3) endTutorial();
       setBoard(prev =>
         prev.map(el => {
           // console.log('el =====', el);
