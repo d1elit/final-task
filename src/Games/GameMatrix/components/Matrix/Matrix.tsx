@@ -56,7 +56,7 @@ export default function Matrix({ matrixGame }: MatrixProps) {
   const [trial, setTrial] = useState(TRIAL_DEFAULT);
   const [score, setScore] = useState(SCORE_DEFAULT);
 
-  // const [lastBoard, setLastBoard] = useState(TILES_DEFAULT);
+  const [lastBoard, setLastBoard] = useState(TILES_DEFAULT);
   const [bestBoard, setBestBoard] = useState(BEST_BOARD_DEFAULT);
   const [tilesLeft, setTilesLeft] = useState(0);
   // const [showMessage, setShowMessage] = useState(false);
@@ -134,7 +134,7 @@ export default function Matrix({ matrixGame }: MatrixProps) {
   const saveResults = useCallback(() => {
     const results = {
       score,
-      lastBoard: bestBoard,
+      lastBoard,
     };
 
     try {
