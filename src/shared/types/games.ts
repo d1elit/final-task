@@ -2,7 +2,7 @@ export enum Games {
   'Speed Match' = 'speed-match',
   'Memory Match' = 'memory-match',
   'Memory Matrix' = 'memory-matrix',
-  'RotationMatrix Matrix' = 'rotation-matrix',
+  'Rotation Matrix' = 'rotation-matrix',
 }
 
 export type GameName =
