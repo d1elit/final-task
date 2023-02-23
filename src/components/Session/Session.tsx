@@ -9,7 +9,7 @@ const Session: React.FC<{ children: ReactNode }> = ({ children }) => {
   const status = useAppSelector(state => state.user.status);
 
   useEffect(() => {
-    void actions.getMe(null);
+    void actions.getMe();
   }, [actions]);
 
   if (status === 'loading') return <Loader />;

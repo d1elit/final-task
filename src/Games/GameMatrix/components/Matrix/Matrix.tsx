@@ -2,7 +2,7 @@ import Board from '../Board/Board';
 import cn from 'classnames';
 import GameStats from '../../../../components/GameStats/GameStats';
 import HowToPlayMemoryMatrix from '../HowToPlayMemoryMatrix/HowToPlayMemoryMatrix';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Results from '../../../../components/Results/Results';
 import StartGame from '../../../../components/StartGame/StartGame';
 import { getEndOfWord } from '../../../../utils/endOfWord';
@@ -14,6 +14,9 @@ import HowToPlayDone, {
 
 import moveBgPath from '../../../../assets/sounds/matrixSounds/moveBg.mp3';
 import HowToPlayRotationMatrix from '../HowToPlayRotationMatrix/HowToPlayRotationMatrix';
+import { MatrixGameResult } from '../../../../shared/types/score';
+import scoreApi from '../../../../shared/api/score';
+import { useAppSelector } from '../../../../shared/hooks/store';
 
 const TILES_DEFAULT = 3;
 const TRIAL_DEFAULT = 1;
@@ -37,7 +40,11 @@ type MatrixProps = {
 };
 
 export default function Matrix({ matrixGame }: MatrixProps) {
+  const isAuth = useAppSelector(state => state.user.isAuth);
+
   const { i18n, t } = useTranslation();
+
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   const [isTutorial, setIsTutorial] = useState(false);
   const [isHowToPlayDone, setIsHowToPlayDone] = useState(false);
@@ -123,6 +130,27 @@ export default function Matrix({ matrixGame }: MatrixProps) {
   function onRetryHandler() {
     initGame();
   }
+
+  const saveResults = useCallback(() => {
+    const results = {
+      score,
+      lastBoard: bestBoard,
+    };
+
+    try {
+      void scoreApi.saveResults<MatrixGameResult>(
+        isRotation ? 'rotation-matrix' : 'memory-matrix',
+        results
+      );
+    } catch (e) {
+      const err = e as Error;
+      setErrorMessage(err.message);
+    }
+  }, [score, bestBoard, isRotation]);
+
+  useEffect(() => {
+    if (isGameEnd && isAuth) saveResults();
+  }, [isGameEnd, isAuth, saveResults]);
 
   useEffect(() => {
     if (isStarted) {
