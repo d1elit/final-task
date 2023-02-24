@@ -10,6 +10,26 @@ import { authHost } from '.';
 import type { APIError } from '../types/api';
 import type { User, UserData } from '../types/user';
 
+const getMe = createAsyncThunk(
+  'user/getMe',
+  async (
+    _: undefined,
+    { rejectWithValue }
+  ): Promise<User | RejectedActionFromAsyncThunk<AnyAsyncThunk>> => {
+    try {
+      const res = await authHost.get<User>('/auth/me');
+      return res.data;
+    } catch (e) {
+      const err = e as AxiosError<APIError>;
+      if (isAxiosError(err) && err.response) {
+        return rejectWithValue(err.response?.data?.message);
+      } else {
+        return rejectWithValue(err.message);
+      }
+    }
+  }
+);
+
 const login = createAsyncThunk(
   'user/login',
   async (
@@ -52,26 +72,6 @@ const register = createAsyncThunk(
         username: userData.username,
         password: userData.password,
       });
-      return res.data;
-    } catch (e) {
-      const err = e as AxiosError<APIError>;
-      if (isAxiosError(err) && err.response) {
-        return rejectWithValue(err.response?.data?.message);
-      } else {
-        return rejectWithValue(err.message);
-      }
-    }
-  }
-);
-
-const getMe = createAsyncThunk(
-  'user/getMe',
-  async (
-    _: null,
-    { rejectWithValue }
-  ): Promise<User | RejectedActionFromAsyncThunk<AnyAsyncThunk>> => {
-    try {
-      const res = await authHost.get<User>('/auth/me');
       return res.data;
     } catch (e) {
       const err = e as AxiosError<APIError>;
