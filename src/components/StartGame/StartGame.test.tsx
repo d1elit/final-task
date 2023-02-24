@@ -1,17 +1,18 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import StartGame from './StartGame';
 import '@testing-library/jest-dom';
 import SpeedMatch from '../../Games/GameSpeedMatch/SpeedMatch';
 import MemoryMatch from '../../Games/GameMemoryMatch/MemoryMatch';
-// import MemoryMatrix from '../../Games/GameMatrix/MemoryMatrix/MemoryMatrix';
-// import RotationMatrix from '../../Games/GameMatrix/RotationMatrix/RotationMatrix';
+import store from '../../store/index';
+import { Provider } from 'react-redux';
+import MemoryMatrix from '../../Games/GameMatrix/MemoryMatrix/MemoryMatrix';
+import RotationMatrix from '../../Games/GameMatrix/RotationMatrix/RotationMatrix';
 
 const components = [
   { name: 'SpeedMatch', component: SpeedMatch },
   { name: 'MemoryMatch', component: MemoryMatch },
-  // { name: 'MemoryMatrix', component: MemoryMatrix },
-  // { name: 'RotationMatrix', component: RotationMatrix },
+  { name: 'MemoryMatrix', component: MemoryMatrix },
+  { name: 'RotationMatrix', component: RotationMatrix },
 ];
 
 describe('StartGame component', () => {
@@ -30,13 +31,31 @@ describe('StartGame component', () => {
     expect(screen.getByText(/startGame.howToPlay/i)).toBeInTheDocument();
   });
 });
-describe('Play button in components', () => {
+describe('User click on Play button in components', () => {
   components.forEach(elem => {
     it(`Render ${elem.name}  after clicking the Play button`, () => {
-      render(<elem.component />);
-      const playButton = screen.getByText('startGame.play');
-      fireEvent.click(playButton);
+      render(
+        <Provider store={store}>
+          <elem.component />
+        </Provider>
+      );
+      const playBtn = screen.getByText('startGame.play');
+      fireEvent.click(playBtn);
       expect(screen.getByText(`${elem.name}.description`)).toBeInTheDocument();
+    });
+  });
+});
+describe('User click on How To Play button in components', () => {
+  components.forEach(elem => {
+    it(`Render ${elem.name}  after clicking the how to play button`, () => {
+      render(
+        <Provider store={store}>
+          <elem.component />
+        </Provider>
+      );
+      const howToPlayBtn = screen.getByText('startGame.howToPlay');
+      fireEvent.click(howToPlayBtn);
+      expect(screen.getByText(/howToPlay/i)).toBeInTheDocument();
     });
   });
 });
