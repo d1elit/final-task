@@ -3,10 +3,10 @@ import StartGame from './StartGame';
 import '@testing-library/jest-dom';
 import SpeedMatch from '../../Games/GameSpeedMatch/SpeedMatch';
 import MemoryMatch from '../../Games/GameMemoryMatch/MemoryMatch';
-import store from '../../store/index';
-import { Provider } from 'react-redux';
 import MemoryMatrix from '../../Games/GameMatrix/MemoryMatrix/MemoryMatrix';
 import RotationMatrix from '../../Games/GameMatrix/RotationMatrix/RotationMatrix';
+import store from '../../store/index';
+import { Provider } from 'react-redux';
 
 const components = [
   { name: 'SpeedMatch', component: SpeedMatch },

@@ -290,7 +290,7 @@ export default function SpeedMatch() {
     <div className="speed-match">
       {!isStarted && !isGameEnd && !isHowToPlayOpen && (
         <StartGame
-          title="Memory Match"
+          title={t('MemoryMatch.gameName')}
           description={t('MemoryMatch.description')}
           onPlayHandler={onPlayHandler}
           colorStyle={'speed-match'}

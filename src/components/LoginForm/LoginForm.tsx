@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 
 import { UserData } from '../../shared/types/user';
-
+import { useTranslation } from 'react-i18next';
 import './LoginForm.scss';
 
 interface Props {
@@ -39,7 +39,7 @@ export default function LoginForm({
   const handleRegister = (data: IFormInputs) => {
     onRegister(data);
   };
-
+  const { t } = useTranslation();
   return (
     <form className="loginForm">
       {isError && <p>{error}</p>}
@@ -71,17 +71,17 @@ export default function LoginForm({
       {errors?.password && <p>{errors.password.message}</p>}
       <div className="loginControls">
         <button disabled={isSubmitting} onClick={handleSubmit(handleLogin)}>
-          Sign in
+          {t('loginPage.signIn')}
         </button>
         <button disabled={isSubmitting} onClick={handleSubmit(handleRegister)}>
-          Sign up
+          {t('loginPage.signUp')}
         </button>
         <button
           type="button"
           disabled={isSubmitting}
           onClick={handleGoogleLogin}
         >
-          G
+          {t('loginPage.google')}
         </button>
       </div>
     </form>
