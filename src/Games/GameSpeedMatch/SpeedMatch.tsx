@@ -18,11 +18,13 @@ import { animateSpeedMatch, getNextCard } from '../../utils/matchGamesUtils';
 import rectangle from '../../assets/images/shapes/rectangle.png';
 import HowToPlay from '../../components/HowToPlay/HowToPlay';
 
+import { useAppSelector } from '../../shared/hooks/store';
 import scoreApi from '../../shared/api/score';
 
-import type { SpeedMatchResult } from '../../shared/types/score';
+import type { MatchGameResult } from '../../shared/types/score';
 
 export default function SpeedMatch() {
+  const isAuth = useAppSelector(state => state.user.isAuth);
   const { t } = useTranslation();
   const [isStarted, setIsStarted] = useState(false);
   const [isSuccess, setIsSuccess] = useState(true);
@@ -50,25 +52,6 @@ export default function SpeedMatch() {
   const isStartTimerEnd = useRef(false);
 
   const [errorMessage, setErrorMessage] = useState<string>('');
-
-  const saveResults = useCallback(() => {
-    const results = {
-      score,
-      correct: `${rightAnswersCount}/${answersCount}`,
-      accuracy: `${
-        rightAnswersCount !== 0
-          ? Math.round((rightAnswersCount / answersCount) * 100)
-          : 0
-      }%`,
-    };
-
-    try {
-      void scoreApi.saveResults<SpeedMatchResult>('speed-match', results);
-    } catch (e) {
-      const err = e as Error;
-      setErrorMessage(err.message);
-    }
-  }, [answersCount, rightAnswersCount, score]);
 
   const changeMultiplayer = (isRightAnswer: boolean, streak: number) => {
     if (isRightAnswer && streak == 4) {
@@ -238,14 +221,33 @@ export default function SpeedMatch() {
     setIsHowToPlayOpen(true);
   };
 
+  const saveResults = useCallback(() => {
+    const results = {
+      score,
+      correct: `${rightAnswersCount}/${answersCount}`,
+      accuracy: `${
+        rightAnswersCount !== 0
+          ? Math.round((rightAnswersCount / answersCount) * 100)
+          : 0
+      }%`,
+    };
+
+    try {
+      void scoreApi.saveResults<MatchGameResult>('speed-match', results);
+    } catch (e) {
+      const err = e as Error;
+      setErrorMessage(err.message);
+    }
+  }, [answersCount, rightAnswersCount, score]);
+
+  useEffect(() => {
+    if (isGameEnd && isAuth) saveResults();
+  }, [isGameEnd, isAuth, saveResults]);
+
   useEffect(() => {
     document.addEventListener('keydown', onKeyControlsHandler);
     document.addEventListener('click', onBtnCountrolsHandler);
   }, []);
-
-  useEffect(() => {
-    if (isGameEnd) saveResults();
-  }, [isGameEnd, saveResults]);
 
   return (
     <div className="speed-match">

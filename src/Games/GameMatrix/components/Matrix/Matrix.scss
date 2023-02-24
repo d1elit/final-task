@@ -1,4 +1,4 @@
-.memory-matrix {
+.matrix {
   width: 640px;
   height: 480px;
   display: flex;
@@ -9,16 +9,16 @@
   align-items: center;
   align-content: center;
   margin: 20px auto;
-  background: url("../../assets/images/gameBackgrounds/bgBlue.jpg");
-  background: url("../../assets/images/gameBackgrounds/bgBrown.jpg");
-  background: url("../../assets/images/gameBackgrounds/bgFiol.jpg");
-  background: url("../../assets/images/gameBackgrounds/bgGradient.jpg");
-  background: url("../../assets/images/gameBackgrounds/bgGreen.jpg");
-  background: url("../../assets/images/gameBackgrounds/bgSky.jpg");
-  background: url("../../assets/images/gameBackgrounds/bgWhite.jpg");
-  background: url("../../assets/images/gameBackgrounds/bgWood.jpg");
-  background: url("../../assets/images/gameBackgrounds/bgBrown.jpg");
-  background: url("../../assets/images/gameBackgrounds/bgWood.jpg");
+  // background: url("../../assets/images/gameBackgrounds/bgBlue.jpg");
+  // background: url("../../assets/images/gameBackgrounds/bgBrown.jpg");
+  // background: url("../../assets/images/gameBackgrounds/bgFiol.jpg");
+  // background: url("../../assets/images/gameBackgrounds/bgGradient.jpg");
+  // background: url("../../assets/images/gameBackgrounds/bgGreen.jpg");
+  // background: url("../../assets/images/gameBackgrounds/bgSky.jpg");
+  // background: url("../../assets/images/gameBackgrounds/bgWhite.jpg");
+  // background: url("../../assets/images/gameBackgrounds/bgWood.jpg");
+  background: url("../../../../assets/images/gameBackgrounds/bgBrown.jpg");
+  background: url("../../../../assets/images/gameBackgrounds/bgWood.jpg");
   border-radius: 10px;
   overflow: hidden;
   text-align: center;
@@ -39,9 +39,10 @@
   margin: 0 auto;
   display: flex;
   justify-content: center;
+  pointer-events: none;
 }
 
-.memory-matrix__message {
+.matrix__message {
   position: relative;
   top: 130px;
 
@@ -51,12 +52,12 @@
   opacity: 0;
 }
 
-.memory-matrix__message_show {
+.matrix__message_show {
   opacity: 0;
   white-space: break-spaces;
-  animation: 0.3s forwards memory-matrix__message_show;
+  animation: 0.3s forwards matrix__message_show;
 
-  @keyframes memory-matrix__message_show {
+  @keyframes matrix__message_show {
     0% {
       opacity: 0;
       transform: scaleX(1);
@@ -72,16 +73,16 @@
   }
 }
 
-.memory-matrix__tutorial-message_loading {
+.matrix__tutorial-message_loading {
   position: inherit;
   top: 30px;
   color: #e1e1e1;
   font-size: 20px;
   opacity: 0;
   transition: 2s;
-  animation: 3s infinite memory-matrix__tutorial-message_loading ease-in-out;
+  animation: 3s infinite matrix__tutorial-message_loading ease-in-out;
 
-  @keyframes memory-matrix__tutorial-message_loading {
+  @keyframes matrix__tutorial-message_loading {
     0% {
       opacity: 1;
       transform: scaleX(1);
@@ -98,16 +99,16 @@
   }
 }
 
-.memory-matrix__tutorial-message_game {
+.matrix__tutorial-message_game {
   position: inherit;
   top: 30px;
   color: #e1e1e1;
   font-size: 20px;
   opacity: 0;
   transition: 2s;
-  animation: 2.5s infinite memory-matrix__tutorial-message_game ease-in-out;
+  animation: 2.5s infinite matrix__tutorial-message_game ease-in-out;
 
-  @keyframes memory-matrix__tutorial-message_game {
+  @keyframes matrix__tutorial-message_game {
     0% {
       opacity: 1;
       transform: scaleX(1);

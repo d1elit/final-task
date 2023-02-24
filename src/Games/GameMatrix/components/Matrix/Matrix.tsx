@@ -1,18 +1,22 @@
-import Board from './components/Board/Board';
+import Board from '../Board/Board';
 import cn from 'classnames';
-import GameStats from '../../components/GameStats/GameStats';
-import HowToPlayMemoryMatrix from './components/HowToPlayMemoryMatrix/HowToPlayMemoryMatrix';
-import React, { useEffect, useState } from 'react';
-import Results from '../../components/Results/Results';
-import StartGame from '../../components/StartGame/StartGame';
-import { getEndOfWord } from '../../utils/endOfWord';
+import GameStats from '../../../../components/GameStats/GameStats';
+import HowToPlayMemoryMatrix from '../HowToPlayMemoryMatrix/HowToPlayMemoryMatrix';
+import React, { useCallback, useEffect, useState } from 'react';
+import Results from '../../../../components/Results/Results';
+import StartGame from '../../../../components/StartGame/StartGame';
+import { getEndOfWord } from '../../../../utils/endOfWord';
 import { useTranslation } from 'react-i18next';
-import './MemoryMatrix.scss';
+import './Matrix.scss';
 import HowToPlayDone, {
   TypeConfirm,
-} from '../../components/HowToPlayDone/HowToPlayDone';
+} from '../../../../components/HowToPlayDone/HowToPlayDone';
 
-import moveBg from '../../assets/sounds/matrixSounds/moveBg.mp3';
+import moveBgPath from '../../../../assets/sounds/matrixSounds/moveBg.mp3';
+import HowToPlayRotationMatrix from '../HowToPlayRotationMatrix/HowToPlayRotationMatrix';
+import { MatrixGameResult } from '../../../../shared/types/score';
+import scoreApi from '../../../../shared/api/score';
+import { useAppSelector } from '../../../../shared/hooks/store';
 
 const TILES_DEFAULT = 3;
 const TRIAL_DEFAULT = 1;
@@ -23,16 +27,27 @@ const BEST_BOARD_DEFAULT = 3;
 const ADD_SCORE = 250;
 const BONUS_MULTIPLIER = 100;
 
-const TIMER_COINS = 10;
-const TIMER_STEP = 50;
+// const TIMER_COINS = 10;
+// const TIMER_STEP = 50;
 
-export default function MemoryMatrix() {
+export enum MatrixGame {
+  MemoryMatrix = 'MemoryMatrix',
+  RotationMatrix = 'RotationMatrix',
+}
+
+type MatrixProps = {
+  matrixGame: MatrixGame;
+};
+
+export default function Matrix({ matrixGame }: MatrixProps) {
+  const isAuth = useAppSelector(state => state.user.isAuth);
+
   const { i18n, t } = useTranslation();
 
-  // const [isGameMode, setIsGameMode] = useState(true);
+  const [errorMessage, setErrorMessage] = useState<string>('');
+
   const [isTutorial, setIsTutorial] = useState(false);
   const [isHowToPlayDone, setIsHowToPlayDone] = useState(false);
-  const [isPause, setIsPause] = useState(false);
 
   const [isStarted, setIsStarted] = useState(false);
   const [isGameEnd, setIsGameEnd] = useState(false);
@@ -44,16 +59,19 @@ export default function MemoryMatrix() {
   const [lastBoard, setLastBoard] = useState(TILES_DEFAULT);
   const [bestBoard, setBestBoard] = useState(BEST_BOARD_DEFAULT);
   const [tilesLeft, setTilesLeft] = useState(0);
-  const [showMessage, setShowMessage] = useState(false);
+  // const [showMessage, setShowMessage] = useState(false);
 
   const [tutorialMessage, setTutorialMessage] = useState('');
+  const [isRotation, setIsRotation] = useState(
+    matrixGame === MatrixGame.RotationMatrix
+  );
+
+  const moveBg = new Audio(moveBgPath);
 
   const initGame = () => {
     setIsStarted(true);
     setIsGameEnd(false);
-    setIsPause(false);
     setIsHowToPlayDone(false);
-    // setIsGameMode(true);
     setIsTutorial(false);
     setTiles(() => TILES_DEFAULT);
     setTrial(() => TRIAL_DEFAULT);
@@ -63,16 +81,15 @@ export default function MemoryMatrix() {
   // === initTutorial ===
   const onHowToPlayHandler = () => {
     setIsTutorial(true);
-
     setTiles(() => 2);
     setIsStarted(true);
     setIsGameEnd(false);
-    setIsPause(false);
   };
 
-  const gameDescription = t('MemoryMatrix.description');
-  const tutorialMessage1 = t('MemoryMatrix.howToPlay.message1');
-  const tutorialMessage2 = t('MemoryMatrix.howToPlay.message2');
+  const gameTitle = t(`${matrixGame}.title`);
+  const gameDescription = t(`${matrixGame}.description`);
+  const tutorialMessage1 = t(`${matrixGame}.howToPlay.message1`);
+  const tutorialMessage2 = t(`${matrixGame}.howToPlay.message2`);
 
   function addScore() {
     setScore(prev => prev + ADD_SCORE);
@@ -114,17 +131,38 @@ export default function MemoryMatrix() {
     initGame();
   }
 
+  const saveResults = useCallback(() => {
+    const results = {
+      score,
+      lastBoard,
+    };
+
+    try {
+      void scoreApi.saveResults<MatrixGameResult>(
+        isRotation ? 'rotation-matrix' : 'memory-matrix',
+        results
+      );
+    } catch (e) {
+      const err = e as Error;
+      setErrorMessage(err.message);
+    }
+  }, [score, bestBoard, isRotation]);
+
+  useEffect(() => {
+    if (isGameEnd && isAuth) saveResults();
+  }, [isGameEnd, isAuth, saveResults]);
+
   useEffect(() => {
     if (isStarted) {
-      void new Audio(moveBg).play();
+      void moveBg.play();
     }
   }, [isStarted]);
 
   return (
-    <div className="memory-matrix">
+    <div className="matrix">
       {!isStarted && !isGameEnd && (
         <StartGame
-          title="Memory Matrix"
+          title={gameTitle}
           colorStyle={'memory-matrix'}
           description={gameDescription}
           onPlayHandler={initGame}
@@ -154,24 +192,25 @@ export default function MemoryMatrix() {
             isTutorial={isTutorial}
             setIsGameEnd={setIsGameEnd}
             refreshBestBoard={refreshBestBoard}
+            isRotation={isRotation}
           />
 
           <div className="matrix__after-board">
             {isTutorial && (
-              <div className="memory-matrix__tutorial-message_loading">
+              <div className="matrix__tutorial-message_loading">
                 {tutorialMessage === 'loading' && tutorialMessage1}
               </div>
             )}
 
             {isTutorial && (
-              <div className="memory-matrix__tutorial-message_game">
+              <div className="matrix__tutorial-message_game">
                 {tutorialMessage === 'game' && tutorialMessage2}
               </div>
             )}
 
             <div
-              className={cn('memory-matrix__message', {
-                ['memory-matrix__message_show']: tilesLeft > 0,
+              className={cn('matrix__message', {
+                ['matrix__message_show']: tilesLeft > 0,
               })}
             >
               {`${t('MemoryMatrix.game.hintStart')} ${tilesLeft} ${t(
@@ -187,7 +226,7 @@ export default function MemoryMatrix() {
           onPlayHandler={initGame}
           typeConfirm={TypeConfirm.button}
         >
-          <HowToPlayMemoryMatrix />
+          {isRotation ? <HowToPlayRotationMatrix /> : <HowToPlayMemoryMatrix />}
         </HowToPlayDone>
       )}
       {isGameEnd && (
@@ -196,7 +235,7 @@ export default function MemoryMatrix() {
           bestBoard={bestBoard}
           colorStyle={'memory-matrix'}
           onRetryHandler={onRetryHandler}
-          gameName="Memory Matrix"
+          gameName={gameTitle}
         />
       )}
     </div>

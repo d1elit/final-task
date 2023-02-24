@@ -5,9 +5,13 @@ export interface BasicGameResult {
   score: number;
 }
 
-export interface SpeedMatchResult extends BasicGameResult {
+export interface MatchGameResult extends BasicGameResult {
   correct: string;
   accuracy: string;
 }
 
-export type GameResult = SpeedMatchResult;
+export interface MatrixGameResult extends BasicGameResult {
+  lastBoard: number;
+}
+
+export type GameResult = MatchGameResult | MatrixGameResult;

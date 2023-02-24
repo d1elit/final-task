@@ -13,11 +13,22 @@
 
   },
   "MemoryMatrix": {
-    "title": "",
+    "title": "Memory Matrix",
     "description": "Train your spatial recall by remembering the pattern of tiles",
     "game.hintStart": "Keep clicking. You can uncover",
     "gameHintEnd": "more tile",
     "howToPlay.message1": "Remember the highlighted tiles.",
+    "howToPlay.message2": "Click the tiles to recreate the pattern.",
+    "howToPlayDone.title": "Nice work! This game is about memory and accuracy.",
+    "howToPlayDone.p1": "There is no time limit",
+    "howToPlayDone.p2": "You'll remember more tiles as you progress"
+  },
+  "RotationMatrix": {
+    "title": "Rotation Matrix",
+    "description": "Train your working memory by remembering the pattern of tiles",
+    "game.hintStart": "Keep clicking. You can uncover",
+    "gameHintEnd": "more tile",
+    "howToPlay.message1": "Remember the pattern. The board will rotate",
     "howToPlay.message2": "Click the tiles to recreate the pattern.",
     "howToPlayDone.title": "Nice work! This game is about memory and accuracy.",
     "howToPlayDone.p1": "There is no time limit",
