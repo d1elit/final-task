@@ -253,9 +253,9 @@ export default function SpeedMatch() {
     <div className="speed-match">
       {!isStarted && !isGameEnd && !isHowToPlayOpen && (
         <StartGame
-          title="Speed Match"
+          title={t('SpeedMatch.gameName')}
           colorStyle={'speed-match'}
-          description={t('speedMatch.description')}
+          description={t('SpeedMatch.description')}
           onPlayHandler={onPlayHandler}
           onHowToPlayHandler={onHowToPlayHandler}
         />
@@ -263,7 +263,7 @@ export default function SpeedMatch() {
 
       {isHowToPlayOpen ? (
         <HowToPlay
-          gameRules={t('speedMatch.howToPlay')}
+          gameRules={t('SpeedMatch.howToPlay')}
           onPlayHandler={onPlayInHowToPlayHandler}
         />
       ) : (
@@ -284,7 +284,7 @@ export default function SpeedMatch() {
             timer={gameTimer}
             colorStyle={'speed-match'}
           />
-          <h2 className="speed-match__title">{t('speedMatch.title')}</h2>
+          <h2 className="speed-match__title">{t('SpeedMatch.title')}</h2>
           <Cards
             currentCard={currentCard.shapeImg}
             secondCard={secondCard.shapeImg}
