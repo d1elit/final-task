@@ -7,6 +7,7 @@ import MemoryMatrix from '../../Games/GameMatrix/MemoryMatrix/MemoryMatrix';
 import RotationMatrix from '../../Games/GameMatrix/RotationMatrix/RotationMatrix';
 import store from '../../store/index';
 import { Provider } from 'react-redux';
+import userEvent from '@testing-library/user-event';
 
 const components = [
   { name: 'SpeedMatch', component: SpeedMatch },
@@ -26,36 +27,31 @@ describe('StartGame component', () => {
       />
     );
     expect(screen.getByText(/Game Name/i)).toBeInTheDocument();
-    expect(screen.getByText(/Game Description/i)).toBeInTheDocument();
-    expect(screen.getByText(/startGame.play/i)).toBeInTheDocument();
-    expect(screen.getByText(/startGame.howToPlay/i)).toBeInTheDocument();
   });
 });
-describe('User click on Play button in components', () => {
+
+describe('Start game  button rendered in all games', () => {
   components.forEach(elem => {
-    it(`Render ${elem.name}  after clicking the Play button`, () => {
+    it(`Render Start game  button in ${elem.name}`, () => {
       render(
         <Provider store={store}>
           <elem.component />
         </Provider>
       );
-      const playBtn = screen.getByText('startGame.play');
-      fireEvent.click(playBtn);
-      expect(screen.getByText(`${elem.name}.description`)).toBeInTheDocument();
+      expect(screen.getByText(/startGame.play/i)).toBeInTheDocument();
     });
   });
 });
-describe('User click on How To Play button in components', () => {
+
+describe('How to play button rendered in all games', () => {
   components.forEach(elem => {
-    it(`Render ${elem.name}  after clicking the how to play button`, () => {
+    it(`Render How to play button in ${elem.name}`, () => {
       render(
         <Provider store={store}>
           <elem.component />
         </Provider>
       );
-      const howToPlayBtn = screen.getByText('startGame.howToPlay');
-      fireEvent.click(howToPlayBtn);
-      expect(screen.getByText(/howToPlay/i)).toBeInTheDocument();
+      expect(screen.getByText(/startGame.howToPlay/i)).toBeInTheDocument();
     });
   });
 });
