@@ -83,52 +83,60 @@ export default function LoginForm({
     };
   }, []);
 
+  useEffect(() => {
+    if (isError) {
+      console.error('Error message: ', error);
+    }
+  }, [error, isError]);
+
   return (
     <form className="loginForm">
-      {isError && <p>{error}</p>}
-      <div className="inputWrapper">
-        <input
-          className="input"
-          type="text"
-          {...register('username', {
-            required: 'Fill the field',
-            minLength: {
-              value: 3,
-              message: 'Min length 3 characters',
-            },
-          })}
-          placeholder="Username"
-        />
-      </div>
-      {errors?.username && <p>{errors.username.message}</p>}
-      <div className="inputWrapper">
-        <input
-          className="input password"
-          type={passwordType}
-          {...register('password', {
-            required: 'Fill the field',
-            pattern: {
-              value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^\w\s]).{6,}/,
-              message:
-                'Invalid password. At least 6 digit characters, spec. characters, \
-              Latin, the presence of lowercase and uppercase characters',
-            },
-          })}
-          placeholder="Password"
-        />
-        <button
-          className="eye"
-          type="button"
-          ref={eyeRef}
-          onClick={handleEyeClick}
-        >
-          <Eye className="eyeIcon" />
-        </button>
-        <div className="beamWrapper">
-          <div className="beam" ref={beamRef}></div>
+      {isError && <p className="error">{t('loginPage.serverError')}</p>}
+      <div className="formGroup">
+        <div className="inputWrapper">
+          <input
+            className="input"
+            type="text"
+            {...register('username', {
+              required: `${t('loginPage.fillTheField')}`,
+              minLength: {
+                value: 3,
+                message: t('loginPage.usernameError'),
+              },
+            })}
+            placeholder={t('loginPage.username') || 'Username'}
+          />
         </div>
+        {errors?.username && <p className="error">{errors.username.message}</p>}
       </div>
-      {errors?.password && <p>{errors.password.message}</p>}
+      <div className="formGroup">
+        <div className="inputWrapper">
+          <input
+            className="input password"
+            type={passwordType}
+            {...register('password', {
+              required: `${t('loginPage.fillTheField')}`,
+              pattern: {
+                value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^\w\s]).{6,}/,
+                message: t('loginPage.passwordError'),
+              },
+            })}
+            placeholder={t('loginPage.password') || 'Password'}
+          />
+          <button
+            className="eye"
+            type="button"
+            ref={eyeRef}
+            onClick={handleEyeClick}
+          >
+            <Eye className="eyeIcon" />
+          </button>
+          <div className="beamWrapper">
+            <div className="beam" ref={beamRef}></div>
+          </div>
+        </div>
+        {errors?.password && <p className="error">{errors.password.message}</p>}
+      </div>
       <div className="loginControls">
         <button
           className="btn"
@@ -152,6 +160,7 @@ export default function LoginForm({
           title={t('loginPage.google') || ''}
         >
           <GoogleIcon className="googleIcon" />
+          <span className="socText">{t('loginPage.google')}</span>
         </button>
       </div>
     </form>
