@@ -83,12 +83,6 @@ export default function LoginForm({
     };
   }, []);
 
-  useEffect(() => {
-    if (isError) {
-      console.error('Error message: ', error);
-    }
-  }, [error, isError]);
-
   return (
     <form className="loginForm">
       {isError && <p className="error">{t('loginPage.serverError')}</p>}
