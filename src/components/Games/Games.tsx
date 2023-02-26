@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import './Games.scss';
 
 export default function Games() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   return (
     <div className="games">
@@ -18,9 +18,11 @@ export default function Games() {
               <img className="games__image" src={speedMatch} alt="speedMatch" />
             </div>
             <div className="games__about">
-              <div className="games__text">SPEED</div>
+              <div className="games__brainArea">
+                {t('speedMatch.brainArea')}
+              </div>
               <div className="games__name">Speed Match</div>
-              <div className="games_category">Information Processing</div>
+              <div className="games__type">{t('speedMatch.type')}</div>
             </div>
           </Link>
         </li>
@@ -34,9 +36,11 @@ export default function Games() {
               />
             </div>
             <div className="games__about">
-              <div className="games__text">MEMORY</div>
+              <div className="games__brainArea">
+                {t('memoryMatch.brainArea')}
+              </div>
               <div className="games__name">Memory Match</div>
-              <div className="games_category">Working Memory</div>
+              <div className="games__type">{t('memoryMatch.type')}</div>
             </div>
           </Link>
         </li>
@@ -50,9 +54,11 @@ export default function Games() {
               />
             </div>
             <div className="games__about">
-              <div className="games__text">MEMORY</div>
+              <div className="games__brainArea">
+                {t('MemoryMatrix.brainArea')}
+              </div>
               <div className="games__name">Memory Matrix</div>
-              <div className="games_category">Spatial Recall</div>
+              <div className="games__type">{t('MemoryMatrix.type')}</div>
             </div>
           </Link>
         </li>
@@ -66,9 +72,11 @@ export default function Games() {
               />
             </div>
             <div className="games__about">
-              <div className="games__text">MEMORY</div>
+              <div className="games__brainArea">
+                {t('RotationMatrix.brainArea')}
+              </div>
               <div className="games__name">Rotation Matrix</div>
-              <div className="games_category">Working Memory</div>
+              <div className="games__type">{t('RotationMatrix.type')}</div>
             </div>
           </Link>
         </li>
