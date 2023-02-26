@@ -17,6 +17,7 @@ import { IShapes } from '../../types/MatchGamesTypes';
 import { useTranslation } from 'react-i18next';
 import { getNextCard, shapes } from '../../utils/matchGamesUtils';
 import HowToPlay from '../../components/HowToPlay/HowToPlay';
+import GameAbout from '../../components/GameAbout/GameAbout';
 
 const getShapeByName = (shapeName: string) => {
   let result: IShapes = { shapeName: '', shapeImg: '' };
@@ -57,6 +58,10 @@ export default function SpeedMatch() {
   const prevPrevCard = useRef('');
   const [startGameTimer, setStartGameTimer] = useState(3);
   const isStartTimerEnd = useRef(false);
+
+  const gameTitle = t(`memoryMatch.name`);
+  const gameType = t(`memoryMatch.type`);
+  const gameAbout = t(`memoryMatch.about`);
 
   const setShapesToEmpty = () => {
     setSecondCard({ shapeName: '', shapeImg: cardBackground });
@@ -252,61 +257,73 @@ export default function SpeedMatch() {
   }, []);
 
   return (
-    <div className="speed-match">
-      {!isStarted && !isGameEnd && !isHowToPlayOpen && (
-        <StartGame
-          title="Memory Match"
-          description={t('memoryMatch.description')}
-          onPlayHandler={onPlayHandler}
-          colorStyle={'speed-match'}
-          onHowToPlayHandler={onHowToPlayHandler}
-        />
-      )}
-      {isStarted && (
-        <>
-          {startGameTimer !== 0 ? (
-            <StartGameTimer timerValue={startGameTimer} />
-          ) : (
-            false
-          )}
-          <GameStats
-            score={score}
-            streak={streak}
-            multiplier={multiplier}
-            timer={gameTimer}
+    <>
+      <div className="speed-match__about">
+        {isStarted && (
+          <GameAbout title={gameTitle} type={gameType} about={gameAbout} />
+        )}
+      </div>
+      <div className="speed-match">
+        {!isStarted && !isGameEnd && !isHowToPlayOpen && (
+          <StartGame
+            title="Memory Match"
+            description={t('memoryMatch.description')}
+            onPlayHandler={onPlayHandler}
             colorStyle={'speed-match'}
+            onHowToPlayHandler={onHowToPlayHandler}
           />
+        )}
+        {isStarted && (
+          <>
+            {startGameTimer !== 0 ? (
+              <StartGameTimer timerValue={startGameTimer} />
+            ) : (
+              false
+            )}
+            <GameStats
+              score={score}
+              streak={streak}
+              multiplier={multiplier}
+              timer={gameTimer}
+              colorStyle={'speed-match'}
+            />
 
-          <h2 className="speed-match__title">{t('memoryMatch.title')}</h2>
+            <h2 className="speed-match__title">{t('memoryMatch.title')}</h2>
 
-          <Cards
-            currentCard={currentCard.shapeImg}
-            secondCard={secondCard.shapeImg}
-            thirdCard={thirdCard.shapeImg}
+            <Cards
+              currentCard={currentCard.shapeImg}
+              secondCard={secondCard.shapeImg}
+              thirdCard={thirdCard.shapeImg}
+            />
+            {isAnswerGetted && (
+              <AnswerIndicator
+                isSuccess={isSuccess}
+                classname="_memory-match"
+              />
+            )}
+            <Controls />
+          </>
+        )}
+
+        {isHowToPlayOpen ? (
+          <HowToPlay
+            gameRules={t('memoryMatch.howToPlay')}
+            onPlayHandler={onPlayInHowToPlayHandler}
           />
-          {isAnswerGetted && <AnswerIndicator isSuccess={isSuccess} />}
-          <Controls />
-        </>
-      )}
-
-      {isHowToPlayOpen ? (
-        <HowToPlay
-          gameRules={t('memoryMatch.howToPlay')}
-          onPlayHandler={onPlayInHowToPlayHandler}
-        />
-      ) : (
-        ''
-      )}
-      {isGameEnd && (
-        <Results
-          score={score}
-          correct={rightAnswersCount}
-          count={answersCount}
-          colorStyle={'speed-match'}
-          onRetryHandler={onRetryHandler}
-          gameName="Memory Match"
-        />
-      )}
-    </div>
+        ) : (
+          ''
+        )}
+        {isGameEnd && (
+          <Results
+            score={score}
+            correct={rightAnswersCount}
+            count={answersCount}
+            colorStyle={'speed-match'}
+            onRetryHandler={onRetryHandler}
+            gameName="Memory Match"
+          />
+        )}
+      </div>
+    </>
   );
 }
