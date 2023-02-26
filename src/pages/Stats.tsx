@@ -9,18 +9,23 @@ import LastResult from '../components/LastResult/LastResult';
 import ScoreTable from '../components/ScoreTable/ScoreTable';
 import scoreApi from '../shared/api/score';
 import withAuth from '../shared/hoc/withAuth';
-import { Games } from '../shared/types/games';
+import { GameName, Games } from '../shared/types/games';
 import type { GameResult } from '../shared/types/score';
 
-const selectOptions = ['Speed Match', 'Memory Match', 'Memory Matrix'];
+const selectOptions = [
+  'Speed Match',
+  'Memory Match',
+  'Memory Matrix',
+  'Rotation Matrix',
+];
 
 const Stats: FC = () => {
-  const [game, setGame] = useState<string>('speed-match');
+  const [game, setGame] = useState<GameName>('speed-match');
   const [bests, setBests] = useState<GameResult[]>([]);
   const [lastResult, setLastResult] = useState<GameResult>();
 
   const handleSelectChange: ChangeEventHandler<HTMLSelectElement> = e => {
-    setGame(e.target.value);
+    setGame(e.target.value as GameName);
   };
 
   const getStats = useCallback(async () => {

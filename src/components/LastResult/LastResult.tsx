@@ -1,6 +1,6 @@
 import type { GameResult } from '../../shared/types/score';
 import { formatDate } from '../../utils/helpers/date';
-
+import { useTranslation } from 'react-i18next';
 import './LastResult.scss';
 
 interface Props {
@@ -8,9 +8,10 @@ interface Props {
 }
 
 export default function LastResult({ result }: Props) {
+  const { t } = useTranslation();
   return (
     <div className="lastResult">
-      <h3>Your last Result</h3>
+      <h3>{t('statsPage.lastResults')}</h3>
       <ul>
         {result &&
           Object.keys(result).map(key =>

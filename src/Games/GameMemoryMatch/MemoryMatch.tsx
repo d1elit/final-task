@@ -1,7 +1,7 @@
 import succesSound from '../../assets/sounds/success.mp3';
 import failureSound from '../../assets/sounds/failure.mp3';
 import timerSound from '../../assets/sounds/timerSound.mp3';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Controls from '../../components/Controls/Controls';
 import StartGame from '../../components/StartGame/StartGame';
 import Cards from './components/Cards/Cards';
@@ -15,8 +15,15 @@ import StartGameTimer from '../../components/StartGameTimer/StartGameTimer';
 import cardBackground from '../../assets/images/shapes/card-background.jpg';
 import { IShapes } from '../../types/MatchGamesTypes';
 import { useTranslation } from 'react-i18next';
-import { getNextCard, shapes } from '../../utils/matchGamesUtils';
+import {
+  animateMemoryMatch,
+  getNextCard,
+  shapes,
+} from '../../utils/matchGamesUtils';
 import HowToPlay from '../../components/HowToPlay/HowToPlay';
+import type { MatchGameResult } from '../../shared/types/score';
+import { useAppSelector } from '../../shared/hooks/store';
+import scoreApi from '../../shared/api/score';
 
 const getShapeByName = (shapeName: string) => {
   let result: IShapes = { shapeName: '', shapeImg: '' };
@@ -27,6 +34,7 @@ const getShapeByName = (shapeName: string) => {
 };
 
 export default function SpeedMatch() {
+  const isAuth = useAppSelector(state => state.user.isAuth);
   const { t } = useTranslation();
   const [isStarted, setIsStarted] = useState(false);
   const [isSuccess, setIsSuccess] = useState(true);
@@ -57,6 +65,7 @@ export default function SpeedMatch() {
   const prevPrevCard = useRef('');
   const [startGameTimer, setStartGameTimer] = useState(3);
   const isStartTimerEnd = useRef(false);
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   const setShapesToEmpty = () => {
     setSecondCard({ shapeName: '', shapeImg: cardBackground });
@@ -148,6 +157,7 @@ export default function SpeedMatch() {
   };
 
   const handleUserMove = (key: string) => {
+    animateMemoryMatch();
     document
       .querySelector('.cards__field-previous')
       ?.classList.add('cards__field-previous_used');
@@ -197,6 +207,7 @@ export default function SpeedMatch() {
       isStartTimerEnd.current = true;
       startTimer();
       setShapesToStart();
+      animateMemoryMatch();
     }, 3000);
   };
 
@@ -246,6 +257,30 @@ export default function SpeedMatch() {
   const onHowToPlayHandler = () => {
     setIsHowToPlayOpen(true);
   };
+
+  const saveResults = useCallback(() => {
+    const results = {
+      score,
+      correct: `${rightAnswersCount}/${answersCount}`,
+      accuracy: `${
+        rightAnswersCount !== 0
+          ? Math.round((rightAnswersCount / answersCount) * 100)
+          : 0
+      }%`,
+    };
+
+    try {
+      void scoreApi.saveResults<MatchGameResult>('memory-match', results);
+    } catch (e) {
+      const err = e as Error;
+      setErrorMessage(err.message);
+    }
+  }, [answersCount, rightAnswersCount, score]);
+
+  useEffect(() => {
+    if (isGameEnd && isAuth) saveResults();
+  }, [isGameEnd, isAuth, saveResults]);
+
   useEffect(() => {
     document.addEventListener('keydown', onKeyControlsHandler);
     document.addEventListener('click', onBtnCountrolsHandler);
@@ -255,8 +290,8 @@ export default function SpeedMatch() {
     <div className="speed-match">
       {!isStarted && !isGameEnd && !isHowToPlayOpen && (
         <StartGame
-          title="Memory Match"
-          description={t('memoryMatch.description')}
+          title={t('MemoryMatch.gameName')}
+          description={t('MemoryMatch.description')}
           onPlayHandler={onPlayHandler}
           colorStyle={'speed-match'}
           onHowToPlayHandler={onHowToPlayHandler}
@@ -277,7 +312,7 @@ export default function SpeedMatch() {
             colorStyle={'speed-match'}
           />
 
-          <h2 className="speed-match__title">{t('memoryMatch.title')}</h2>
+          <h2 className="speed-match__title">{t('MemoryMatch.title')}</h2>
 
           <Cards
             currentCard={currentCard.shapeImg}
@@ -291,7 +326,7 @@ export default function SpeedMatch() {
 
       {isHowToPlayOpen ? (
         <HowToPlay
-          gameRules={t('memoryMatch.howToPlay')}
+          gameRules={t('MemoryMatch.howToPlay')}
           onPlayHandler={onPlayInHowToPlayHandler}
         />
       ) : (
