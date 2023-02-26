@@ -1,9 +1,20 @@
 .cards {
   display: flex;
-  width: 70%;
+  width: 448px;
   justify-content: space-between;
   margin-top: -90px;
-
+  @media screen and (max-width: 470px) {
+    zoom: 0.9;
+  }
+  @media screen and (max-width: 430px) {
+    zoom: 0.8;
+  }
+  @media screen and (max-width: 380px) {
+    zoom: 0.7;
+  }
+  @media screen and (max-width: 340px) {
+    zoom: 0.65;
+  }
   &__card-field {
     position: relative;
     z-index: 10;

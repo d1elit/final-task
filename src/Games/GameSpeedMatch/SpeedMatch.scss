@@ -1,32 +1,39 @@
 .speed-match {
-  width: 640px;
+  width: 100%;
+  max-width: 640px;
   height: 480px;
   display: flex;
   flex-wrap: wrap;
   position: relative;
   justify-content: center;
   align-items: center;
-  margin: 20px auto;
-  background: linear-gradient(153deg, rgba(2, 0, 36, 1) 0%, rgba(164, 68, 157, 1) 35%, rgba(0, 212, 255, 1) 100%);
+  margin: 0 auto;
 
   background: url("../../assets/images/gameBackgrounds/bgBlue.jpg");
-  background: url("../../assets/images/gameBackgrounds/bgBrown.jpg");
-  background: url("../../assets/images/gameBackgrounds/bgFiol.jpg");
-  background: url("../../assets/images/gameBackgrounds/bgGradient.jpg");
-  background: url("../../assets/images/gameBackgrounds/bgGreen.jpg");
-  background: url("../../assets/images/gameBackgrounds/bgSky.jpg");
-  background: url("../../assets/images/gameBackgrounds/bgWhite.jpg");
-  background: url("../../assets/images/gameBackgrounds/bgWood.jpg");
-
   background: url("../../assets/images/gameBackgrounds/bgGradient.jpg");
   border-radius: 10px;
   text-align: center;
   overflow: hidden;
+  user-select: none;
+
+  @media screen and (max-width: 640px) {
+    border-radius: 0;
+  }
+
   &__title {
     margin-top: 50px;
+    padding: 0 20px;
     color: #fff;
     font-size: 1.5rem;
     font-weight: normal;
     font-family: "Courier New", Courier, monospace;
   }
+}
+
+.speed-match__about {
+  width: 100%;
+  max-width: 640px;
+  height: 150px;
+  display: flex;
+  margin: 0 auto;
 }

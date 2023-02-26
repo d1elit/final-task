@@ -1,25 +1,22 @@
-export const setStyles = (
-  e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-): void => {
-  const langs = document.querySelectorAll('.header__lang') as NodeList;
-  const target = e.target as HTMLElement;
-  langs.forEach(lang => {
-    (lang as HTMLElement).innerHTML === target.innerHTML
-      ? (lang as HTMLElement).classList.add('header__lang_active')
-      : (lang as HTMLElement).classList.remove('header__lang_active');
-  });
-};
+import i18n from './i18next';
 
 export const setLocalisationStyle = () => {
-  const langs = document.querySelectorAll('.header__lang') as NodeList;
+  const langElem = document.querySelector('.header__lang') as HTMLElement;
   const currentLang = localStorage.getItem('i18nextLng');
-  const engElem = document.querySelector('.header__lang_en') as HTMLElement;
-  langs.forEach(lang => {
-    if (!currentLang) engElem.classList.add('header__lang_active');
-    else {
-      (lang as HTMLElement).innerHTML === currentLang
-        ? (lang as HTMLElement).classList.add('header__lang_active')
-        : (lang as HTMLElement).classList.remove('header__lang_active');
-    }
-  });
+  !currentLang
+    ? (langElem.className = 'header__lang header__lang_en')
+    : (langElem.className = `header__lang header__lang_${currentLang}`);
+};
+
+export const setStyles = (): void => {
+  const langElem = document.querySelector('.header__lang') as HTMLElement;
+  const currentLang = localStorage.getItem('i18nextLng');
+  if (!currentLang) {
+    langElem.className = 'header__lang header__lang_en';
+  } else {
+    currentLang === 'en'
+      ? void i18n.changeLanguage('ru')
+      : void i18n.changeLanguage('en');
+    langElem.className = `header__lang header__lang_${i18n.language}`;
+  }
 };

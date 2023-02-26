@@ -2,6 +2,49 @@
   position: absolute;
   z-index: 20;
   top: 55%;
+  @media screen and (max-width: 470px) {
+    zoom: 0.9;
+    top: 60%;
+  }
+  @media screen and (max-width: 430px) {
+    zoom: 0.8;
+    top: 63%;
+  }
+  @media screen and (max-width: 380px) {
+    zoom: 0.7;
+    top: 66%;
+  }
+  @media screen and (max-width: 340px) {
+    zoom: 0.65;
+    top: 68%;
+  }
+
+  &_memory-match {
+    @media screen and (max-width: 640px) {
+      zoom: 0.9;
+      top: 60%;
+    }
+    @media screen and (max-width: 580px) {
+      zoom: 0.8;
+      top: 63%;
+    }
+    @media screen and (max-width: 500px) {
+      zoom: 0.7;
+      top: 65%;
+    }
+    @media screen and (max-width: 430px) {
+      zoom: 0.6;
+      top: 68%;
+    }
+    @media screen and (max-width: 370px) {
+      zoom: 0.55;
+      top: 70%;
+    }
+    @media screen and (max-width: 340px) {
+      zoom: 0.5;
+      top: 72%;
+    }
+  }
 
   &__failure {
     font-size: 3.5rem;

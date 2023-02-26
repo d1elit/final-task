@@ -17,10 +17,10 @@ import { useTranslation } from 'react-i18next';
 import { animateSpeedMatch, getNextCard } from '../../utils/matchGamesUtils';
 import rectangle from '../../assets/images/shapes/rectangle.png';
 import HowToPlay from '../../components/HowToPlay/HowToPlay';
+import GameAbout from '../../components/GameAbout/GameAbout';
 
 import { useAppSelector } from '../../shared/hooks/store';
 import scoreApi from '../../shared/api/score';
-
 import type { MatchGameResult } from '../../shared/types/score';
 
 export default function SpeedMatch() {
@@ -52,6 +52,10 @@ export default function SpeedMatch() {
   const isStartTimerEnd = useRef(false);
 
   const [errorMessage, setErrorMessage] = useState<string>('');
+
+  const gameTitle = t(`SpeedMatch.gameName`);
+  const gameType = t(`SpeedMatch.type`);
+  const gameAbout = t(`SpeedMatch.about`);
 
   const changeMultiplayer = (isRightAnswer: boolean, streak: number) => {
     if (isRightAnswer && streak == 4) {
@@ -250,59 +254,66 @@ export default function SpeedMatch() {
   }, []);
 
   return (
-    <div className="speed-match">
-      {!isStarted && !isGameEnd && !isHowToPlayOpen && (
-        <StartGame
-          title={t('SpeedMatch.gameName')}
-          colorStyle={'speed-match'}
-          description={t('SpeedMatch.description')}
-          onPlayHandler={onPlayHandler}
-          onHowToPlayHandler={onHowToPlayHandler}
-        />
-      )}
-
-      {isHowToPlayOpen ? (
-        <HowToPlay
-          gameRules={t('SpeedMatch.howToPlay')}
-          onPlayHandler={onPlayInHowToPlayHandler}
-        />
-      ) : (
-        ''
-      )}
-
-      {isStarted && (
-        <>
-          {startGameTimer !== 0 ? (
-            <StartGameTimer timerValue={startGameTimer} />
-          ) : (
-            false
-          )}
-          <GameStats
-            score={score}
-            streak={streak}
-            multiplier={multiplier}
-            timer={gameTimer}
+    <>
+      <div className="speed-match__about">
+        {isStarted && (
+          <GameAbout title={gameTitle} type={gameType} about={gameAbout} />
+        )}
+      </div>
+      <div className="speed-match">
+        {!isStarted && !isGameEnd && !isHowToPlayOpen && (
+          <StartGame
+            title="Speed Match"
             colorStyle={'speed-match'}
+            description={t('SpeedMatch.description')}
+            onPlayHandler={onPlayHandler}
+            onHowToPlayHandler={onHowToPlayHandler}
           />
-          <h2 className="speed-match__title">{t('SpeedMatch.title')}</h2>
-          <Cards
-            currentCard={currentCard.shapeImg}
-            secondCard={secondCard.shapeImg}
+        )}
+
+        {isHowToPlayOpen ? (
+          <HowToPlay
+            gameRules={t('SpeedMatch.howToPlay')}
+            onPlayHandler={onPlayInHowToPlayHandler}
           />
-          {isAnswerGetted && <AnswerIndicator isSuccess={isSuccess} />}
-          <Controls />
-        </>
-      )}
-      {isGameEnd && (
-        <Results
-          score={score}
-          correct={rightAnswersCount}
-          count={answersCount}
-          colorStyle={'speed-match'}
-          onRetryHandler={onRetryHandler}
-          gameName="Speed Match"
-        />
-      )}
-    </div>
+        ) : (
+          ''
+        )}
+
+        {isStarted && (
+          <>
+            {startGameTimer !== 0 ? (
+              <StartGameTimer timerValue={startGameTimer} />
+            ) : (
+              false
+            )}
+            <GameStats
+              score={score}
+              streak={streak}
+              multiplier={multiplier}
+              timer={gameTimer}
+              colorStyle={'speed-match'}
+            />
+            <h2 className="speed-match__title">{t('SpeedMatch.title')}</h2>
+            <Cards
+              currentCard={currentCard.shapeImg}
+              secondCard={secondCard.shapeImg}
+            />
+            {isAnswerGetted && <AnswerIndicator isSuccess={isSuccess} />}
+            <Controls />
+          </>
+        )}
+        {isGameEnd && (
+          <Results
+            score={score}
+            correct={rightAnswersCount}
+            count={answersCount}
+            colorStyle={'speed-match'}
+            onRetryHandler={onRetryHandler}
+            gameName="Speed Match"
+          />
+        )}
+      </div>
+    </>
   );
 }
