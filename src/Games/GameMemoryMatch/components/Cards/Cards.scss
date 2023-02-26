@@ -4,6 +4,24 @@
   justify-content: space-around;
   margin-top: -90px;
   animation: myAnimation 1s linear;
+  @media screen and (max-width: 640px) {
+    zoom: 0.9;
+  }
+  @media screen and (max-width: 580px) {
+    zoom: 0.8;
+  }
+  @media screen and (max-width: 500px) {
+    zoom: 0.7;
+  }
+  @media screen and (max-width: 430px) {
+    zoom: 0.6;
+  }
+  @media screen and (max-width: 370px) {
+    zoom: 0.55;
+  }
+  @media screen and (max-width: 340px) {
+    zoom: 0.5;
+  }
   &__card-field {
     width: 190px;
     height: 190px;
