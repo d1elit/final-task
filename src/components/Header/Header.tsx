@@ -1,13 +1,12 @@
-import React, { useEffect } from 'react';
-import './Header.scss';
-import logo from '../../assets/images/appLogos/lumosityLogo.png';
-import { Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { setLocalisationStyle, setStyles } from '../../utils/localisationUtils';
-
-import { useActionCreators, useAppSelector } from '../../shared/hooks/store';
 import authApi from '../../shared/api/auth';
+import { Link } from 'react-router-dom';
+import { setLocalisationStyle, setStyles } from '../../utils/localisationUtils';
+import { useActionCreators, useAppSelector } from '../../shared/hooks/store';
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import './Header.scss';
 
+import appLogo from '../../assets/images/appLogos/lumosityLogo.png';
 import memoryMatch from '../../assets/images/gameLogos/memoryMatch.png';
 import memoryMatrix from '../../assets/images/gameLogos/memoryMatrix.png';
 import rotationMatrix from '../../assets/images/gameLogos/rotationMatrix.png';
@@ -33,7 +32,12 @@ export default function Header() {
       <div className="header__container">
         <div className="header__logo">
           <Link to={'./'}>
-            <img className="header__logo-img" src={logo} alt="logo" />
+            <img
+              className="header__logo-img"
+              src={appLogo}
+              alt="lumosity Logo"
+              title="Lumosity Clone"
+            />
           </Link>
         </div>
         <nav className="header__menu">
