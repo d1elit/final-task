@@ -52,11 +52,11 @@ export default function SpeedMatch() {
   const isStartTimerEnd = useRef(false);
 
   const [errorMessage, setErrorMessage] = useState<string>('');
-  
+
   const gameTitle = t(`SpeedMatch.gameName`);
   const gameType = t(`SpeedMatch.type`);
   const gameAbout = t(`SpeedMatch.about`);
-  
+
   const changeMultiplayer = (isRightAnswer: boolean, streak: number) => {
     if (isRightAnswer && streak == 4) {
       setMultiplier(prev => {
