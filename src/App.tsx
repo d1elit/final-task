@@ -14,24 +14,28 @@ import './App.scss';
 
 function App() {
   return (
-    <Suspense fallback={''}>
-      <BrowserRouter>
-        <Session>
-          <Header />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/speedmatch" element={<SpeedMatch />} />
-            <Route path="/memorymatch" element={<MemoryMatch />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/memorymatrix" element={<MemoryMatrix />} />
-            <Route path="/rotationmatrix" element={<RotationMatrix />} />
-            <Route path="/stats" element={<Stats />} />
-            <Route path="*" element={<Home />} />
-          </Routes>
-          <Footer />
-        </Session>
-      </BrowserRouter>
-    </Suspense>
+    <div className="wrapper">
+      <Suspense fallback={''}>
+        <BrowserRouter>
+          <Session>
+            <Header />
+            <div className="main">
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/speedmatch" element={<SpeedMatch />} />
+                <Route path="/memorymatch" element={<MemoryMatch />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/memorymatrix" element={<MemoryMatrix />} />
+                <Route path="/rotationmatrix" element={<RotationMatrix />} />
+                <Route path="/stats" element={<Stats />} />
+                <Route path="*" element={<Home />} />
+              </Routes>
+            </div>
+            <Footer />
+          </Session>
+        </BrowserRouter>
+      </Suspense>
+    </div>
   );
 }
 

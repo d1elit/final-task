@@ -125,6 +125,7 @@
   }
   &_sedrak {
     background-image: url("../../assets/images/photos/sedrak.jpg");
+    background-position: center;
     animation: sedrak 1s forwards ease;
     @keyframes sedrak {
       0% {
