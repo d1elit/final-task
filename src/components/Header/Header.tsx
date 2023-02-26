@@ -1,13 +1,17 @@
-/* eslint-disable @typescript-eslint/no-floating-promises */
 import React, { useEffect } from 'react';
 import './Header.scss';
-import logo from '../../assets/images/lumosityLogo.png';
+import logo from '../../assets/images/appLogos/lumosityLogo.png';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { setLocalisationStyle, setStyles } from '../../utils/localisationUtils';
 
 import { useActionCreators, useAppSelector } from '../../shared/hooks/store';
 import authApi from '../../shared/api/auth';
+
+import memoryMatch from '../../assets/images/gameLogos/memoryMatch.png';
+import memoryMatrix from '../../assets/images/gameLogos/memoryMatrix.png';
+import rotationMatrix from '../../assets/images/gameLogos/rotationMatrix.png';
+import speedMatch from '../../assets/images/gameLogos/speedMatch.png';
 
 export default function Header() {
   const username = useAppSelector(state => state.user.data?.username);
@@ -17,10 +21,12 @@ export default function Header() {
     void actions.logout(null);
   };
 
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   useEffect(() => {
     setLocalisationStyle();
   }, []);
+
+  const langTitle = t('header.langTitle');
 
   return (
     <header className="header">
@@ -33,63 +39,89 @@ export default function Header() {
         <nav className="header__menu">
           <ul className="header__menu-list">
             <li className="header__menu-item">
-              <Link className="header__menu-link" to="./speedmatch">
-                Speed Match
-              </Link>
-            </li>
-            <li className="header__menu-item">
-              <Link className="header__menu-link" to="./memorymatch">
-                Memory Match
-              </Link>
-            </li>
-            <li className="header__menu-item">
-              <Link className="header__menu-link" to="./memorymatrix">
-                Memory Matrix
-              </Link>
-            </li>
-            <li className="header__menu-item">
-              <Link className="header__menu-link" to="./rotationmatrix">
-                Rotation Matrix
-              </Link>
-            </li>
-            <li className="header__menu-item">
-              <Link className="header__menu-link" to="./stats">
-                Stats
-              </Link>
-            </li>
-            <li className="header__menu-item">
-              <button
-                className="header__lang header__lang_ru"
-                onClick={e => {
-                  i18n.changeLanguage('ru');
-                  setStyles(e);
-                }}
+              <Link
+                className="header__menu-link header__menu-link_home"
+                to="./"
               >
-                ru
-              </button>
+                {t('header.home')}
+              </Link>
             </li>
 
-            <li className="header__menu-item">
+            <li className="header__games">
+              <div className="header__games-name">{t('header.games')}</div>
+              <div className="header__games-menu">
+                <ul className="header__games-list">
+                  <li className="header__games-item">
+                    <Link className="header__games-link" to="./speedmatch">
+                      <img
+                        className="header__games-image"
+                        src={speedMatch}
+                        alt="speedMatch"
+                      />
+                      <div className="header__games-text">Speed Match</div>
+                    </Link>
+                  </li>
+                  <li className="header__games-item">
+                    <Link className="header__games-link" to="./memorymatch">
+                      <img
+                        className="header__games-image"
+                        src={memoryMatch}
+                        alt="memorydMatch"
+                      />
+                      <div className="header__games-text">Memory Match</div>
+                    </Link>
+                  </li>
+                  <li className="header__games-item">
+                    <Link className="header__games-link" to="./memorymatrix">
+                      <img
+                        className="header__games-image"
+                        src={memoryMatrix}
+                        alt="memorydMatrix"
+                      />
+                      <div className="header__games-text">Memory Matrix</div>
+                    </Link>
+                  </li>
+                  <li className="header__games-item">
+                    <Link className="header__games-link" to="./rotationmatrix">
+                      <img
+                        className="header__games-image"
+                        src={rotationMatrix}
+                        alt="rotationMatrix"
+                      />
+                      <div className="header__games-text">Rotation Matrix</div>
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            {username ? (
+              <li className="header__menu-item">
+                <Link
+                  className="header__menu-link header__menu-link_stats"
+                  to="./stats"
+                >
+                  {t('header.stats')}
+                </Link>
+              </li>
+            ) : (
+              <li className="header__menu-item header__menu-link_stats header__menu-item_disabled">
+                <div className="header__menu-link header__menu-link_disabled">
+                  {t('header.stats')}
+                </div>
+              </li>
+            )}
+            <li className="header__lang-container">
               <button
                 className="header__lang header__lang_en"
-                onClick={e => {
-                  i18n.changeLanguage('en');
-                  setStyles(e);
-                }}
-              >
-                en
-              </button>
+                title={langTitle}
+                onClick={() => setStyles()}
+              ></button>
             </li>
-            {/* <li className="header__menu-item">
-              <Link className="header__menu-link" to={'./aboutus'}>
-                About us
-              </Link>
-            </li> */}
           </ul>
         </nav>
         <div className="header__account">
           <div className="header__account-name">
-            {username || 'Get started'}
+            {username || t('header.account')}
           </div>
           <div className="header__account-menu">
             <ul className="header__account-list">
