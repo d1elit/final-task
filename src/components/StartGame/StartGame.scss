@@ -1,6 +1,7 @@
 .start-game {
   &__title {
     margin: 0;
+    padding: 0 20px;
     font-size: 5rem;
     font-weight: normal;
     color: #fff;
@@ -8,14 +9,18 @@
   &__description {
     color: #fff;
     font-size: 1.5rem;
-    width: 430px;
+    width: 92%;
+    max-width: 430px;
     margin: 40px auto;
   }
   &__controls {
     max-width: 390px;
+    width: 90%;
     display: flex;
     margin: 0 auto;
-    justify-content: space-between;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
   }
   &__btn {
     width: 190px;
@@ -57,7 +62,7 @@
 }
 
 .start-game-out {
-  animation: 1s forwards start-game-out cubic-bezier(0.645, 0.045, 0.355, 1);
+  animation: 1.1s forwards start-game-out cubic-bezier(0.645, 0.045, 0.355, 1);
 
   @keyframes start-game-out {
     1% {
