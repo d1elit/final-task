@@ -1,5 +1,6 @@
 .matrix {
-  width: 640px;
+  width: 100%;
+  max-width: 640px;
   height: 480px;
   display: flex;
   flex-direction: column;
@@ -8,21 +9,16 @@
   justify-content: center;
   align-items: center;
   align-content: center;
-  margin: 20px auto;
-  // background: url("../../assets/images/gameBackgrounds/bgBlue.jpg");
-  // background: url("../../assets/images/gameBackgrounds/bgBrown.jpg");
-  // background: url("../../assets/images/gameBackgrounds/bgFiol.jpg");
-  // background: url("../../assets/images/gameBackgrounds/bgGradient.jpg");
-  // background: url("../../assets/images/gameBackgrounds/bgGreen.jpg");
-  // background: url("../../assets/images/gameBackgrounds/bgSky.jpg");
-  // background: url("../../assets/images/gameBackgrounds/bgWhite.jpg");
-  // background: url("../../assets/images/gameBackgrounds/bgWood.jpg");
+  margin: 0 auto;
   background: url("../../../../assets/images/gameBackgrounds/bgBrown.jpg");
   background: url("../../../../assets/images/gameBackgrounds/bgWood.jpg");
   border-radius: 10px;
   overflow: hidden;
   text-align: center;
   user-select: none;
+  @media screen and (max-width: 640px) {
+    border-radius: 0;
+  }
   &__title {
     margin-top: 50px;
     color: #fff;
@@ -31,12 +27,20 @@
   }
 }
 
+.matrix__about {
+  width: 100%;
+  max-width: 640px;
+  height: 150px;
+  display: flex;
+  margin: 0 auto;
+}
 .matrix__after-board {
   position: absolute;
   bottom: -10px;
   width: 100%;
   height: 200px;
   margin: 0 auto;
+  padding: 0 10px;
   display: flex;
   justify-content: center;
   pointer-events: none;
@@ -53,6 +57,8 @@
 }
 
 .matrix__message_show {
+  padding: 0 10px;
+
   opacity: 0;
   white-space: break-spaces;
   animation: 0.3s forwards matrix__message_show;
@@ -76,6 +82,7 @@
 .matrix__tutorial-message_loading {
   position: inherit;
   top: 30px;
+  padding: 0 10px;
   color: #e1e1e1;
   font-size: 20px;
   opacity: 0;
@@ -102,6 +109,7 @@
 .matrix__tutorial-message_game {
   position: inherit;
   top: 30px;
+  padding: 0 10px;
   color: #e1e1e1;
   font-size: 20px;
   opacity: 0;

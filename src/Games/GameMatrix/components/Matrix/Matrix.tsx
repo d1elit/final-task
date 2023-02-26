@@ -1,7 +1,10 @@
 import Board from '../Board/Board';
 import cn from 'classnames';
+import GameAbout from '../../../../components/GameAbout/GameAbout';
 import GameStats from '../../../../components/GameStats/GameStats';
 import HowToPlayMemoryMatrix from '../HowToPlayMemoryMatrix/HowToPlayMemoryMatrix';
+import HowToPlayRotationMatrix from '../HowToPlayRotationMatrix/HowToPlayRotationMatrix';
+import moveBgPath from '../../../../assets/sounds/matrixSounds/moveBg.mp3';
 import React, { useEffect, useState } from 'react';
 import Results from '../../../../components/Results/Results';
 import StartGame from '../../../../components/StartGame/StartGame';
@@ -11,9 +14,6 @@ import './Matrix.scss';
 import HowToPlayDone, {
   TypeConfirm,
 } from '../../../../components/HowToPlayDone/HowToPlayDone';
-
-import moveBgPath from '../../../../assets/sounds/matrixSounds/moveBg.mp3';
-import HowToPlayRotationMatrix from '../HowToPlayRotationMatrix/HowToPlayRotationMatrix';
 
 const TILES_DEFAULT = 3;
 const TRIAL_DEFAULT = 1;
@@ -49,7 +49,7 @@ export default function Matrix({ matrixGame }: MatrixProps) {
   const [trial, setTrial] = useState(TRIAL_DEFAULT);
   const [score, setScore] = useState(SCORE_DEFAULT);
 
-  // const [lastBoard, setLastBoard] = useState(TILES_DEFAULT);
+  const [lastBoard, setLastBoard] = useState(TILES_DEFAULT);
   const [bestBoard, setBestBoard] = useState(BEST_BOARD_DEFAULT);
   const [tilesLeft, setTilesLeft] = useState(0);
   // const [showMessage, setShowMessage] = useState(false);
@@ -81,6 +81,8 @@ export default function Matrix({ matrixGame }: MatrixProps) {
 
   const gameTitle = t(`${matrixGame}.title`);
   const gameDescription = t(`${matrixGame}.description`);
+  const gameType = t(`${matrixGame}.type`);
+  const gameAbout = t(`${matrixGame}.about`);
   const tutorialMessage1 = t(`${matrixGame}.howToPlay.message1`);
   const tutorialMessage2 = t(`${matrixGame}.howToPlay.message2`);
 
@@ -131,85 +133,96 @@ export default function Matrix({ matrixGame }: MatrixProps) {
   }, [isStarted]);
 
   return (
-    <div className="matrix">
-      {!isStarted && !isGameEnd && (
-        <StartGame
-          title={gameTitle}
-          colorStyle={'memory-matrix'}
-          description={gameDescription}
-          onPlayHandler={initGame}
-          onHowToPlayHandler={onHowToPlayHandler}
-        />
-      )}
-      {isStarted && !isGameEnd && !isHowToPlayDone && (
-        <>
-          {!isTutorial && (
-            <GameStats
-              tiles={tiles}
-              trial={trial}
-              score={score}
-              colorStyle={'memory-matrix'}
-            />
-          )}
-          <Board
-            tiles={tiles}
-            setTiles={setTiles}
-            trial={trial}
-            setTrial={setTrial}
-            addScore={addScore}
-            addBonusScore={addBonusScore}
-            gameMessage={gameMessage}
-            tutorMessage={tutorMessage}
-            endTutorial={endTutorial}
-            isTutorial={isTutorial}
-            setIsGameEnd={setIsGameEnd}
-            refreshBestBoard={refreshBestBoard}
-            isRotation={isRotation}
+    <>
+      <div className="matrix__about">
+        {isStarted && (
+          <GameAbout title={gameTitle} type={gameType} about={gameAbout} />
+        )}
+      </div>
+      <div className="matrix">
+        {!isStarted && !isGameEnd && (
+          <StartGame
+            title={gameTitle}
+            colorStyle={'memory-matrix'}
+            description={gameDescription}
+            onPlayHandler={initGame}
+            onHowToPlayHandler={onHowToPlayHandler}
           />
-
-          <div className="matrix__after-board">
-            {isTutorial && (
-              <div className="matrix__tutorial-message_loading">
-                {tutorialMessage === 'loading' && tutorialMessage1}
-              </div>
+        )}
+        {isStarted && !isGameEnd && !isHowToPlayDone && (
+          <>
+            {!isTutorial && (
+              <GameStats
+                tiles={tiles}
+                trial={trial}
+                score={score}
+                colorStyle={'memory-matrix'}
+              />
             )}
+            <Board
+              tiles={tiles}
+              setTiles={setTiles}
+              trial={trial}
+              setTrial={setTrial}
+              addScore={addScore}
+              addBonusScore={addBonusScore}
+              gameMessage={gameMessage}
+              tutorMessage={tutorMessage}
+              endTutorial={endTutorial}
+              isTutorial={isTutorial}
+              setIsGameEnd={setIsGameEnd}
+              refreshBestBoard={refreshBestBoard}
+              isRotation={isRotation}
+            />
 
-            {isTutorial && (
-              <div className="matrix__tutorial-message_game">
-                {tutorialMessage === 'game' && tutorialMessage2}
+            <div className="matrix__after-board">
+              {isTutorial && (
+                <div className="matrix__tutorial-message_loading">
+                  {tutorialMessage === 'loading' && tutorialMessage1}
+                </div>
+              )}
+
+              {isTutorial && (
+                <div className="matrix__tutorial-message_game">
+                  {tutorialMessage === 'game' && tutorialMessage2}
+                </div>
+              )}
+
+              <div
+                className={cn('matrix__message', {
+                  ['matrix__message_show']: tilesLeft > 0,
+                })}
+              >
+                {`${t('MemoryMatrix.game.hintStart')} ${tilesLeft} ${t(
+                  'MemoryMatrix.gameHintEnd'
+                )}${getEndOfWord(i18n.language, tilesLeft, 'ку', 'ки', 'ок')}`}
               </div>
-            )}
-
-            <div
-              className={cn('matrix__message', {
-                ['matrix__message_show']: tilesLeft > 0,
-              })}
-            >
-              {`${t('MemoryMatrix.game.hintStart')} ${tilesLeft} ${t(
-                'MemoryMatrix.gameHintEnd'
-              )}${getEndOfWord(i18n.language, tilesLeft, 'ку', 'ки', 'ок')}`}
             </div>
-          </div>
-        </>
-      )}
-      {isHowToPlayDone && (
-        <HowToPlayDone
-          colorStyle={'memory-matrix'}
-          onPlayHandler={initGame}
-          typeConfirm={TypeConfirm.button}
-        >
-          {isRotation ? <HowToPlayRotationMatrix /> : <HowToPlayMemoryMatrix />}
-        </HowToPlayDone>
-      )}
-      {isGameEnd && (
-        <Results
-          score={score}
-          bestBoard={bestBoard}
-          colorStyle={'memory-matrix'}
-          onRetryHandler={onRetryHandler}
-          gameName={gameTitle}
-        />
-      )}
-    </div>
+          </>
+        )}
+        {isHowToPlayDone && (
+          <HowToPlayDone
+            colorStyle={'memory-matrix'}
+            onPlayHandler={initGame}
+            typeConfirm={TypeConfirm.button}
+          >
+            {isRotation ? (
+              <HowToPlayRotationMatrix />
+            ) : (
+              <HowToPlayMemoryMatrix />
+            )}
+          </HowToPlayDone>
+        )}
+        {isGameEnd && (
+          <Results
+            score={score}
+            bestBoard={bestBoard}
+            colorStyle={'memory-matrix'}
+            onRetryHandler={onRetryHandler}
+            gameName={gameTitle}
+          />
+        )}
+      </div>
+    </>
   );
 }
