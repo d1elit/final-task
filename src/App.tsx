@@ -1,3 +1,4 @@
+import Footer from './components/Footer/Footer';
 import Header from './components/Header/Header';
 import Home from './components/Home/Home';
 import Login from './pages/Login';
@@ -27,6 +28,7 @@ function App() {
             <Route path="/stats" element={<Stats />} />
             <Route path="*" element={<Home />} />
           </Routes>
+          <Footer />
         </Session>
       </BrowserRouter>
     </Suspense>
