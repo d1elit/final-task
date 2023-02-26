@@ -120,7 +120,13 @@
   "loginPage": {
     "signIn": "Sign In",
     "signUp": "Sign Up",
-    "google": "Sign In with Google"
+    "google": "Sign In with Google",
+    "username": "Username",
+    "password": "Password",
+    "usernameError": "Invalid username. Min length 3 characters.",
+    "passwordError": "Invalid password. At least 6 digit characters, spec. characters, Latin, the presence of lowercase and uppercase characters.",
+    "fillTheField": "Fill the field!",
+    "serverError": "Something went wrong. Please try again later."
   },
   "howToPlay": {
     "title": "How To Play"
