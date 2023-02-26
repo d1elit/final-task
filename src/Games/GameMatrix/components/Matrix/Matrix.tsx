@@ -7,19 +7,16 @@ import HowToPlayRotationMatrix from '../HowToPlayRotationMatrix/HowToPlayRotatio
 import moveBgPath from '../../../../assets/sounds/matrixSounds/moveBg.mp3';
 import React, { useCallback, useEffect, useState } from 'react';
 import Results from '../../../../components/Results/Results';
+import scoreApi from '../../../../shared/api/score';
 import StartGame from '../../../../components/StartGame/StartGame';
 import { getEndOfWord } from '../../../../utils/endOfWord';
+import { MatrixGameResult } from '../../../../shared/types/score';
+import { useAppSelector } from '../../../../shared/hooks/store';
 import { useTranslation } from 'react-i18next';
 import './Matrix.scss';
 import HowToPlayDone, {
   TypeConfirm,
 } from '../../../../components/HowToPlayDone/HowToPlayDone';
-
-import moveBgPath from '../../../../assets/sounds/matrixSounds/moveBg.mp3';
-import HowToPlayRotationMatrix from '../HowToPlayRotationMatrix/HowToPlayRotationMatrix';
-import { MatrixGameResult } from '../../../../shared/types/score';
-import scoreApi from '../../../../shared/api/score';
-import { useAppSelector } from '../../../../shared/hooks/store';
 
 const TILES_DEFAULT = 3;
 const TRIAL_DEFAULT = 1;
