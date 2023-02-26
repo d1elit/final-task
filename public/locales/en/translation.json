@@ -110,7 +110,12 @@
     "accuracy": "ACCURACY",
     "bestBoard": "BEST BOARD",
     "bestBoardTiles": "Tile",
-    "tryAgain": "Try again"
+    "tryAgain": "Try again",
+    "date": "DATE",
+    "noRes": "No results",
+    "bests": "Your best results",
+    "last": "Your last results",
+    "chooseGame": "Select a game to view statistics"
   },
   "login": {
     "login": "Log In",

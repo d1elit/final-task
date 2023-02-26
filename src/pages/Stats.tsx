@@ -5,6 +5,7 @@ import {
   useEffect,
   useState,
 } from 'react';
+import { useTranslation } from 'react-i18next';
 import LastResult from '../components/LastResult/LastResult';
 import Loader from '../components/Loader/Loader';
 import ScoreTable from '../components/ScoreTable/ScoreTable';
@@ -21,6 +22,8 @@ const selectOptions = [
 ];
 
 const Stats: FC = () => {
+  const { t } = useTranslation();
+
   const [game, setGame] = useState<GameName>('speed-match');
   const [bests, setBests] = useState<GameResult[]>([]);
   const [lastResult, setLastResult] = useState<GameResult>();
@@ -46,6 +49,7 @@ const Stats: FC = () => {
   return (
     <div className="pageWrapper">
       <div className="container">
+        {t('results.chooseGame')}:{' '}
         <select onChange={handleSelectChange}>
           {selectOptions.map(game => (
             <option key={game} value={Games[game as keyof typeof Games]}>
@@ -58,10 +62,10 @@ const Stats: FC = () => {
         ) : lastResult ? (
           <>
             <LastResult result={lastResult} />
-            <ScoreTable title="Your best results" results={bests} />
+            <ScoreTable title={`${t('results.bests')}`} results={bests} />
           </>
         ) : (
-          <h3>No Results</h3>
+          <h3>{t('results.noRes')}</h3>
         )}
       </div>
     </div>
