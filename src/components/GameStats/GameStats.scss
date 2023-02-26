@@ -34,6 +34,15 @@
       transform: translate(0px, 0px);
     }
   }
+  @media screen and (max-width: 435px) {
+    zoom: 0.9;
+  }
+  @media screen and (max-width: 390px) {
+    zoom: 0.8;
+  }
+  @media screen and (max-width: 340px) {
+    zoom: 0.75;
+  }
 }
 
 .game-stats_speed-match {
