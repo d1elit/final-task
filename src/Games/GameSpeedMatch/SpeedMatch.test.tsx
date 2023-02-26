@@ -10,6 +10,6 @@ test('SpeedMatch rendered', () => {
       <SpeedMatch />
     </Provider>
   );
-  const gameName = screen.getByText(/SpeedMatch.gameName/i);
+  const gameName = screen.getByText(/SpeedMatch.description/i);
   expect(gameName).toBeInTheDocument();
 });
