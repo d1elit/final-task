@@ -19,10 +19,10 @@ export default function Games() {
             </div>
             <div className="games__about">
               <div className="games__brainArea">
-                {t('speedMatch.brainArea')}
+                {t('SpeedMatch.brainArea')}
               </div>
               <div className="games__name">Speed Match</div>
-              <div className="games__type">{t('speedMatch.type')}</div>
+              <div className="games__type">{t('SpeedMatch.type')}</div>
             </div>
           </Link>
         </li>
@@ -37,10 +37,10 @@ export default function Games() {
             </div>
             <div className="games__about">
               <div className="games__brainArea">
-                {t('memoryMatch.brainArea')}
+                {t('MemoryMatch.brainArea')}
               </div>
               <div className="games__name">Memory Match</div>
-              <div className="games__type">{t('memoryMatch.type')}</div>
+              <div className="games__type">{t('MemoryMatch.type')}</div>
             </div>
           </Link>
         </li>

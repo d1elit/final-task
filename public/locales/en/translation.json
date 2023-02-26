@@ -40,8 +40,8 @@
     "evgenii.p2": "Set up Netlify, fixing bugs, searching for sounds for games. He was also responsible for creating the UI of the main page, header and footer of the site with the appropriate translation.",
     "evgenii.p3": "Added several non-game animations and implemented the adaptability of the site, including games, to a minimum width of 320px."
   },
-  "speedMatch": {
-    "name": "Speed Match",
+  "SpeedMatch": {
+    "gameName": "Speed Match",
     "title": "Does the CURRENT card match the card that came IMMEDIATELY BEFORE it?",
     "description": "In Speed Match you only need to determine if the symbols are the same.",
     "howToPlay": "In the Speed Match family of games the goal is to remember the previous card shown and select whether or not the next card matches the previous card. The cards are shown face-up on the right pile and face-down on the left pile. It’s helpful to think of the left pile as the “discard” pile, while the pile on the right is still “in play.” \n\nIf the cards match, tap the right arrow key to indicate 'Yes'. If the cards don’t match, then tap the left arrow key to indicate 'No'.\n\nMake sure to answer both quickly and accurately to reach higher scores and levels.",
@@ -51,8 +51,8 @@
     "type": "Information Processing",
     "about": "Information processing is the initial identification and analysis of incoming sensory input."
   },
-  "memoryMatch": {
-    "name": "Memory Match",
+  "MemoryMatch": {
+    "gameName": "Memory Match",
     "title": "Does the card on the RIGHT match the card that came TWO CARDS BEFORE it?",
     "description": "Train your working memory by determining whether the symbols match.",
     "howToPlay": "Memory Match are meant to train and improve your memory. The goal of these game is to remember what symbol appeared either two cards ago  and determine if they match with the currently shown card. The cards shift left and flip over after each guess. The card on the right is face up displaying a symbol, while the two cards, three for Overdrive, on the left are face down, forcing you to remember what they displayed previously.\n\nMemory Match starts with all 3 cards facing up, allowing you to quickly memorize the left and middle cards. After a few seconds, the left and middle cards flip to face down. You then must determine if the symbol on the face up card on the right matches the symbol on the face down card on the left. Press the left arrow key to choose “No” or press the right arrow key to choose “Yes.”\n\nAfter selecting you answer, the cards shift left and a new card is pulled from the pile on the right. The card that was previously face up on the right is now face down in the middle. And the card previously in the middle is now on the left. You need to determine if the newly pulled card matches the card now on the left.\n\nAnswering incorrectly causes all the cards to be revealed. The left and middle cards flip back to face down once you answer correctly again.",

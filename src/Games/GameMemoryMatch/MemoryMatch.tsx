@@ -59,9 +59,9 @@ export default function SpeedMatch() {
   const [startGameTimer, setStartGameTimer] = useState(3);
   const isStartTimerEnd = useRef(false);
 
-  const gameTitle = t(`memoryMatch.name`);
-  const gameType = t(`memoryMatch.type`);
-  const gameAbout = t(`memoryMatch.about`);
+  const gameTitle = t(`MemoryMatch.gameName`);
+  const gameType = t(`MemoryMatch.type`);
+  const gameAbout = t(`MemoryMatch.about`);
 
   const setShapesToEmpty = () => {
     setSecondCard({ shapeName: '', shapeImg: cardBackground });
@@ -267,7 +267,7 @@ export default function SpeedMatch() {
         {!isStarted && !isGameEnd && !isHowToPlayOpen && (
           <StartGame
             title="Memory Match"
-            description={t('memoryMatch.description')}
+            description={t('MemoryMatch.description')}
             onPlayHandler={onPlayHandler}
             colorStyle={'speed-match'}
             onHowToPlayHandler={onHowToPlayHandler}
@@ -288,7 +288,7 @@ export default function SpeedMatch() {
               colorStyle={'speed-match'}
             />
 
-            <h2 className="speed-match__title">{t('memoryMatch.title')}</h2>
+            <h2 className="speed-match__title">{t('MemoryMatch.title')}</h2>
 
             <Cards
               currentCard={currentCard.shapeImg}
@@ -307,7 +307,7 @@ export default function SpeedMatch() {
 
         {isHowToPlayOpen ? (
           <HowToPlay
-            gameRules={t('memoryMatch.howToPlay')}
+            gameRules={t('MemoryMatch.howToPlay')}
             onPlayHandler={onPlayInHowToPlayHandler}
           />
         ) : (
