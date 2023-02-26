@@ -1,0 +1,47 @@
+.game-about {
+  top: 0;
+
+  width: 100%;
+
+  padding: 0 20px;
+  margin: 0 auto;
+
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  color: #333;
+
+  user-select: none;
+  &__title {
+    font-size: 4rem;
+    @media screen and (max-width: 500px) {
+      font-size: 3rem;
+    }
+    @media screen and (max-width: 350px) {
+      font-size: 2rem;
+    }
+  }
+  &__type {
+    font-size: 20px;
+    font-weight: 500;
+  }
+  &__about {
+    margin: 5px auto 0;
+  }
+
+  animation: game-about forwards 0.3s ease-out;
+
+  @keyframes game-about {
+    0% {
+      opacity: 1;
+      transform: translateY(150px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0px);
+    }
+  }
+}
