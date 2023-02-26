@@ -9,19 +9,20 @@
   color: #fff;
   background-color: rgb(164, 102, 172);
   position: absolute;
+  z-index: 100;
   border-radius: 50%;
-  transform: scale(.25);
+  transform: scale(0.25);
   animation: pulse 1s ease-in-out infinite;
 }
 
 @keyframes pulse {
   from {
-    transform: scale(.25);
+    transform: scale(0.25);
   }
   50% {
     transform: scale(1);
   }
   to {
-    transform: scale(.25);
+    transform: scale(0.25);
   }
 }

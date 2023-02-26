@@ -117,10 +117,18 @@
     "logOut": "Log Out",
     "signUp": "Sign Up"
   },
+  "loginPage": {
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "google": "Sign In with Google"
+  },
   "howToPlay": {
     "title": "How To Play"
   },
   "howToPlayDone": {
     "keys": "Press any ARROW KEY to continue"
+  },
+  "statsPage": {
+    "lastResults": "Your last Results"
   }
 }

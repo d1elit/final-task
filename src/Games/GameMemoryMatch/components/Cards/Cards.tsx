@@ -10,13 +10,13 @@ type Props = {
 export default function Cards({ currentCard, secondCard, thirdCard }: Props) {
   return (
     <div className="cards-memory">
-      <div className="cards-memory__card-field cards-memory__field-previous">
+      <div className="cards-memory__card-field cards-memory__field-previous cards-memory__prevPrev">
         <Card shapeImg={thirdCard} />
       </div>
-      <div className="cards-memory__card-field cards-memory__field-previous">
+      <div className="cards-memory__card-field cards-memory__field-previous cards-memory__prev">
         <Card shapeImg={secondCard} />
       </div>
-      <div className="cards-memory__card-field">
+      <div className="cards-memory__card-field cards-memory__field-current">
         <Card shapeImg={currentCard} />
       </div>
     </div>

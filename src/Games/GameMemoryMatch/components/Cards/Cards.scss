@@ -23,20 +23,75 @@
     zoom: 0.5;
   }
   &__card-field {
+    position: relative;
+    z-index: 10;
     width: 190px;
     height: 190px;
     background-color: rgba(236, 234, 240, 0.062);
-    border-radius: 5px;
+    border-radius: 15px;
   }
   &__field-previous {
+    position: relative;
+    z-index: 20;
     &_used {
       background-color: rgba(53, 48, 122, 0.719);
     }
   }
 }
 
+.animate-prev {
+  animation: prevAnim 0.2s linear;
+}
+
 .animate {
-  // animation: myAnimation .2s linear;
+  z-index: 5;
+  position: absolute;
+  top: 0;
+  transform: translateX(-213px);
+  animation: myAnimation2 0.2s linear;
+  background-color: #fff;
+  img {
+    animation: figureAnim 0.2s linear;
+  }
+  .card__figure {
+    animation: figureAnim 0.2s linear;
+  }
+}
+
+@keyframes figureAnim {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes myAnimation2 {
+  0% {
+    transform: translateX(0px);
+  }
+  50% {
+    transform: translateX(-90px) rotateY(90deg);
+    opacity: 1;
+  }
+  100% {
+    background-image: url(../../../../assets/images/shapes/card-background.jpg);
+    background-repeat: no-repeat;
+    background-position-x: 30px;
+    background-position-y: 22px;
+    transform: translateX(-213px) rotateY(180deg);
+  }
+}
+
+@keyframes prevAnim {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-213px);
+  }
 }
 
 @keyframes myAnimation {
