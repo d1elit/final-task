@@ -28,7 +28,7 @@ interface BoardProps {
 }
 
 const BOARD_ZOOM = 40;
-const TRIAL_MAX = 5;
+const TRIAL_MAX = 12;
 
 const DELAY_LOAD_BG = 1000;
 const DELAY_FLIP_IN = 1000;
