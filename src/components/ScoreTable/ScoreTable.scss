@@ -1,8 +1,12 @@
 .table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
   width: 100%;
-  background-color: #dddddd;
+
+  border-collapse: collapse;
+  background: #fdfdfd;
+  box-shadow: 0px 1px 8px 0px rgba(34, 60, 80, 0.2);
+  border-radius: 15px;
+  overflow: hidden;
+  border: 1px solid #fdfdfd;
 }
 
 .td,
@@ -28,7 +32,9 @@
 
 .scoreTable {
   &__title {
-    color: #fff;
+    margin-top: 15px;
+
+    font-size: 25px;
     text-align: center;
   }
 }

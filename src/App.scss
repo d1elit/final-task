@@ -37,6 +37,11 @@
   max-width: 1230px;
   padding: 0 15px;
   margin: 0 auto;
+
+  &-xs {
+    max-width: 680px;
+    margin: 0 auto;
+  }
 }
 
 .wrapper {
@@ -45,4 +50,8 @@
 
   display: grid;
   grid-template-rows: auto 1fr auto;
+}
+
+.pageWrapper {
+  padding-top: 15px;
 }
