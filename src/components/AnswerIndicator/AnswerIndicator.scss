@@ -28,20 +28,24 @@
       zoom: 0.8;
       top: 63%;
     }
-    @media screen and (max-width: 500px) {
+    @media screen and (max-width: 520px) {
       zoom: 0.7;
       top: 65%;
     }
-    @media screen and (max-width: 430px) {
+    @media screen and (max-width: 470px) {
       zoom: 0.6;
       top: 68%;
     }
-    @media screen and (max-width: 370px) {
+    @media screen and (max-width: 390px) {
       zoom: 0.55;
       top: 70%;
     }
-    @media screen and (max-width: 340px) {
+    @media screen and (max-width: 360px) {
       zoom: 0.5;
+      top: 72%;
+    }
+    @media screen and (max-width: 340px) {
+      zoom: 0.45;
       top: 72%;
     }
   }

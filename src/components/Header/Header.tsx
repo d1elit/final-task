@@ -11,6 +11,9 @@ import memoryMatch from '../../assets/images/gameLogos/memoryMatch.png';
 import memoryMatrix from '../../assets/images/gameLogos/memoryMatrix.png';
 import rotationMatrix from '../../assets/images/gameLogos/rotationMatrix.png';
 import speedMatch from '../../assets/images/gameLogos/speedMatch.png';
+import { initSound } from '../../utils/soundUtils';
+
+initSound();
 
 export default function Header() {
   const username = useAppSelector(state => state.user.data?.username);

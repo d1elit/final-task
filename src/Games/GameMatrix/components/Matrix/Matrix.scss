@@ -58,10 +58,14 @@
 
 .matrix__message_show {
   padding: 0 10px;
-
+  padding: 0 150px;
   opacity: 0;
   white-space: break-spaces;
   animation: 0.3s forwards matrix__message_show;
+
+  @media screen and (max-width: 640px) {
+    padding: 0 50px;
+  }
 
   @keyframes matrix__message_show {
     0% {

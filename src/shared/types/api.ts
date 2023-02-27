@@ -5,6 +5,7 @@ export interface APIError {
 }
 
 export interface ResultResponse {
+  lastBoard(lastBoard: number): number;
   game: string;
   results: GameResult | GameResult[];
 }

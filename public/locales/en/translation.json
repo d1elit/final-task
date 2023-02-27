@@ -25,16 +25,19 @@
   },
   "team": {
     "artem.name": "Artem",
+    "artem.fullname": "Artem Gromiko",
     "artem.role": "Team leader",
     "artem.p1": "Сreated a repository with the project and set it up together with other team members.",
     "artem.p2": "Implemented 2 games - Speed Match and Memory Match, including animation. Created several common components.",
     "artem.p3": "Added the ability to use two languages for the site. He was also responsible for testing and fixing bugs.",
     "sedrak.name": "Sedrak",
+    "sedrak.fullname": "Sedrak Adoyan",
     "sedrak.role": "Team Developer",
     "sedrak.p1": "Created the Backend of the site in a separate repository. He was responsible for the implementation of the site's database, for saving and downloading the results of the game and displaying them on the statistics page.",
     "sedrak.p2": "Implemented the possibility of user registration and configured the corresponding pages in the Frontend part of the site.",
     "sedrak.p3": "He created various utilities for the site and also participated in testing assistance.",
     "evgenii.name": "Evgenii",
+    "evgenii.fullname": "Evgenii Kolesnikov",
     "evgenii.role": "Team Developer",
     "evgenii.p1": "Implemented 2 games - Memory Matrix and Rotation Matrix, including animation. Created several common components.",
     "evgenii.p2": "Set up Netlify, fixing bugs, searching for sounds for games. He was also responsible for creating the UI of the main page, header and footer of the site with the appropriate translation.",
@@ -130,5 +133,9 @@
   },
   "statsPage": {
     "lastResults": "Your last Results"
+  },
+  "sound": {
+    "on": "Mute Sound",
+    "off": "Sound Muted"
   }
 }
