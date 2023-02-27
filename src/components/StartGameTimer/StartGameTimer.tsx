@@ -1,4 +1,3 @@
-import React from 'react';
 import './StartGameTimer.scss';
 
 interface StartGameProps {

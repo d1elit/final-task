@@ -27,9 +27,6 @@ const BEST_BOARD_DEFAULT = 3;
 const ADD_SCORE = 250;
 const BONUS_MULTIPLIER = 100;
 
-// const TIMER_COINS = 10;
-// const TIMER_STEP = 50;
-
 export enum MatrixGame {
   MemoryMatrix = 'MemoryMatrix',
   RotationMatrix = 'RotationMatrix',
@@ -59,7 +56,6 @@ export default function Matrix({ matrixGame }: MatrixProps) {
   const [lastBoard, setLastBoard] = useState(TILES_DEFAULT);
   const [bestBoard, setBestBoard] = useState(BEST_BOARD_DEFAULT);
   const [tilesLeft, setTilesLeft] = useState(0);
-  // const [showMessage, setShowMessage] = useState(false);
 
   const [tutorialMessage, setTutorialMessage] = useState('');
   const [isRotation, setIsRotation] = useState(
@@ -78,7 +74,6 @@ export default function Matrix({ matrixGame }: MatrixProps) {
     setScore(() => SCORE_DEFAULT);
   };
 
-  // === initTutorial ===
   const onHowToPlayHandler = () => {
     setIsTutorial(true);
     setTiles(() => 2);
@@ -99,13 +94,11 @@ export default function Matrix({ matrixGame }: MatrixProps) {
 
   function addBonusScore() {
     setScore(prev => prev + tiles * BONUS_MULTIPLIER);
-    // console.log('анимация бонуса');
   }
 
   function endTutorial() {
     setIsStarted(true);
     setIsHowToPlayDone(true);
-    // initGame();
   }
 
   function refreshBestBoard() {
