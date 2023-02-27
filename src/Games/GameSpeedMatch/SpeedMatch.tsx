@@ -162,6 +162,7 @@ export default function SpeedMatch() {
       setStartGameTimer(prev => {
         if (prev !== 1) {
           void new Audio(timerSoundPath).play();
+          return prev - 1;
         }
         return prev - 1;
       });
@@ -282,7 +283,7 @@ export default function SpeedMatch() {
 
         {isStarted && (
           <>
-            {startGameTimer > 0 ? (
+            {startGameTimer >= 1 ? (
               <StartGameTimer timerValue={startGameTimer} />
             ) : (
               false
