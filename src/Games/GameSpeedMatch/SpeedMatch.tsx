@@ -1,6 +1,6 @@
-import succesSoundPath from '../../assets/sounds/success.mp3';
-import failureSoundPath from '../../assets/sounds/failure.mp3';
-import timerSoundPath from '../../assets/sounds/timerSound.mp3';
+import succesSoundPath from '../../assets/sounds/matchSounds/good.mp3';
+import failureSoundPath from '../../assets/sounds/matchSounds/bad.mp3';
+import timerSoundPath from '../../assets/sounds/matchSounds/timer.mp3';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import Controls from '../../components/Controls/Controls';
@@ -22,7 +22,7 @@ import GameAbout from '../../components/GameAbout/GameAbout';
 import { useAppSelector } from '../../shared/hooks/store';
 import scoreApi from '../../shared/api/score';
 import type { MatchGameResult } from '../../shared/types/score';
-
+const isMobileDevice = /Mobi|Android/i.test(navigator.userAgent);
 export default function SpeedMatch() {
   const isAuth = useAppSelector(state => state.user.isAuth);
   const { t } = useTranslation();
@@ -98,9 +98,11 @@ export default function SpeedMatch() {
   const handleAnswer = (isRightAnswer: boolean) => {
     changeScore(isRightAnswer);
     setIsSuccess(isRightAnswer);
-    isRightAnswer
-      ? void new Audio(succesSoundPath).play()
-      : void new Audio(failureSoundPath).play();
+    if (!isMobileDevice) {
+      isRightAnswer
+        ? void new Audio(succesSoundPath).play()
+        : void new Audio(failureSoundPath).play();
+    }
   };
 
   const chekIsRightAnswer = (key: string, current: string, prev: string) => {
@@ -157,11 +159,11 @@ export default function SpeedMatch() {
   };
 
   const startGameTimerHandle = () => {
-    void new Audio(timerSoundPath).play();
     const timer = setInterval(() => {
       setStartGameTimer(prev => {
         if (prev !== 1) {
-          void new Audio(timerSoundPath).play();
+          if (!isMobileDevice) void new Audio(timerSoundPath).play();
+          return prev - 1;
         }
         return prev - 1;
       });
@@ -170,12 +172,14 @@ export default function SpeedMatch() {
       clearInterval(timer);
       isStartTimerEnd.current = true;
       startTimer();
+      setStartGameTimer(0);
       setShapesToStart();
       animateSpeedMatch();
     }, 3000);
   };
 
   const onPlayHandler = () => {
+    if (!isMobileDevice) void new Audio(timerSoundPath).play();
     setIsStarted(true);
     startGameTimerHandle();
   };
@@ -251,6 +255,11 @@ export default function SpeedMatch() {
   useEffect(() => {
     document.addEventListener('keydown', onKeyControlsHandler);
     document.addEventListener('click', onBtnCountrolsHandler);
+    return () => {
+      isStartTimerEnd.current = true;
+      setStartGameTimer(0);
+      setIsStarted(false);
+    };
   }, []);
 
   return (
@@ -282,7 +291,7 @@ export default function SpeedMatch() {
 
         {isStarted && (
           <>
-            {startGameTimer !== 0 ? (
+            {startGameTimer >= 1 ? (
               <StartGameTimer timerValue={startGameTimer} />
             ) : (
               false
