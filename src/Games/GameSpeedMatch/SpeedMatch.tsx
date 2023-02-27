@@ -163,11 +163,11 @@ export default function SpeedMatch() {
   const [timerHash, setTimerHash] = useState('');
 
   const startGameTimerHandle = () => {
-    void new Audio(timerSoundPath).play();
+    if (!isMobileDevice) void new Audio(timerSoundPath).play();
     const timer = setInterval(() => {
       setStartGameTimer(prev => {
         if (prev !== 1) {
-          void new Audio(timerSoundPath).play();
+          if (!isMobileDevice) void new Audio(timerSoundPath).play();
           return prev - 1;
         }
         return prev - 1;
