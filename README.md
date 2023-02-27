@@ -1,4 +1,4 @@
-# RS CLONE. Team ACE
+# RS Clone. Team ACE
 
 #### Task:
 
