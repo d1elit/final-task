@@ -290,6 +290,11 @@ export default function SpeedMatch() {
   useEffect(() => {
     document.addEventListener('keydown', onKeyControlsHandler);
     document.addEventListener('click', onBtnCountrolsHandler);
+    return () => {
+      setStartGameTimer(0);
+      setIsStarted(false);
+      // isStartedTemp.current = false;
+    };
   }, []);
 
   return (

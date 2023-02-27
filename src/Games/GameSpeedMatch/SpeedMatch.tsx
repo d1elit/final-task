@@ -22,7 +22,7 @@ import GameAbout from '../../components/GameAbout/GameAbout';
 import { useAppSelector } from '../../shared/hooks/store';
 import scoreApi from '../../shared/api/score';
 import type { MatchGameResult } from '../../shared/types/score';
-
+const isMobileDevice = /Mobi|Android/i.test(navigator.userAgent);
 export default function SpeedMatch() {
   const isAuth = useAppSelector(state => state.user.isAuth);
   const { t } = useTranslation();
@@ -48,6 +48,7 @@ export default function SpeedMatch() {
   const multiplierTemp = useRef(1);
   const gameEndTemp = useRef(false);
   const prevCard = useRef('');
+  const isStartedTemp = useRef(false);
   const [startGameTimer, setStartGameTimer] = useState(3);
   const isStartTimerEnd = useRef(false);
 
@@ -98,9 +99,11 @@ export default function SpeedMatch() {
   const handleAnswer = (isRightAnswer: boolean) => {
     changeScore(isRightAnswer);
     setIsSuccess(isRightAnswer);
-    isRightAnswer
-      ? void new Audio(succesSoundPath).play()
-      : void new Audio(failureSoundPath).play();
+    if (!isMobileDevice) {
+      isRightAnswer
+        ? void new Audio(succesSoundPath).play()
+        : void new Audio(failureSoundPath).play();
+    }
   };
 
   const chekIsRightAnswer = (key: string, current: string, prev: string) => {
@@ -146,6 +149,7 @@ export default function SpeedMatch() {
           clearInterval(interval);
           setEndOfGame(true);
           setIsStarted(false);
+          isStartedTemp.current = false;
           return 0;
         } else {
           return prevTimer - 1;
@@ -155,6 +159,8 @@ export default function SpeedMatch() {
 
     return () => clearInterval(interval);
   };
+
+  const [timerHash, setTimerHash] = useState('');
 
   const startGameTimerHandle = () => {
     void new Audio(timerSoundPath).play();
@@ -179,6 +185,7 @@ export default function SpeedMatch() {
 
   const onPlayHandler = () => {
     setIsStarted(true);
+    isStartedTemp.current = true;
     startGameTimerHandle();
   };
 
@@ -190,6 +197,7 @@ export default function SpeedMatch() {
   const onRetryHandler = () => {
     setEndOfGame(false);
     setIsStarted(true);
+    isStartedTemp.current = true;
     setScore(0);
     setMultiplier(1);
     setStreak(0);
@@ -253,6 +261,11 @@ export default function SpeedMatch() {
   useEffect(() => {
     document.addEventListener('keydown', onKeyControlsHandler);
     document.addEventListener('click', onBtnCountrolsHandler);
+    return () => {
+      setStartGameTimer(0);
+      setIsStarted(false);
+      isStartedTemp.current = false;
+    };
   }, []);
 
   return (
