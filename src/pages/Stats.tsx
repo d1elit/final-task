@@ -48,7 +48,7 @@ const Stats: FC = () => {
 
   return (
     <div className="pageWrapper">
-      <div className="container">
+      <div className="container-xs">
         {t('results.chooseGame')}:{' '}
         <select onChange={handleSelectChange}>
           {selectOptions.map(game => (
