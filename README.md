@@ -10,26 +10,28 @@ https://github.com/rolling-scopes-school/tasks/blob/master/tasks/stage-2/rs-lang
 - [Сет @DefK1lla](https://github.com/DefK1lla) - Frontend developer
 - [Евгений @evgeniikolesnikov](https://github.com/EvgeniiKolesnikov) - Frontend developer
 
-![](https://imgur.com/gboc9RB)
+#### Frontend:
 
-#### Deploy:
-
-- https://dazzling-froyo-22bec7.netlify.app/
-
-#### Video
-
-- https://youtu.be/Gj7oevU50cI
+- repo: https://github.com/d1elit/final-task
+- deploy: https://dazzling-froyo-22bec7.netlify.app/
 
 #### Backend
 
 - repo: https://github.com/DefK1lla/final-task-backend
-- deploy https://final-task-backend1.onrender.com/
+- deploy: https://final-task-backend1.onrender.com/
 
-### Stack:
+### Frontend Stack:
 
 1. React - https://reactjs.org/
 2. Redux, redux toolkit - https://redux.js.org/ | https://redux-toolkit.js.org/
 3. Typescript - https://www.typescriptlang.org/
+
+### Backend Stack:
+
+1. Express - https://expressjs.com/
+2. MongoDB - https://www.mongodb.com/
+3. Mongoose - https://mongoosejs.com/
+4. PassportJS - https://www.passportjs.org/
 
 ### Used libs:
 
@@ -41,3 +43,11 @@ https://github.com/rolling-scopes-school/tasks/blob/master/tasks/stage-2/rs-lang
 
 - prettier
 - eslint.
+
+In the project directory, you can run:
+
+### `npm start`
+
+### `npm run build`
+
+### `npm test`
