@@ -32,6 +32,9 @@ https://github.com/rolling-scopes-school/tasks/blob/master/tasks/stage-2/rs-lang
 2. MongoDB - https://www.mongodb.com/
 3. Mongoose - https://mongoosejs.com/
 4. PassportJS - https://www.passportjs.org/
+5. Winston - https://www.npmjs.com/package/winston
+6. Bcrypt - https://www.npmjs.com/package/bcrypt
+7. Express-session - https://www.npmjs.com/package/express-session
 
 ### Used libs:
 
