@@ -8,22 +8,24 @@ interface Props {
 }
 
 export default function LastResult({ result }: Props) {
+  const keys = Object.keys(result as GameResult).filter(
+    key => key !== 'user' && key !== '_id' && key !== 'lastBoard'
+  );
+
   const { t } = useTranslation();
   return (
     <div className="lastResult">
       <h3>{t('statsPage.lastResults')}</h3>
       <ul>
         {result &&
-          Object.keys(result).map(key =>
-            key === 'user' || key === '_id' ? null : (
-              <li key={key}>
-                {key}:{' '}
-                {key === 'date'
-                  ? formatDate(result[key as keyof GameResult] as string)
-                  : result[key as keyof GameResult]}
-              </li>
-            )
-          )}
+          keys.map(key => (
+            <li key={key}>
+              {t(`results.${key}`)}:{' '}
+              {key === 'date'
+                ? formatDate(result[key as keyof GameResult] as string)
+                : result[key as keyof GameResult]}
+            </li>
+          ))}
       </ul>
     </div>
   );

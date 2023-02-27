@@ -1,5 +1,4 @@
 import cn from 'classnames';
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { getEndOfWord } from '../../utils/endOfWord';
 import './Results.scss';

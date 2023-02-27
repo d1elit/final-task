@@ -1,7 +1,6 @@
 import succesSoundPath from '../../assets/sounds/matchSounds/good.mp3';
 import failureSoundPath from '../../assets/sounds/matchSounds/bad.mp3';
 import timerSoundPath from '../../assets/sounds/matchSounds/timer.mp3';
-
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Controls from '../../components/Controls/Controls';
 import StartGame from '../../components/StartGame/StartGame';
@@ -38,6 +37,7 @@ const getShapeByName = (shapeName: string) => {
   return result;
 };
 
+const isMobileDevice = /Mobi|Android/i.test(navigator.userAgent);
 export default function SpeedMatch() {
   const isAuth = useAppSelector(state => state.user.isAuth);
   const { t } = useTranslation();
@@ -108,7 +108,7 @@ export default function SpeedMatch() {
     prevPrevCard.current = 'circle';
     prevCard.current = 'rectangle';
     setCurrentCard(getNextCard());
-    playSound(new Audio(succesSoundPath));
+    if (!isMobileDevice) playSound(new Audio(succesSoundPath));
   };
 
   const changeMultiplayer = (isRightAnswer: boolean, streak: number) => {
@@ -149,9 +149,12 @@ export default function SpeedMatch() {
       setSecondCard(getShapeByName(prevCard.current));
       setThirdCard(getShapeByName(prevPrevCard.current));
     }
-    isRightAnswer
-      ? playSound(new Audio(succesSoundPath))
-      : playSound(new Audio(failureSoundPath));
+
+    if (!isMobileDevice) {
+      isRightAnswer
+        ? playSound(new Audio(succesSoundPath))
+        : playSound(new Audio(failureSoundPath));
+    }
   };
 
   const chekIsRightAnswer = (
@@ -219,10 +222,9 @@ export default function SpeedMatch() {
   };
 
   const startGameTimerHandle = () => {
-    playSound(new Audio(timerSoundPath));
     const timer = setInterval(() => {
       setStartGameTimer(prev => {
-        if (prev !== 1) playSound(new Audio(timerSoundPath));
+        if (!isMobileDevice) if (prev !== 1) playSound(new Audio(timerSoundPath));
         return prev - 1;
       });
     }, 1000);
@@ -231,11 +233,13 @@ export default function SpeedMatch() {
       isStartTimerEnd.current = true;
       startTimer();
       setShapesToStart();
+      setStartGameTimer(0);
       animateMemoryMatch();
     }, 3000);
   };
 
   const onPlayHandler = () => {
+    if (!isMobileDevice) void new Audio(timerSound).play();
     setIsStarted(true);
     startGameTimerHandle();
   };
@@ -311,6 +315,8 @@ export default function SpeedMatch() {
     return () => {
       document.removeEventListener('keydown', onKeyControlsHandler);
       document.removeEventListener('click', onBtnCountrolsHandler);
+      setStartGameTimer(0);
+      setIsStarted(false);
     };
   }, []);
 

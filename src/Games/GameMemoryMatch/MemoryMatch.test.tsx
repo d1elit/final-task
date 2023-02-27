@@ -10,6 +10,6 @@ test('MemoryMatch rendered', () => {
       <MemoryMatch />
     </Provider>
   );
-  const gameName = screen.getByText(/MemoryMatch.gameName/i);
+  const gameName = screen.getByText(/MemoryMatch.description/i);
   expect(gameName).toBeInTheDocument();
 });

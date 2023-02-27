@@ -1,5 +1,5 @@
-import React from 'react';
 import './AnswerIndicator.scss';
+
 type Props = {
   isSuccess: boolean;
   classname?: string;

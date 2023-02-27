@@ -29,9 +29,6 @@ const BEST_BOARD_DEFAULT = 3;
 const ADD_SCORE = 250;
 const BONUS_MULTIPLIER = 100;
 
-// const TIMER_COINS = 10;
-// const TIMER_STEP = 50;
-
 export enum MatrixGame {
   MemoryMatrix = 'MemoryMatrix',
   RotationMatrix = 'RotationMatrix',
@@ -135,7 +132,6 @@ export default function Matrix({ matrixGame }: MatrixProps) {
 
   function addBonusScore() {
     setScore(prev => prev + tiles * BONUS_MULTIPLIER);
-    // console.log('анимация бонуса');
   }
 
   function endTutorial() {

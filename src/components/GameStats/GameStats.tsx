@@ -1,4 +1,3 @@
-import React from 'react';
 import './GameStats.scss';
 import cn from 'classnames';
 import { useTranslation } from 'react-i18next';

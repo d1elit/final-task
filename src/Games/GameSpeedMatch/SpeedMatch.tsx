@@ -22,8 +22,11 @@ import GameAbout from '../../components/GameAbout/GameAbout';
 import { useAppSelector } from '../../shared/hooks/store';
 import scoreApi from '../../shared/api/score';
 import type { MatchGameResult } from '../../shared/types/score';
+
 import { getIsSound } from '../../utils/soundUtils';
 import SoundButton from '../../components/SoundButton/SoundButton';
+
+const isMobileDevice = /Mobi|Android/i.test(navigator.userAgent);
 
 export default function SpeedMatch() {
   const isAuth = useAppSelector(state => state.user.isAuth);
@@ -115,9 +118,11 @@ export default function SpeedMatch() {
   const handleAnswer = (isRightAnswer: boolean) => {
     changeScore(isRightAnswer);
     setIsSuccess(isRightAnswer);
-    isRightAnswer
-      ? playSound(new Audio(succesSoundPath))
-      : playSound(new Audio(failureSoundPath));
+    if (!isMobileDevice) {
+      isRightAnswer
+        ? playSound(new Audio(succesSoundPath))
+        : playSound(new Audio(failureSoundPath));
+    }
   };
 
   const chekIsRightAnswer = (key: string, current: string, prev: string) => {
@@ -174,11 +179,11 @@ export default function SpeedMatch() {
   };
 
   const startGameTimerHandle = () => {
-    playSound(new Audio(timerSoundPath));
     const timer = setInterval(() => {
       setStartGameTimer(prev => {
         if (prev !== 1) {
-          playSound(new Audio(timerSoundPath));
+          if (!isMobileDevice) playSound(new Audio(timerSoundPath));
+          return prev - 1;
         }
         return prev - 1;
       });
@@ -187,12 +192,14 @@ export default function SpeedMatch() {
       clearInterval(timer);
       isStartTimerEnd.current = true;
       startTimer();
+      setStartGameTimer(0);
       setShapesToStart();
       animateSpeedMatch();
     }, 3000);
   };
 
   const onPlayHandler = () => {
+    if (!isMobileDevice) void new Audio(timerSoundPath).play();
     setIsStarted(true);
     startGameTimerHandle();
   };
@@ -271,6 +278,9 @@ export default function SpeedMatch() {
     return () => {
       document.removeEventListener('keydown', onKeyControlsHandler);
       document.removeEventListener('click', onBtnCountrolsHandler);
+      isStartTimerEnd.current = true;
+      setStartGameTimer(0);
+      setIsStarted(false);
     };
   }, []);
 
@@ -304,7 +314,7 @@ export default function SpeedMatch() {
 
         {isStarted && (
           <>
-            {startGameTimer !== 0 ? (
+            {startGameTimer >= 1 ? (
               <StartGameTimer timerValue={startGameTimer} />
             ) : (
               false
