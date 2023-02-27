@@ -1,6 +1,6 @@
-import succesSoundPath from '../../assets/sounds/success.mp3';
-import failureSoundPath from '../../assets/sounds/failure.mp3';
-import timerSoundPath from '../../assets/sounds/timerSound.mp3';
+import succesSoundPath from '../../assets/sounds/matchSounds/good.mp3';
+import failureSoundPath from '../../assets/sounds/matchSounds/bad.mp3';
+import timerSoundPath from '../../assets/sounds/matchSounds/timer.mp3';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import Controls from '../../components/Controls/Controls';
@@ -48,7 +48,6 @@ export default function SpeedMatch() {
   const multiplierTemp = useRef(1);
   const gameEndTemp = useRef(false);
   const prevCard = useRef('');
-  const isStartedTemp = useRef(false);
   const [startGameTimer, setStartGameTimer] = useState(3);
   const isStartTimerEnd = useRef(false);
 
@@ -149,7 +148,6 @@ export default function SpeedMatch() {
           clearInterval(interval);
           setEndOfGame(true);
           setIsStarted(false);
-          isStartedTemp.current = false;
           return 0;
         } else {
           return prevTimer - 1;
@@ -160,7 +158,6 @@ export default function SpeedMatch() {
     return () => clearInterval(interval);
   };
 
-  const [timerHash, setTimerHash] = useState('');
   const startGameTimerHandle = () => {
     const timer = setInterval(() => {
       setStartGameTimer(prev => {
@@ -184,7 +181,6 @@ export default function SpeedMatch() {
   const onPlayHandler = () => {
     if (!isMobileDevice) void new Audio(timerSoundPath).play();
     setIsStarted(true);
-    isStartedTemp.current = true;
     startGameTimerHandle();
   };
 
@@ -196,7 +192,6 @@ export default function SpeedMatch() {
   const onRetryHandler = () => {
     setEndOfGame(false);
     setIsStarted(true);
-    isStartedTemp.current = true;
     setScore(0);
     setMultiplier(1);
     setStreak(0);
@@ -261,9 +256,9 @@ export default function SpeedMatch() {
     document.addEventListener('keydown', onKeyControlsHandler);
     document.addEventListener('click', onBtnCountrolsHandler);
     return () => {
+      isStartTimerEnd.current = true;
       setStartGameTimer(0);
       setIsStarted(false);
-      isStartedTemp.current = false;
     };
   }, []);
 

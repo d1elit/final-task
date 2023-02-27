@@ -1,6 +1,6 @@
-import succesSound from '../../assets/sounds/success.mp3';
-import failureSound from '../../assets/sounds/failure.mp3';
-import timerSound from '../../assets/sounds/timerSound.mp3';
+import succesSound from '../../assets/sounds/matchSounds/good.mp3';
+import failureSound from '../../assets/sounds/matchSounds/bad.mp3';
+import timerSound from '../../assets/sounds/matchSounds/timer.mp3';
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Controls from '../../components/Controls/Controls';
 import StartGame from '../../components/StartGame/StartGame';
@@ -215,6 +215,7 @@ export default function SpeedMatch() {
       isStartTimerEnd.current = true;
       startTimer();
       setShapesToStart();
+      setStartGameTimer(0);
       animateMemoryMatch();
     }, 3000);
   };
