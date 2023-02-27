@@ -282,7 +282,7 @@ export default function SpeedMatch() {
 
         {isStarted && (
           <>
-            {startGameTimer !== 0 ? (
+            {startGameTimer > 0 ? (
               <StartGameTimer timerValue={startGameTimer} />
             ) : (
               false
