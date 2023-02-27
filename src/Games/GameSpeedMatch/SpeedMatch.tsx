@@ -171,6 +171,7 @@ export default function SpeedMatch() {
       clearInterval(timer);
       isStartTimerEnd.current = true;
       startTimer();
+      setStartGameTimer(0);
       setShapesToStart();
       animateSpeedMatch();
     }, 3000);
