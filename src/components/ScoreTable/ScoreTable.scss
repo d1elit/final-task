@@ -7,6 +7,12 @@
   border-radius: 15px;
   overflow: hidden;
   border: 1px solid #fdfdfd;
+  @media screen and (max-width: 400px) {
+    zoom: 0.9;
+  }
+  @media screen and (max-width: 340px) {
+    zoom: 0.8;
+  }
 }
 
 .td,
@@ -32,7 +38,7 @@
 
 .scoreTable {
   &__title {
-    margin-top: 15px;
+    margin: 15px;
 
     font-size: 25px;
     text-align: center;

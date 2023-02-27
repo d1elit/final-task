@@ -41,6 +41,7 @@
   &-xs {
     max-width: 680px;
     margin: 0 auto;
+    padding: 0 10px;
   }
 }
 
@@ -54,4 +55,6 @@
 
 .pageWrapper {
   padding-top: 15px;
+  width: 95%;
+  margin: 0 auto;
 }
