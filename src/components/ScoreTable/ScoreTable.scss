@@ -1,0 +1,46 @@
+.table {
+  width: 100%;
+
+  border-collapse: collapse;
+  background: #fdfdfd;
+  box-shadow: 0px 1px 8px 0px rgba(34, 60, 80, 0.2);
+  border-radius: 15px;
+  overflow: hidden;
+  border: 1px solid #fdfdfd;
+  @media screen and (max-width: 400px) {
+    zoom: 0.9;
+  }
+  @media screen and (max-width: 340px) {
+    zoom: 0.8;
+  }
+}
+
+.td,
+.th {
+  border: 1px solid #000;
+  text-align: left;
+  padding: 8px;
+  &_empty {
+    font-size: 0;
+    color: transparent;
+  }
+}
+
+.tr:nth-child(odd) {
+  background-color: #fff;
+}
+
+.no-results {
+  text-align: center;
+  font-size: 28px;
+  color: #dddddd;
+}
+
+.scoreTable {
+  &__title {
+    margin: 15px;
+
+    font-size: 25px;
+    text-align: center;
+  }
+}
