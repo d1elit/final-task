@@ -26,8 +26,6 @@ import type { MatchGameResult } from '../../shared/types/score';
 import { getIsSound } from '../../utils/soundUtils';
 import SoundButton from '../../components/SoundButton/SoundButton';
 
-const isMobileDevice = /Mobi|Android/i.test(navigator.userAgent);
-
 export default function SpeedMatch() {
   const isAuth = useAppSelector(state => state.user.isAuth);
   const { t } = useTranslation();
@@ -118,11 +116,9 @@ export default function SpeedMatch() {
   const handleAnswer = (isRightAnswer: boolean) => {
     changeScore(isRightAnswer);
     setIsSuccess(isRightAnswer);
-    if (!isMobileDevice) {
-      isRightAnswer
-        ? playSound(new Audio(succesSoundPath))
-        : playSound(new Audio(failureSoundPath));
-    }
+    isRightAnswer
+      ? playSound(new Audio(succesSoundPath))
+      : playSound(new Audio(failureSoundPath));
   };
 
   const chekIsRightAnswer = (key: string, current: string, prev: string) => {
@@ -182,7 +178,7 @@ export default function SpeedMatch() {
     const timer = setInterval(() => {
       setStartGameTimer(prev => {
         if (prev !== 1) {
-          if (!isMobileDevice) playSound(new Audio(timerSoundPath));
+          playSound(new Audio(timerSoundPath));
           return prev - 1;
         }
         return prev - 1;
@@ -199,7 +195,7 @@ export default function SpeedMatch() {
   };
 
   const onPlayHandler = () => {
-    if (!isMobileDevice) void new Audio(timerSoundPath).play();
+    playSound(new Audio(timerSoundPath));
     setIsStarted(true);
     startGameTimerHandle();
   };
