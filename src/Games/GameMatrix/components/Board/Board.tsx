@@ -93,10 +93,6 @@ const generateBoard = (tiles: number): string[] => {
   return defaultBoardStyles;
 };
 
-// ============================================================================
-// ============================================================================
-// ============================================================================
-
 export default function Board({
   tiles = 3,
   setTiles,
@@ -163,7 +159,6 @@ export default function Board({
     }
   }
 
-  // Waiting BG loaded
   useEffect(() => {
     const timer: ReturnType<typeof setTimeout> = setTimeout(() => {
       setIsLevelLoaded(() => true);
@@ -176,7 +171,6 @@ export default function Board({
 
   useEffect(() => {
     if (isLevelLoaded) {
-      // Load Board
       setBoard(generateBoard(tiles));
       tutorMessage('loading');
 
@@ -191,16 +185,13 @@ export default function Board({
       }, DELAY_FLIP_OUT);
 
       const timerRotation: ReturnType<typeof setTimeout> = setTimeout(() => {
-        // START GAME
         if (isRotation) {
           rotateBoard();
         }
         clearTimeout(timerRotation);
       }, DELAY_GAME);
 
-      // Waiting coup tiles and Start Game
       const timerStartGame: ReturnType<typeof setTimeout> = setTimeout(() => {
-        // START GAME
         setIsGame(() => true);
         setTapsCount(tiles);
         setTapsSuccess(0);
@@ -218,7 +209,6 @@ export default function Board({
   useEffect(() => {
     if (isLevelLoaded && isLevelEnd) {
       setIsLevelLoaded(false);
-      // Unload Level
       setBoard(prev =>
         prev.map(el => {
           if (el.includes('tile_guess') && !el.includes('flipped_guess')) {
@@ -233,7 +223,6 @@ export default function Board({
         setIsLevelEnd(false);
         setBoard(() => []);
         setTiles(prev => {
-          // Tutorial rules =========================================
           if (isTutorial) {
             if (tapsSuccess === tapsCount) {
               if (tiles === 3) {
@@ -246,8 +235,6 @@ export default function Board({
               return prev;
             }
           }
-          //  Tutorial rules end ======================================
-
           if (tapsSuccess === tapsCount) {
             return prev >= 30 ? prev : prev + 1;
           }
@@ -257,9 +244,7 @@ export default function Board({
           }
           return prev;
         });
-        // Next Level
         refreshBestBoard();
-        // check End Of GAME
         if (checkEndOfGame()) {
           setIsGameEnd(true);
         } else {
@@ -274,7 +259,6 @@ export default function Board({
   useEffect(() => {
     gameMessage(tapsDone, tapsSuccess);
     if (tapsCount === tapsSuccess) {
-      // All taps Success
       addBonusScore();
       setBoard(prev =>
         prev.map((el, i) => {
@@ -294,7 +278,6 @@ export default function Board({
       );
     }
     if (tapsCount === tapsDone) {
-      // All taps Done
       setIsGame(() => false);
       setIsLevelEnd(true);
     }
