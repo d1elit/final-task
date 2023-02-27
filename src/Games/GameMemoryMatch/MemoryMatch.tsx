@@ -37,7 +37,6 @@ const getShapeByName = (shapeName: string) => {
   return result;
 };
 
-const isMobileDevice = /Mobi|Android/i.test(navigator.userAgent);
 export default function SpeedMatch() {
   const isAuth = useAppSelector(state => state.user.isAuth);
   const { t } = useTranslation();
@@ -108,7 +107,7 @@ export default function SpeedMatch() {
     prevPrevCard.current = 'circle';
     prevCard.current = 'rectangle';
     setCurrentCard(getNextCard());
-    if (!isMobileDevice) playSound(new Audio(succesSoundPath));
+    playSound(new Audio(succesSoundPath));
   };
 
   const changeMultiplayer = (isRightAnswer: boolean, streak: number) => {
@@ -150,11 +149,9 @@ export default function SpeedMatch() {
       setThirdCard(getShapeByName(prevPrevCard.current));
     }
 
-    if (!isMobileDevice) {
-      isRightAnswer
-        ? playSound(new Audio(succesSoundPath))
-        : playSound(new Audio(failureSoundPath));
-    }
+    isRightAnswer
+      ? playSound(new Audio(succesSoundPath))
+      : playSound(new Audio(failureSoundPath));
   };
 
   const chekIsRightAnswer = (
@@ -224,8 +221,7 @@ export default function SpeedMatch() {
   const startGameTimerHandle = () => {
     const timer = setInterval(() => {
       setStartGameTimer(prev => {
-        if (!isMobileDevice)
-          if (prev !== 1) playSound(new Audio(timerSoundPath));
+        if (prev !== 1) playSound(new Audio(timerSoundPath));
         return prev - 1;
       });
     }, 1000);
@@ -240,7 +236,7 @@ export default function SpeedMatch() {
   };
 
   const onPlayHandler = () => {
-    if (!isMobileDevice) playSound(new Audio(timerSoundPath));
+    playSound(new Audio(timerSoundPath));
     setIsStarted(true);
     startGameTimerHandle();
   };
