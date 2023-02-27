@@ -6,7 +6,7 @@ import './Board.scss';
 import flipGoodPath from '../../../../assets/sounds/matrixSounds/flipGood.mp3';
 import flipBadPath from '../../../../assets/sounds/matrixSounds/flipBad.mp3';
 import flipWinPath from '../../../../assets/sounds/matrixSounds/flipWin.mp3';
-import flipWinAll from '../../../../assets/sounds/matrixSounds/flipWinAll.mp3';
+import flipWinAllPath from '../../../../assets/sounds/matrixSounds/flipWinAll.mp3';
 
 interface BoardProps {
   tiles: number;
@@ -20,8 +20,10 @@ interface BoardProps {
   endTutorial: () => void;
   isTutorial: boolean;
   setIsGameEnd: React.Dispatch<React.SetStateAction<boolean>>;
+  setLastBoard: React.Dispatch<React.SetStateAction<number>>;
   refreshBestBoard: () => void;
   isRotation: boolean;
+  playSound: (soundPath: HTMLAudioElement) => void;
   children?: JSX.Element;
 }
 
@@ -33,6 +35,7 @@ const DELAY_FLIP_IN = 1000;
 const DELAY_FLIP_OUT = 3700;
 const DELAY_GAME = 4200;
 const DELAY_ROTATION = 1000;
+const DELAY_NEXT_LEVEL = 3000;
 
 const boardSizes: Map<number, { w: number; h: number }> = new Map([
   [1, { w: 2, h: 2 }],
@@ -107,6 +110,8 @@ export default function Board({
   setIsGameEnd,
   refreshBestBoard,
   isRotation,
+  setLastBoard,
+  playSound,
 }: BoardProps) {
   const [board, setBoard] = useState<string[]>([]);
 
@@ -120,9 +125,11 @@ export default function Board({
   const [lastTileIndex, setLastTileIndex] = useState<number>(0);
   const [boardRotation, setBoardRotation] = useState('board_init');
   const [tileRotation, setTileRotation] = useState('tile_init');
+
   const flipGood = new Audio(flipGoodPath);
   const flipBad = new Audio(flipBadPath);
   const flipWin = new Audio(flipWinPath);
+  const flipWinAll = new Audio(flipWinAllPath);
 
   const boardSize = boardSizes.get(tiles);
   const boardWidth = boardSize?.w !== undefined ? boardSize.w : 3;
@@ -175,12 +182,12 @@ export default function Board({
       tutorMessage('loading');
 
       const timerFlipIn: ReturnType<typeof setTimeout> = setTimeout(() => {
-        void flipGood.play();
+        playSound(flipGood);
         clearTimeout(timerFlipIn);
       }, DELAY_FLIP_IN);
 
       const timerFlipOut: ReturnType<typeof setTimeout> = setTimeout(() => {
-        void flipGood.play();
+        playSound(flipGood);
         clearTimeout(timerFlipOut);
       }, DELAY_FLIP_OUT);
 
@@ -246,13 +253,14 @@ export default function Board({
         });
         refreshBestBoard();
         if (checkEndOfGame()) {
+          setLastBoard(() => tiles);
           setIsGameEnd(true);
         } else {
           isTutorial ? setTrial(prev => prev - 1) : setTrial(prev => prev + 1);
         }
 
         clearTimeout(timerNextLevel);
-      }, 3000);
+      }, DELAY_NEXT_LEVEL);
     }
   }, [isLevelEnd]);
 
@@ -263,10 +271,10 @@ export default function Board({
       setBoard(prev =>
         prev.map((el, i) => {
           if (i === lastTileIndex && el.includes('tile_guess')) {
-            void flipWin.play();
+            playSound(flipWin);
             const timerFlipAll: ReturnType<typeof setTimeout> = setTimeout(
               () => {
-                void new Audio(flipWinAll).play();
+                playSound(flipWinAll);
                 clearTimeout(timerFlipAll);
               },
               1300
@@ -291,7 +299,7 @@ export default function Board({
             setLastTileIndex(() => i);
             setTapsDone(prev => prev + 1);
             if (el.includes('tile_default')) {
-              void flipBad.play();
+              playSound(flipBad);
               return 'tile tile_wrong';
             } else if (el.includes('tile_guess')) {
               addScore();
@@ -299,7 +307,7 @@ export default function Board({
               if (tapsSuccess === tapsCount) {
                 return `tile tile_allright ${tileRotation}`;
               } else {
-                void flipGood.play();
+                playSound(flipGood);
                 return 'tile_guess flipped_guess';
               }
             }

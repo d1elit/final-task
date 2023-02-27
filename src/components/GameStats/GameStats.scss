@@ -34,14 +34,17 @@
       transform: translate(0px, 0px);
     }
   }
-  @media screen and (max-width: 435px) {
+  @media screen and (max-width: 450px) {
     zoom: 0.9;
   }
-  @media screen and (max-width: 390px) {
+  @media screen and (max-width: 410px) {
     zoom: 0.8;
   }
-  @media screen and (max-width: 340px) {
-    zoom: 0.75;
+  @media screen and (max-width: 370px) {
+    zoom: 0.78;
+  }
+  @media screen and (max-width: 360px) {
+    zoom: 0.68;
   }
 }
 

@@ -50,6 +50,9 @@
   padding: 20px 30px;
 
   background-color: #fff;
+  @media screen and (max-width: 400px) {
+    padding: 15px 15px;
+  }
 }
 
 .how-to-play-done-out {

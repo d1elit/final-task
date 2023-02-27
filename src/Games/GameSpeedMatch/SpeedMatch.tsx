@@ -22,7 +22,12 @@ import GameAbout from '../../components/GameAbout/GameAbout';
 import { useAppSelector } from '../../shared/hooks/store';
 import scoreApi from '../../shared/api/score';
 import type { MatchGameResult } from '../../shared/types/score';
+
+import { getIsSound } from '../../utils/soundUtils';
+import SoundButton from '../../components/SoundButton/SoundButton';
+
 const isMobileDevice = /Mobi|Android/i.test(navigator.userAgent);
+
 export default function SpeedMatch() {
   const isAuth = useAppSelector(state => state.user.isAuth);
   const { t } = useTranslation();
@@ -56,6 +61,21 @@ export default function SpeedMatch() {
   const gameTitle = t(`SpeedMatch.gameName`);
   const gameType = t(`SpeedMatch.type`);
   const gameAbout = t(`SpeedMatch.about`);
+
+  const [soundOn, setSoundOn] = useState(getIsSound());
+  const canSound = useRef(true);
+
+  const playSound = (soundPath: HTMLAudioElement) => {
+    canSound.current && void soundPath.play();
+  };
+
+  useEffect(() => {
+    canSound.current = soundOn;
+
+    return () => {
+      canSound.current = false;
+    };
+  }, [canSound.current, soundOn]);
 
   const changeMultiplayer = (isRightAnswer: boolean, streak: number) => {
     if (isRightAnswer && streak == 4) {
@@ -92,7 +112,7 @@ export default function SpeedMatch() {
     setSecondCard({ shapeName: '', shapeImg: cardBackground });
     prevCard.current = 'rectangle';
     setCurrentCard(getNextCard());
-    void new Audio(succesSoundPath).play();
+    playSound(new Audio(succesSoundPath));
   };
 
   const handleAnswer = (isRightAnswer: boolean) => {
@@ -100,8 +120,8 @@ export default function SpeedMatch() {
     setIsSuccess(isRightAnswer);
     if (!isMobileDevice) {
       isRightAnswer
-        ? void new Audio(succesSoundPath).play()
-        : void new Audio(failureSoundPath).play();
+        ? playSound(new Audio(succesSoundPath))
+        : playSound(new Audio(failureSoundPath));
     }
   };
 
@@ -162,7 +182,7 @@ export default function SpeedMatch() {
     const timer = setInterval(() => {
       setStartGameTimer(prev => {
         if (prev !== 1) {
-          if (!isMobileDevice) void new Audio(timerSoundPath).play();
+          if (!isMobileDevice) playSound(new Audio(timerSoundPath));
           return prev - 1;
         }
         return prev - 1;
@@ -256,6 +276,8 @@ export default function SpeedMatch() {
     document.addEventListener('keydown', onKeyControlsHandler);
     document.addEventListener('click', onBtnCountrolsHandler);
     return () => {
+      document.removeEventListener('keydown', onKeyControlsHandler);
+      document.removeEventListener('click', onBtnCountrolsHandler);
       isStartTimerEnd.current = true;
       setStartGameTimer(0);
       setIsStarted(false);
@@ -270,6 +292,7 @@ export default function SpeedMatch() {
         )}
       </div>
       <div className="speed-match">
+        <SoundButton setSoundOn={setSoundOn} />
         {!isStarted && !isGameEnd && !isHowToPlayOpen && (
           <StartGame
             title="Speed Match"

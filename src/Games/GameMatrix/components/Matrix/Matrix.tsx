@@ -5,9 +5,10 @@ import GameStats from '../../../../components/GameStats/GameStats';
 import HowToPlayMemoryMatrix from '../HowToPlayMemoryMatrix/HowToPlayMemoryMatrix';
 import HowToPlayRotationMatrix from '../HowToPlayRotationMatrix/HowToPlayRotationMatrix';
 import moveBgPath from '../../../../assets/sounds/matrixSounds/moveBg.mp3';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Results from '../../../../components/Results/Results';
 import scoreApi from '../../../../shared/api/score';
+import SoundButton from '../../../../components/SoundButton/SoundButton';
 import StartGame from '../../../../components/StartGame/StartGame';
 import { getEndOfWord } from '../../../../utils/endOfWord';
 import { MatrixGameResult } from '../../../../shared/types/score';
@@ -17,6 +18,7 @@ import './Matrix.scss';
 import HowToPlayDone, {
   TypeConfirm,
 } from '../../../../components/HowToPlayDone/HowToPlayDone';
+import { getIsSound } from '../../../../utils/soundUtils';
 
 const TILES_DEFAULT = 3;
 const TRIAL_DEFAULT = 1;
@@ -58,18 +60,54 @@ export default function Matrix({ matrixGame }: MatrixProps) {
   const [tilesLeft, setTilesLeft] = useState(0);
 
   const [tutorialMessage, setTutorialMessage] = useState('');
-  const [isRotation, setIsRotation] = useState(
-    matrixGame === MatrixGame.RotationMatrix
-  );
+
+  const [soundOn, setSoundOn] = useState(getIsSound());
+
+  const isRotation = matrixGame === MatrixGame.RotationMatrix;
+
+  const game = isRotation ? 'rotation-matrix' : 'memory-matrix';
 
   const moveBg = new Audio(moveBgPath);
 
-  const initGame = () => {
+  const canSound = useRef(true);
+
+  const playSound = (soundPath: HTMLAudioElement) => {
+    canSound.current && void soundPath.play();
+  };
+
+  useEffect(() => {
+    canSound.current = soundOn;
+
+    return () => {
+      canSound.current = false;
+    };
+  }, [canSound.current, soundOn]);
+
+  const getStats = async () => {
+    const lastResult = await scoreApi.getUserLastResult(game);
+    const matrixResult = lastResult.results as MatrixGameResult;
+
+    setTiles(() => {
+      if (matrixResult) {
+        const possibleTiles = +matrixResult.lastBoard - 3;
+
+        if (possibleTiles <= TILES_DEFAULT) {
+          return TILES_DEFAULT;
+        } else {
+          return possibleTiles;
+        }
+      } else {
+        return TILES_DEFAULT;
+      }
+    });
+  };
+
+  const initGame = async () => {
     setIsStarted(true);
     setIsGameEnd(false);
     setIsHowToPlayDone(false);
     setIsTutorial(false);
-    setTiles(() => TILES_DEFAULT);
+    await getStats();
     setTrial(() => TRIAL_DEFAULT);
     setScore(() => SCORE_DEFAULT);
   };
@@ -122,8 +160,8 @@ export default function Matrix({ matrixGame }: MatrixProps) {
     isTutorial && setTutorialMessage(levelState);
   }
 
-  function onRetryHandler() {
-    initGame();
+  async function onRetryHandler() {
+    await initGame();
   }
 
   const saveResults = useCallback(() => {
@@ -141,7 +179,7 @@ export default function Matrix({ matrixGame }: MatrixProps) {
       const err = e as Error;
       setErrorMessage(err.message);
     }
-  }, [score, bestBoard, isRotation]);
+  }, [score, lastBoard, isRotation]);
 
   useEffect(() => {
     if (isGameEnd && isAuth) saveResults();
@@ -149,7 +187,7 @@ export default function Matrix({ matrixGame }: MatrixProps) {
 
   useEffect(() => {
     if (isStarted) {
-      void moveBg.play();
+      playSound(moveBg);
     }
   }, [isStarted]);
 
@@ -161,6 +199,7 @@ export default function Matrix({ matrixGame }: MatrixProps) {
         )}
       </div>
       <div className="matrix">
+        <SoundButton setSoundOn={setSoundOn} />
         {!isStarted && !isGameEnd && (
           <StartGame
             title={gameTitle}
@@ -194,6 +233,8 @@ export default function Matrix({ matrixGame }: MatrixProps) {
               setIsGameEnd={setIsGameEnd}
               refreshBestBoard={refreshBestBoard}
               isRotation={isRotation}
+              setLastBoard={setLastBoard}
+              playSound={playSound}
             />
 
             <div className="matrix__after-board">

@@ -1,6 +1,9 @@
+import { useTranslation } from 'react-i18next';
 import './Footer.scss';
 
 export default function Footer() {
+  const { t } = useTranslation();
+
   return (
     <footer className="footer">
       <div className="footer__container">
@@ -13,7 +16,9 @@ export default function Footer() {
                 target="_blank"
               >
                 <div className="footer__menu-icon"></div>
-                <div className="footer__menu-text">Artem Gromiko</div>
+                <div className="footer__menu-text">
+                  {t('team.artem.fullname')}
+                </div>
               </a>
             </li>
             <li className="footer__menu-item">
@@ -23,7 +28,9 @@ export default function Footer() {
                 target="_blank"
               >
                 <div className="footer__menu-icon"></div>
-                <div className="footer__menu-text">Sedrak Adoyan</div>
+                <div className="footer__menu-text">
+                  {t('team.sedrak.fullname')}
+                </div>
               </a>
             </li>
             <li className="footer__menu-item">
@@ -33,7 +40,9 @@ export default function Footer() {
                 target="_blank"
               >
                 <div className="footer__menu-icon"></div>
-                <div className="footer__menu-text">Evgenii Kolesnikov</div>
+                <div className="footer__menu-text">
+                  {t('team.evgenii.fullname')}
+                </div>
               </a>
             </li>
           </ul>

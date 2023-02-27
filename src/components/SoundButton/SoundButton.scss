@@ -1,0 +1,71 @@
+.sound-button {
+  width: auto;
+  min-width: 140px;
+  height: 40px;
+
+  padding: 0 5px;
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  z-index: 1;
+
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+
+  border-radius: 20px;
+  color: white;
+
+  background-color: rgba(0, 0, 0, 0.4);
+
+  zoom: 0.9;
+  @media screen and (max-width: 640px) {
+    height: 45px;
+    width: 45px;
+    min-width: auto;
+    justify-content: center;
+
+    border-radius: 50%;
+  }
+
+  cursor: pointer;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+    .sound-button__icon {
+      width: 32px;
+      height: 32px;
+      margin-right: -2px;
+    }
+  }
+  &:active {
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+}
+
+.sound-button__icon {
+  width: 30px;
+  height: 30px;
+
+  background-image: url("../../assets/images/icons/soundOn.svg");
+  background-size: cover;
+
+  pointer-events: none;
+  user-select: none;
+  &_on {
+    background-image: url("../../assets/images/icons/soundOn.svg");
+  }
+  &_off {
+    background-image: url("../../assets/images/icons/soundOff.svg");
+  }
+}
+
+.sound-button__text {
+  margin: 0 5px 0 0;
+
+  pointer-events: none;
+  user-select: none;
+  @media screen and (max-width: 640px) {
+    display: none;
+  }
+}

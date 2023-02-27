@@ -1,6 +1,6 @@
-import succesSound from '../../assets/sounds/matchSounds/good.mp3';
-import failureSound from '../../assets/sounds/matchSounds/bad.mp3';
-import timerSound from '../../assets/sounds/matchSounds/timer.mp3';
+import succesSoundPath from '../../assets/sounds/matchSounds/good.mp3';
+import failureSoundPath from '../../assets/sounds/matchSounds/bad.mp3';
+import timerSoundPath from '../../assets/sounds/matchSounds/timer.mp3';
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Controls from '../../components/Controls/Controls';
 import StartGame from '../../components/StartGame/StartGame';
@@ -26,6 +26,8 @@ import GameAbout from '../../components/GameAbout/GameAbout';
 import type { MatchGameResult } from '../../shared/types/score';
 import { useAppSelector } from '../../shared/hooks/store';
 import scoreApi from '../../shared/api/score';
+import SoundButton from '../../components/SoundButton/SoundButton';
+import { getIsSound } from '../../utils/soundUtils';
 
 const getShapeByName = (shapeName: string) => {
   let result: IShapes = { shapeName: '', shapeImg: '' };
@@ -74,6 +76,21 @@ export default function SpeedMatch() {
   const gameType = t(`MemoryMatch.type`);
   const gameAbout = t(`MemoryMatch.about`);
 
+  const [soundOn, setSoundOn] = useState(getIsSound());
+  const canSound = useRef(true);
+
+  const playSound = (soundPath: HTMLAudioElement) => {
+    canSound.current && void soundPath.play();
+  };
+
+  useEffect(() => {
+    canSound.current = soundOn;
+
+    return () => {
+      canSound.current = false;
+    };
+  }, [canSound.current, soundOn]);
+
   const setShapesToEmpty = () => {
     setSecondCard({ shapeName: '', shapeImg: cardBackground });
     setThirdCard({ shapeName: '', shapeImg: cardBackground });
@@ -91,7 +108,7 @@ export default function SpeedMatch() {
     prevPrevCard.current = 'circle';
     prevCard.current = 'rectangle';
     setCurrentCard(getNextCard());
-    if (!isMobileDevice) void new Audio(succesSound).play();
+    if (!isMobileDevice) playSound(new Audio(succesSoundPath));
   };
 
   const changeMultiplayer = (isRightAnswer: boolean, streak: number) => {
@@ -132,10 +149,11 @@ export default function SpeedMatch() {
       setSecondCard(getShapeByName(prevCard.current));
       setThirdCard(getShapeByName(prevPrevCard.current));
     }
+
     if (!isMobileDevice) {
       isRightAnswer
-        ? void new Audio(succesSound).play()
-        : void new Audio(failureSound).play();
+        ? playSound(new Audio(succesSoundPath))
+        : playSound(new Audio(failureSoundPath));
     }
   };
 
@@ -206,7 +224,8 @@ export default function SpeedMatch() {
   const startGameTimerHandle = () => {
     const timer = setInterval(() => {
       setStartGameTimer(prev => {
-        if (!isMobileDevice) if (prev !== 1) void new Audio(timerSound).play();
+        if (!isMobileDevice)
+          if (prev !== 1) playSound(new Audio(timerSoundPath));
         return prev - 1;
       });
     }, 1000);
@@ -221,7 +240,7 @@ export default function SpeedMatch() {
   };
 
   const onPlayHandler = () => {
-    if (!isMobileDevice) void new Audio(timerSound).play();
+    if (!isMobileDevice) playSound(new Audio(timerSoundPath));
     setIsStarted(true);
     startGameTimerHandle();
   };
@@ -295,9 +314,10 @@ export default function SpeedMatch() {
     document.addEventListener('keydown', onKeyControlsHandler);
     document.addEventListener('click', onBtnCountrolsHandler);
     return () => {
+      document.removeEventListener('keydown', onKeyControlsHandler);
+      document.removeEventListener('click', onBtnCountrolsHandler);
       setStartGameTimer(0);
       setIsStarted(false);
-      // isStartedTemp.current = false;
     };
   }, []);
 
@@ -309,6 +329,7 @@ export default function SpeedMatch() {
         )}
       </div>
       <div className="speed-match">
+        <SoundButton setSoundOn={setSoundOn} />
         {!isStarted && !isGameEnd && !isHowToPlayOpen && (
           <StartGame
             title="Memory Match"
