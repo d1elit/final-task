@@ -1,4 +1,3 @@
-import React from 'react';
 import Card from '../../../../components/Card/Card';
 import './Cards.scss';
 type Props = {
@@ -15,8 +14,6 @@ export default function Cards({ currentCard, secondCard }: Props) {
       <div className="cards__card-field cards__field-current">
         <Card shapeImg={currentCard} />
       </div>
-      {/* <Card figure={'hello'}/>
-      <Card figure={'hello'}/> */}
     </div>
   );
 }
